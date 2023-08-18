@@ -97,7 +97,6 @@ export const Sprite = {
             sprite,
             pos
         );
-        console.log('uv', u,v, sprite, pos, Camera.pos, Viewport.center, sprite.anchor);
         if (rotation) {
             Viewport.ctx.save();
             Viewport.ctx.translate(u + sprite.anchor.x, v + sprite.anchor.y);

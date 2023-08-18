@@ -96,12 +96,14 @@ export class Game {
     }
 
     update() {
+        Input.update();
+
         if (this.screens.length === 0) {
             this.screens.push(new LevelScreen('level01'));
         }
         this.screen = this.screens[this.screens.length - 1];
-
         this.screen.update();
+
         return;
 
         if (!this.wave) {
