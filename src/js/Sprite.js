@@ -26,6 +26,8 @@ export const Sprite = {
     },
 
     init() {
+        Sprite.bigpig = SpriteSheet.bigpig.map(initBasicSprite);
+
         // Base pixel font and icons (see `Text.init` for additional variations)
         Sprite.font = initBasicSprite(SpriteSheet.font[0]);
         //Sprite.icon_mouse_lmb = initBasicSprite(SpriteSheet.icon_mouse[0]);
@@ -95,6 +97,7 @@ export const Sprite = {
             sprite,
             pos
         );
+        console.log('uv', u,v, sprite, pos, Camera.pos, Viewport.center, sprite.anchor);
         if (rotation) {
             Viewport.ctx.save();
             Viewport.ctx.translate(u + sprite.anchor.x, v + sprite.anchor.y);

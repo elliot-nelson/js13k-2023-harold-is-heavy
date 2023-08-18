@@ -137,10 +137,14 @@ export const Audio = {
     // that's not helpful if it won't work because you aren't looking at the page!)
 
     pause() {
-        Audio.gain_.gain.linearRampToValueAtTime(0, Audio.ctx.currentTime + 1);
+        if (Audio.readyToPlay) {
+            Audio.gain_.gain.linearRampToValueAtTime(0, Audio.ctx.currentTime + 1);
+        }
     },
 
     unpause() {
-        Audio.gain_.gain.linearRampToValueAtTime(1, Audio.ctx.currentTime + 1);
+        if (Audio.readyToPlay) {
+            Audio.gain_.gain.linearRampToValueAtTime(1, Audio.ctx.currentTime + 1);
+        }
     }
 };

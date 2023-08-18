@@ -11,7 +11,7 @@ export const TARGET_GAME_WIDTH = 240;
 export const TARGET_GAME_HEIGHT = 135;
 
 // Size in pixels of each map tile
-export const TILE_SIZE   = 8;
+export const TILE_SIZE = 8;
 
 // Modes (touch vs mouse cursor)
 export const INPUT_MODE_TOUCH = 1;

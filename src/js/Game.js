@@ -18,6 +18,8 @@ import { Wave } from './Wave';
 import { VictoryScreen } from './VictoryScreen';
 import { DefeatScreen } from './DefeatScreen';
 
+import { LevelScreen } from './LevelScreen';
+
 /**
  * Game state.
  */
@@ -28,7 +30,7 @@ export class Game {
             Sprite.init();
             Text.init();
             Input.init();
-            Audio.init();
+            //Audio.init();
             Hud.init();
 
             Camera.init();
@@ -44,6 +46,10 @@ export class Game {
     }
 
     reset() {
+        this.screens = [];
+
+        return;
+
         this.entities = [];
         this.dialogPending = {};
         this.dialogSeen = {};
@@ -90,6 +96,14 @@ export class Game {
     }
 
     update() {
+        if (this.screens.length === 0) {
+            this.screens.push(new LevelScreen('level01'));
+        }
+        this.screen = this.screens[this.screens.length - 1];
+
+        this.screen.update();
+        return;
+
         if (!this.wave) {
             this.wave = new Wave(this.waveNumber++);
         }
@@ -158,6 +172,9 @@ export class Game {
         // Reset canvas transform and scale
         Viewport.ctx.setTransform(1, 0, 0, 1, 0, 0);
         Viewport.ctx.scale(Viewport.scale, Viewport.scale);
+
+        this.screen.draw();
+        return;
 
         //Viewport.ctx.fillStyle = rgba(13, 43, 69, 1);
         //Viewport.ctx.fillStyle = rgba(84, 78, 104, 1);
