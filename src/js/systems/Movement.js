@@ -11,7 +11,7 @@ import {
 } from '../Util';
 
 export const Movement = {
-    perform(entities) {
+    perform(level, entities) {
         // Movement only applies to active entities with positions and velocities
         let movers = entities.filter(
             entity => entity.pos && entity.vel && !entity.cull
@@ -29,7 +29,8 @@ export const Movement = {
             }
 
             for (let entity of movers) {
-                Movement.clipVelocityAgainstWalls(entity);
+                console.log(entity);
+                Movement.clipVelocityAgainstTiles(level, entity);
             }
         }
 
@@ -76,7 +77,7 @@ export const Movement = {
         }
     },
 
-    clipVelocityAgainstWalls(entity) {
+    clipVelocityAgainstTiles(level, entity) {
         if (entity.noClipWall) return;
 
         for (let tile of tilesHitByCircle(
@@ -84,7 +85,8 @@ export const Movement = {
             entity.vel,
             entity.radius
         )) {
-            if (!tileIsPassable(tile.q, tile.r)) {
+            console.log('3');
+            if (!level.tileIsPassable(tile.q, tile.r)) {
                 let bounds = [
                     qr2xy(tile),
                     qr2xy({ q: tile.q + 1, r: tile.r + 1 })

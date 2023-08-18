@@ -7,6 +7,7 @@ import { Viewport } from './Viewport';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { qr2xy, rgba, xy2uv } from './Util';
+import { Movement } from './systems/Movement';
 
 export class LevelScreen {
     constructor(levelName) {
@@ -28,6 +29,8 @@ export class LevelScreen {
         for (const entity of this.entities) {
             entity.update();
         }
+
+        Movement.perform(this, this.entities);
     }
 
     draw() {
@@ -52,5 +55,11 @@ export class LevelScreen {
                 }
             }
         }
+    }
+
+    tileIsPassable(q, r) {
+        if (r < 0 || r >= this.tiles.length) return true;
+        if (q < 0 || q >= this.tiles[0].length) return true;
+        return this.tiles[r][q] < 1;
     }
 }
