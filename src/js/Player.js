@@ -16,6 +16,8 @@ export class Player {
     }
 
     update() {
+        console.log(this.vel.y, this.pos.x, this.pos.y);
+
         let v = {
             x: Input.direction.x * Input.direction.m * 0.4,
             y: Input.direction.y * Input.direction.m * 0.4
@@ -29,23 +31,24 @@ export class Player {
         ///this.pos.y += this.vel.y;
 
         if (Input.pressed[Input.Action.JUMP]) {
-            this.jumpFrames = 20;
+            this.jumpFrames = 16;
             this.jumpLength = 0;
         }
 
         if (this.jumpFrames > 0) {
             this.jumpFrames--;
             this.jumpLength++;
-            this.vel.y = -1;
+            this.vel.y = -1.2;
         }
 
-        if (Input.held[Input.Action.JUMP] && this.jumpFrames < 1 && this.jumpLength < 30) {
+        if (Input.held[Input.Action.JUMP] && this.jumpFrames < 1 && this.jumpLength < 36) {
             this.jumpFrames = 1;
         }
 
-        this.vel.y += 0.11;
+        this.vel.y += 0.12;
 
         if (this.vel.y > 2.5) this.vel.y = 2.5;
+
     }
 
     draw() {

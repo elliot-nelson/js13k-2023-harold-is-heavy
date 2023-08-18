@@ -128,7 +128,9 @@ export const Movement = {
                             entity.vel.x = hit.x - entity.pos.x;
                         } else {
                             entity.vel.x += hit.nx;
-                            entity.vel.y += hit.ny;
+                            //entity.vel.y += hit.ny;
+                            entity.vel.y = 0;
+                            //entity.vel.y = hit.y - entity.pos.y;
                         }
                     }
                 }

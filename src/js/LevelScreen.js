@@ -6,7 +6,7 @@ import { Player } from './Player';
 import { Viewport } from './Viewport';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
-import { qr2xy, rgba, xy2uv } from './Util';
+import { qr2xy, rgba, xy2uv, vectorBetween } from './Util';
 import { Movement } from './systems/Movement';
 
 export class LevelScreen {
@@ -23,7 +23,9 @@ export class LevelScreen {
     }
 
     update() {
-        Camera.forceTarget = this.player.pos;
+        //if (vectorBetween(Camera.pos, this.player.pos).m > 48) {
+            Camera.forceTarget = this.player.pos;
+        //}
         Camera.update();
 
         for (const entity of this.entities) {

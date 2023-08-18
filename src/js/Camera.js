@@ -29,8 +29,8 @@ export const Camera = {
 
             let newVelocity = vector2point(dist);
             this.vel = {
-                x: (this.vel.x + newVelocity.x) / 2,
-                y: (this.vel.y + newVelocity.y) / 2
+                x: (this.vel.x * 2 + newVelocity.x) / 3,
+                y: (this.vel.y * 2 + newVelocity.y) / 3
             };
 
             this.pos.x += this.vel.x;
