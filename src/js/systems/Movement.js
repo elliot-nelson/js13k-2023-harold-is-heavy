@@ -29,7 +29,6 @@ export const Movement = {
             }
 
             for (let entity of movers) {
-                console.log(entity);
                 Movement.clipVelocityAgainstTiles(level, entity);
             }
         }
@@ -85,7 +84,6 @@ export const Movement = {
             entity.vel,
             entity.radius
         )) {
-            console.log('3');
             if (!level.tileIsPassable(tile.q, tile.r)) {
                 let bounds = [
                     qr2xy(tile),

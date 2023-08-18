@@ -10,6 +10,7 @@ export const KeyboardAdapter = {
             KeyA:        Input.Action.LEFT,
             KeyS:        Input.Action.DOWN,
             KeyD:        Input.Action.RIGHT,
+            Space:       Input.Action.JUMP,
             ArrowUp:     Input.Action.UP,
             ArrowLeft:   Input.Action.LEFT,
             ArrowDown:   Input.Action.DOWN,
@@ -42,7 +43,7 @@ export const KeyboardAdapter = {
         window.addEventListener('keydown', event => {
             let k = KeyboardAdapter.map[event.code];
             // Debugging - key presses
-            // console.log(event.key, event.keyCode, event.code, k);
+             console.log(event.key, event.keyCode, event.code, k);
             if (k) {
                 KeyboardAdapter.held[k] = true;
             }

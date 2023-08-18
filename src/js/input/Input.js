@@ -21,6 +21,7 @@ export const Input = {
         DOWN: 12,
         LEFT: 13,
         RIGHT: 14,
+        JUMP: 22,
         ATTACK: 21,
         RELOAD: 30,
         MENU: 96,
