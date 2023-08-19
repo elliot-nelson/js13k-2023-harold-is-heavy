@@ -34,6 +34,8 @@ export const Sprite = {
 
         Sprite.littlepigbox = SpriteSheet.littlepigbox.map(initBasicSprite);
 
+        Sprite.explosiona = SpriteSheet.explosiona.map(initBasicSprite);
+
         // Base pixel font and icons (see `Text.init` for additional variations)
         Sprite.font = initBasicSprite(SpriteSheet.font[0]);
         //Sprite.icon_mouse_lmb = initBasicSprite(SpriteSheet.icon_mouse[0]);

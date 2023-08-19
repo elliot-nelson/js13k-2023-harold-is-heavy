@@ -7,6 +7,7 @@ import { Viewport } from './Viewport';
 import { Input } from './input/Input';
 import { game } from './Game';
 import { LittlePigBoxParticle } from './LittlePigBoxParticle';
+import { ExplosionAParticle } from './ExplosionAParticle';
 
 export class LittlePigBox {
     constructor(pos) {
@@ -18,6 +19,7 @@ export class LittlePigBox {
         this.t++;
 
         if (this.t === 60) {
+            game.screen.entities.push(new ExplosionAParticle({ x: this.pos.x, y: this.pos.y }));
             game.screen.entities.push(new LittlePigBoxParticle(1, { x: this.pos.x, y: this.pos.y }, 225 * Math.PI / 180, 0));
             game.screen.entities.push(new LittlePigBoxParticle(2, { x: this.pos.x + 2, y: this.pos.y }, 246 * Math.PI / 180, 0));
             game.screen.entities.push(new LittlePigBoxParticle(2, { x: this.pos.x + 2, y: this.pos.y }, 292 * Math.PI / 180, R180));

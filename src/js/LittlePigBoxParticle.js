@@ -12,7 +12,7 @@ export class LittlePigBoxParticle {
         this.frame = frame;
         this.pos = { ...pos };
         this.angle = angle;
-        this.vel = vector2point(angle2vector(this.angle, 2));
+        this.vel = vector2point(angle2vector(this.angle, 1.7));
         this.a = 10 * Math.PI / 180;
         this.noClipEntity = true;
         //this.bounce = true;
