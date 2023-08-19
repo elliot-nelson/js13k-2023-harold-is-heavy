@@ -26,7 +26,11 @@ export const Sprite = {
     },
 
     init() {
-        Sprite.bigpig = SpriteSheet.bigpig.map(initBasicSprite);
+        Sprite.bigpig = [SpriteSheet.bigpig.map(initBasicSprite)];
+        Sprite.bigpig.push(Sprite.bigpig[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
+
+        Sprite.littlepig = [SpriteSheet.littlepig.map(initBasicSprite)];
+        Sprite.littlepig.push(Sprite.littlepig[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
 
         // Base pixel font and icons (see `Text.init` for additional variations)
         Sprite.font = initBasicSprite(SpriteSheet.font[0]);
@@ -282,5 +286,13 @@ function createDynamicTile(tiles, bitmask) {
         canvas.ctx.drawImage(tiles[TILE_CORNER_INNER - 1].img, 0, 4, 5, 4, 0, 4, 5, 4);
     }
 
+    return canvas.canvas;
+}
+
+function flipHorizontal(source) {
+    let canvas = createCanvas(source.width, source.height);
+    canvas.ctx.translate(source.width, 0);
+    canvas.ctx.scale(-1, 1);
+    canvas.ctx.drawImage(source, 0, 0);
     return canvas.canvas;
 }

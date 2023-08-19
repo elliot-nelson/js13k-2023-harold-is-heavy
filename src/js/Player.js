@@ -13,6 +13,7 @@ export class Player {
         this.radius = 4;
         this.jumpLength = 0;
         this.jumpFrames = 0;
+        this.facing = 0;
     }
 
     update() {
@@ -49,9 +50,11 @@ export class Player {
 
         if (this.vel.y > 2.5) this.vel.y = 2.5;
 
+        if (this.vel.x > 0) this.facing = 0;
+        if (this.vel.x < 0) this.facing = 1;
     }
 
     draw() {
-        Sprite.drawViewportSprite(Sprite.bigpig[this.frame], { x: this.pos.x, y: this.pos.y });
+        Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.pos.x, y: this.pos.y });
     }
 }
