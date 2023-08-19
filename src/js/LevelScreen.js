@@ -8,6 +8,7 @@ import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { qr2xy, rgba, xy2uv, vectorBetween } from './Util';
 import { Movement } from './systems/Movement';
+import { LittlePigBox } from './LittlePigBox';
 
 export class LevelScreen {
     constructor(levelName) {
@@ -18,6 +19,12 @@ export class LevelScreen {
 
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
         this.entities.push(this.player);
+
+        for (const obj of this.levelData.floors[0].objects) {
+            if (obj.name === 'BOX') {
+                this.entities.push(new LittlePigBox(qr2xy({ q: obj.x, r: obj.y })));
+            }
+        }
 
         Camera.pos = { ...this.player.pos };
     }
@@ -30,6 +37,13 @@ export class LevelScreen {
 
         for (const entity of this.entities) {
             entity.update();
+        }
+
+        for (let i = 0; i < this.entities.length; i++) {
+            if (this.entities[i].cull) {
+                this.entities.splice(i, 1);
+                i--;
+            }
         }
 
         Movement.perform(this, this.entities);

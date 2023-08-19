@@ -399,7 +399,12 @@ export const LevelData =
                     {
                         "name": "SPAWN",
                         "x": 11,
-                        "y": 5
+                        "y": 4
+                    },
+                    {
+                        "name": "BOX",
+                        "x": 21,
+                        "y": 0
                     }
                 ],
                 "areas": [],
@@ -418,7 +423,7 @@ export const LevelData =
         ],
         "spawn": [
             11,
-            5,
+            4,
             0
         ]
     }

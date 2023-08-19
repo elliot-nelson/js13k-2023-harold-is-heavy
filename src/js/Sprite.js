@@ -32,6 +32,8 @@ export const Sprite = {
         Sprite.littlepig = [SpriteSheet.littlepig.map(initBasicSprite)];
         Sprite.littlepig.push(Sprite.littlepig[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
 
+        Sprite.littlepigbox = SpriteSheet.littlepigbox.map(initBasicSprite);
+
         // Base pixel font and icons (see `Text.init` for additional variations)
         Sprite.font = initBasicSprite(SpriteSheet.font[0]);
         //Sprite.icon_mouse_lmb = initBasicSprite(SpriteSheet.icon_mouse[0]);
