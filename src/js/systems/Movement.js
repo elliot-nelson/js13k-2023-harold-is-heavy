@@ -11,7 +11,8 @@ import {
     normalizeVector,
     tilesHitInBounds,
     centerxy,
-    uv2xy
+    uv2xy,
+    vectorBetween
 } from '../Util';
 
 export const Movement = {
@@ -118,24 +119,61 @@ export const Movement = {
             if (!level.tileIsPassable(tile.q, tile.r)) {
                 let tileXY = qr2xy(tile);
 
+                // This algorithm is kind of a practical approach to the question of
+                // how to interact with tiles hit while moving. Instead of computing the
+                // the normal of our velocity into the sides of a tile hit, we compute
+                // what we WOULD do if we chose to bounce off the X side or Y side of
+                // a tile, and then we pick whichever one will move the player the least.
+                //
+                // This generally gives behavior that feels "expected" - jumping into the side
+                // of a block results in stopping and sliding down, while jumping into the
+                // bottom of a block results in hitting your head.
+
+                let suggested = [];
+
                 if (tileXY.y + JUMP_CHEAT_Y_PIXELS >= entity.pos.y + entity.bb[1].y) {
                     let lowestAllowedY = tileXY.y - entity.bb[1].y;
-                    entity.pos.y = lowestAllowedY;
-                    entity.vel.y = 0;
-                    if (entity.landedOnTile) entity.landedOnTile(tile);
-                } else if (tileXY.x >= entity.pos.x + entity.bb[1].x) {
-                    let rightmostAllowedX = tileXY.x - entity.bb[1].x;
-                    entity.pos.x = rightmostAllowedX;
-                    entity.vel.x = 0;
-                } else if (tileXY.x <= entity.pos.x - entity.bb[1].x) {
-                    let leftmostAllowedX = tileXY.x + TILE_SIZE - entity.bb[0].x;
-                    entity.pos.x = leftmostAllowedX;
-                    entity.vel.x = 0;
-                } else if (tileXY.y < entity.pos.y) {
-                    let highestAllowedY = tileXY.y + TILE_SIZE - entity.bb[0].y;
-                    entity.pos.y = highestAllowedY;
-                    entity.vel.y = 0;
+                    suggested.push({
+                        pos: { x: entity.pos.x, y: lowestAllowedY },
+                        vel: { x: entity.vel.x, y: 0 },
+                        tile: tile
+                    });
                 }
+                if (tileXY.x >= entity.pos.x + entity.bb[1].x) {
+                    let rightmostAllowedX = tileXY.x - entity.bb[1].x;
+                    suggested.push({
+                        pos: { x: rightmostAllowedX, y: entity.pos.y },
+                        vel: { x: 0, y: entity.vel.y }
+                    });
+                }
+                if (tileXY.x <= entity.pos.x - entity.bb[1].x) {
+                    let leftmostAllowedX = tileXY.x + TILE_SIZE - entity.bb[0].x;
+                    suggested.push({
+                        pos: { x: leftmostAllowedX, y: entity.pos.y },
+                        vel: { x: 0, y: entity.vel.y }
+                    });
+                }
+                if (tileXY.y < entity.pos.y) {
+                    let highestAllowedY = tileXY.y + TILE_SIZE - entity.bb[0].y;
+                    suggested.push({
+                        pos: { x: entity.pos.x, y: highestAllowedY },
+                        vel: { x: entity.vel.x, y: 0 }
+                    });
+                }
+
+                let chosen = suggested[0];
+                let pixelDistance = vectorBetween(entity.pos, chosen.pos).m;
+                for (let i = 1; i < suggested.length; i++) {
+                    let newPixelDistance = vectorBetween(entity.pos, suggested[i].pos).m;
+                    if (newPixelDistance < pixelDistance) {
+                        pixelDistance = newPixelDistance;
+                        chosen = suggested[i];
+                    }
+                }
+
+                entity.pos = chosen.pos;
+                entity.vel = chosen.vel;
+                if (chosen.tile && entity.landedOnTile) entity.landedOnTile(tile);
             }
         }
     },

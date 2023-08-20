@@ -1,12 +1,13 @@
 // Player
 
-import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY } from './Constants';
+import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED } from './Constants';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { Viewport } from './Viewport';
 import { Input } from './input/Input';
 import { game } from './Game';
 import { LandingParticle } from './Particle';
+import { clamp } from './Util';
 
 export class Player {
     constructor(pos) {
@@ -31,11 +32,11 @@ export class Player {
         console.log(this.vel.y, this.pos.x, this.pos.y);
 
         let v = {
-            x: Input.direction.x * Input.direction.m * 0.4,
+            x: Input.direction.x * Input.direction.m * PLAYER_FOOT_SPEED,
             y: Input.direction.y * Input.direction.m * 0.4
         };
 
-        this.vel.x = (this.vel.x + v.x) / 2;
+        this.vel.x = clamp((this.vel.x + v.x) / 2, -PLAYER_FOOT_SPEED, PLAYER_FOOT_SPEED);
         //this.vel.y = (this.vel.y + v.y) / 2;
 
         // move
