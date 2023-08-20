@@ -1,5 +1,6 @@
 // Movement
 
+import { TILE_SIZE, JUMP_CHEAT_Y_PIXELS } from '../Constants';
 import { game } from '../Game';
 import {
     tilesHitByCircle,
@@ -7,7 +8,10 @@ import {
     qr2xy,
     intersectCircleCircle,
     intersectCircleRectangle,
-    normalizeVector
+    normalizeVector,
+    tilesHitInBounds,
+    centerxy,
+    uv2xy
 } from '../Util';
 
 export const Movement = {
@@ -30,6 +34,10 @@ export const Movement = {
 
             for (let entity of movers) {
                 Movement.clipVelocityAgainstTiles(level, entity);
+            }
+
+            for (let entity of movers) {
+                Movement.clipVelocityAgainstTiles2(level, entity);
             }
         }
 
@@ -72,6 +80,61 @@ export const Movement = {
                     (hit.nx * hit.m * otherI * otherM) / (entityM + otherM);
                 other.vel.y +=
                     (hit.ny * hit.m * otherI * otherM) / (entityM + otherM);
+            }
+        }
+    },
+
+    clipVelocityAgainstTiles2(level, entity) {
+        if (!entity.newClip) return;
+
+        let xArray = [
+            entity.pos.x + entity.bb[0].x,
+            entity.pos.x + entity.bb[1].x
+        ];
+
+        let yArray = [
+            entity.pos.y + entity.bb[0].y,
+            entity.pos.y + entity.bb[1].y
+        ];
+
+        if (entity.vel.x <= 0) {
+            xArray[0] += entity.vel.x;
+        } else {
+            xArray[1] += entity.vel.x;
+        }
+
+        if (entity.vel.y <= 0) {
+            yArray[0] += entity.vel.y;
+        } else {
+            yArray[1] += entity.vel.y;
+        }
+
+        let bounds = [
+            { x: xArray[0], y: yArray[0] },
+            { x: xArray[1], y: yArray[1] }
+        ];
+
+        for (let tile of tilesHitInBounds(bounds)) {
+            if (!level.tileIsPassable(tile.q, tile.r)) {
+                let tileXY = qr2xy(tile);
+
+                if (tileXY.y + JUMP_CHEAT_Y_PIXELS >= entity.pos.y + entity.bb[1].y) {
+                    let lowestAllowedY = tileXY.y - entity.bb[1].y;
+                    entity.pos.y = lowestAllowedY;
+                    entity.vel.y = 0;
+                } else if (tileXY.x >= entity.pos.x + entity.bb[1].x) {
+                    let rightmostAllowedX = tileXY.x - entity.bb[1].x;
+                    entity.pos.x = rightmostAllowedX;
+                    entity.vel.x = 0;
+                } else if (tileXY.x <= entity.pos.x - entity.bb[1].x) {
+                    let leftmostAllowedX = tileXY.x + TILE_SIZE - entity.bb[0].x;
+                    entity.pos.x = leftmostAllowedX;
+                    entity.vel.x = 0;
+                } else if (tileXY.y < entity.pos.y) {
+                    let highestAllowedY = tileXY.y + TILE_SIZE - entity.bb[0].y;
+                    entity.pos.y = highestAllowedY;
+                    entity.vel.y = 0;
+                }
             }
         }
     },

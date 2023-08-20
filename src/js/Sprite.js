@@ -138,22 +138,29 @@ export const Sprite = {
 
 // Sprite utility functions
 
-function initBasicSprite(data, anchor) {
-    return initDynamicSprite(loadCacheSlice(...data), anchor);
+function initBasicSprite(data, opts) {
+    return initDynamicSprite(loadCacheSlice(...data), opts);
 }
 
-function initDynamicSprite(source, anchor) {
+function initDynamicSprite(source, opts) {
     let w = source.width,
         h = source.height;
 
+    if (typeof opts !== 'object') {
+        opts = {};
+    }
+
+    if (!opts.anchor) {
+        opts.anchor = { x: (w / 2) | 0, y: (h / 2) | 0 };
+    }
+
+    if (!opts.bb) {
+        opts.bb = [-opts.anchor.x, -opts.anchor.y, source.width, source.height];
+    }
+
     return {
         img: source,
-        // Hack! Using a flat `.map(initBasicSprite)` is actually going to pass the
-        // element INDEX as second argument, resulting in "anchor=1". The right solution
-        // here is "typeof anchor === 'object' ?", but to save bytes I avoid using
-        // the typeof and instanceof keywords anywhere in the codebase. Hence,
-        // "anchor && anchor.x".
-        anchor: (typeof anchor === 'object') ? anchor : { x: (w / 2) | 0, y: (h / 2) | 0 }
+        ...opts
     };
 }
 

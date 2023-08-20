@@ -85,3 +85,21 @@ export const ATTACK    = 12;
 // Additional behaviors (buildings)
 export const WIP       = 21;
 export const ONLINE    = 22;
+
+
+export const FPS = 60;
+
+// Fiddle with these numbers to customize jump
+export const JUMP_HEIGHT = 3 * TILE_SIZE;
+export const JUMP_DURATION = 75 / FPS;
+
+// Ask again
+export const GRAVITY = JUMP_HEIGHT / 2 * JUMP_DURATION * JUMP_DURATION;
+export const JUMP_VELOCITY = Math.sqrt(2 * JUMP_HEIGHT * GRAVITY);
+
+export const TERMINAL_VELOCITY = 1.4;
+
+// If the bounding box of a jumping character hits a platform and the feet of
+// the character are within this many pixels of the top of the floor, pretend
+// that they "made the jump".
+export const JUMP_CHEAT_Y_PIXELS = 2;

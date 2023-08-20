@@ -1,5 +1,6 @@
 // Player
 
+import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY } from './Constants';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { Viewport } from './Viewport';
@@ -14,6 +15,13 @@ export class Player {
         this.jumpLength = 0;
         this.jumpFrames = 0;
         this.facing = 0;
+
+        this.bb = [{ x: -7, y: -4 }, { x: 7, y: 5 }];
+
+        // temp
+        this.noClipEntity = true;
+        this.noClipWall = true;
+        this.newClip = true;
     }
 
     update() {
@@ -34,6 +42,7 @@ export class Player {
         if (Input.pressed[Input.Action.JUMP]) {
             this.jumpFrames = 16;
             this.jumpLength = 0;
+            //this.vel.y = 0 - JUMP_VELOCITY - GRAVITY;
         }
 
         if (this.jumpFrames > 0) {
@@ -46,9 +55,11 @@ export class Player {
             this.jumpFrames = 1;
         }
 
+        console.log(GRAVITY);
+        //this.vel.y += GRAVITY;
         this.vel.y += 0.12;
 
-        if (this.vel.y > 2.5) this.vel.y = 2.5;
+        if (this.vel.y > TERMINAL_VELOCITY) this.vel.y = TERMINAL_VELOCITY;
 
         if (this.vel.x > 0) this.facing = 0;
         if (this.vel.x < 0) this.facing = 1;

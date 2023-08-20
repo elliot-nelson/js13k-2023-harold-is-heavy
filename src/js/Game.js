@@ -1,5 +1,6 @@
 // Game
 
+import { FPS } from './Constants';
 import { Sprite } from './Sprite';
 import { Input } from './input/Input';
 import { Text } from './Text';
@@ -47,6 +48,7 @@ export class Game {
 
     reset() {
         this.screens = [];
+        this.lastFrame = 0;
 
         return;
 
@@ -85,10 +87,12 @@ export class Game {
         }
         this.fps = 1000 / ((this.framestamps[this.framestamps.length - 1] - this.framestamps[0]) / this.framestamps.length);
 
-        this.frame++;
-        Viewport.resize();
-        this.update();
-        this.draw(Viewport.ctx);
+        if (currentms - this.lastFrame >= 1000 / FPS) {
+            this.frame++;
+            Viewport.resize();
+            this.update();
+            this.draw(Viewport.ctx);
+        }
         window.requestAnimationFrame((xyz) => this.onFrame(xyz));
 
         let endTime = new Date().getTime();
