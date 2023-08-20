@@ -122,6 +122,7 @@ export const Movement = {
                     let lowestAllowedY = tileXY.y - entity.bb[1].y;
                     entity.pos.y = lowestAllowedY;
                     entity.vel.y = 0;
+                    if (entity.landedOnTile) entity.landedOnTile(tile);
                 } else if (tileXY.x >= entity.pos.x + entity.bb[1].x) {
                     let rightmostAllowedX = tileXY.x - entity.bb[1].x;
                     entity.pos.x = rightmostAllowedX;

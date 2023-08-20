@@ -403,8 +403,13 @@ export const LevelData =
                     },
                     {
                         "name": "BOX",
+                        "x": 2,
+                        "y": 5
+                    },
+                    {
+                        "name": "BOX",
                         "x": 21,
-                        "y": 0
+                        "y": -1
                     }
                 ],
                 "areas": [],

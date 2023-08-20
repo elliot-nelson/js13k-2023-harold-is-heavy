@@ -86,16 +86,17 @@ export const ATTACK    = 12;
 export const WIP       = 21;
 export const ONLINE    = 22;
 
-
 export const FPS = 60;
 
 // Fiddle with these numbers to customize jump
 export const JUMP_HEIGHT = 3 * TILE_SIZE;
-export const JUMP_DURATION = 75 / FPS;
+export const JUMP_DURATION = 240 / 60;
 
 // Ask again
-export const GRAVITY = JUMP_HEIGHT / 2 * JUMP_DURATION * JUMP_DURATION;
-export const JUMP_VELOCITY = Math.sqrt(2 * JUMP_HEIGHT * GRAVITY);
+//export const GRAVITY = (JUMP_HEIGHT / 2 * JUMP_DURATION * JUMP_DURATION) / 2;
+//export const JUMP_VELOCITY = Math.sqrt(2 * JUMP_HEIGHT * GRAVITY) / 2;
+export const GRAVITY = 0.11;
+export const JUMP_VELOCITY = 2.4;
 
 export const TERMINAL_VELOCITY = 1.4;
 

@@ -26,15 +26,17 @@ export const Sprite = {
     },
 
     init() {
-        Sprite.bigpig = [SpriteSheet.bigpig.map(initBasicSprite)];
+        Sprite.bigpig = [SpriteSheet.bigpig.map(initBasicSprite, { x: 7, y: 4 })];
         Sprite.bigpig.push(Sprite.bigpig[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
 
         Sprite.littlepig = [SpriteSheet.littlepig.map(initBasicSprite)];
         Sprite.littlepig.push(Sprite.littlepig[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
 
-        Sprite.littlepigbox = SpriteSheet.littlepigbox.map(initBasicSprite);
+        Sprite.littlepigbox = SpriteSheet.littlepigbox.map(initBasicSprite, { x: 7, y: 5 });
 
         Sprite.explosiona = SpriteSheet.explosiona.map(initBasicSprite);
+
+        Sprite.particle = SpriteSheet.particle.map(initBasicSprite);
 
         // Base pixel font and icons (see `Text.init` for additional variations)
         Sprite.font = initBasicSprite(SpriteSheet.font[0]);

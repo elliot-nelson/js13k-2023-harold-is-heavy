@@ -5,6 +5,8 @@ import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { Viewport } from './Viewport';
 import { Input } from './input/Input';
+import { game } from './Game';
+import { LandingParticle } from './Particle';
 
 export class Player {
     constructor(pos) {
@@ -15,6 +17,7 @@ export class Player {
         this.jumpLength = 0;
         this.jumpFrames = 0;
         this.facing = 0;
+        this.isJumping = true;
 
         this.bb = [{ x: -7, y: -4 }, { x: 7, y: 5 }];
 
@@ -39,13 +42,14 @@ export class Player {
         ///this.pos.x += this.vel.x;
         ///this.pos.y += this.vel.y;
 
-        if (Input.pressed[Input.Action.JUMP]) {
-            this.jumpFrames = 16;
-            this.jumpLength = 0;
-            //this.vel.y = 0 - JUMP_VELOCITY - GRAVITY;
+        if (Input.pressed[Input.Action.JUMP] && !this.isJumping) {
+            this.isJumping = true;
+            //this.jumpFrames = 16;
+            //this.jumpLength = 0;
+            this.vel.y = 0 - JUMP_VELOCITY - GRAVITY;
         }
 
-        if (this.jumpFrames > 0) {
+        /*if (this.jumpFrames > 0) {
             this.jumpFrames--;
             this.jumpLength++;
             this.vel.y = -1.2;
@@ -53,16 +57,23 @@ export class Player {
 
         if (Input.held[Input.Action.JUMP] && this.jumpFrames < 1 && this.jumpLength < 36) {
             this.jumpFrames = 1;
-        }
+        }*/
 
         console.log(GRAVITY);
-        //this.vel.y += GRAVITY;
-        this.vel.y += 0.12;
+        this.vel.y += GRAVITY;
+        //this.vel.y += 0.12;
 
         if (this.vel.y > TERMINAL_VELOCITY) this.vel.y = TERMINAL_VELOCITY;
 
         if (this.vel.x > 0) this.facing = 0;
         if (this.vel.x < 0) this.facing = 1;
+    }
+
+    landedOnTile(tile) {
+        if (this.isJumping) {
+            this.isJumping = false;
+            game.screen.landedOnTile(tile);
+        }
     }
 
     draw() {

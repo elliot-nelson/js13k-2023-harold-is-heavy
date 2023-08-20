@@ -19,6 +19,8 @@ import { Wave } from './Wave';
 import { VictoryScreen } from './VictoryScreen';
 import { DefeatScreen } from './DefeatScreen';
 
+import { LittlePigBox } from './LittlePigBox';
+
 import { LevelScreen } from './LevelScreen';
 
 /**
@@ -269,6 +271,7 @@ export class Game {
             }
         }
     }
+
 }
 
 export const game = new Game();

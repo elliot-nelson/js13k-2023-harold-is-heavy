@@ -9,6 +9,7 @@ import { Camera } from './Camera';
 import { qr2xy, rgba, xy2uv, vectorBetween } from './Util';
 import { Movement } from './systems/Movement';
 import { LittlePigBox } from './LittlePigBox';
+import { LandingParticle } from './Particle';
 
 export class LevelScreen {
     constructor(levelName) {
@@ -22,7 +23,7 @@ export class LevelScreen {
 
         for (const obj of this.levelData.floors[0].objects) {
             if (obj.name === 'BOX') {
-                this.entities.push(new LittlePigBox(qr2xy({ q: obj.x, r: obj.y })));
+                this.entities.push(new LittlePigBox({ q: obj.x, r: obj.y }));
             }
         }
 
@@ -77,5 +78,20 @@ export class LevelScreen {
         if (r < 0 || r >= this.tiles.length) return true;
         if (q < 0 || q >= this.tiles[0].length) return true;
         return this.tiles[r][q] < 1;
+    }
+
+    landedOnTile(tile) {
+        console.log('LAND on tile');
+
+        for (let entity of this.entities) {
+            if (entity.landedOnTile) entity.landedOnTile(tile);
+        }
+
+        this.entities.push(new LandingParticle(this.pos));
+        this.entities.push(new LandingParticle(this.pos));
+        this.entities.push(new LandingParticle(this.pos));
+        this.entities.push(new LandingParticle(this.pos));
+        this.entities.push(new LandingParticle(this.pos));
+        this.entities.push(new LandingParticle(this.pos));
     }
 }
