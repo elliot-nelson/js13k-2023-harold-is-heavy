@@ -6,11 +6,12 @@ import { Player } from './Player';
 import { Viewport } from './Viewport';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
-import { qr2xy, rgba, xy2uv, vectorBetween } from './Util';
+import { qr2xy, rgba, xy2uv, vectorBetween, xy2qr } from './Util';
 import { Movement } from './systems/Movement';
 import { LittlePigBox } from './LittlePigBox';
 import { LandingParticle } from './Particle';
 import { Text } from './Text';
+import { Knight } from './Knight';
 
 export class LevelScreen {
     constructor(levelName) {
@@ -25,10 +26,16 @@ export class LevelScreen {
         this.littlePigs = 0;
         this.littlePigsRescued = 0;
 
+        this.enemies = 0;
+        this.enemiesDefeated = 0;
+
         for (const obj of this.levelData.floors[0].objects) {
             if (obj.name === 'BOX') {
                 this.entities.push(new LittlePigBox({ q: obj.x, r: obj.y }));
                 this.littlePigs++;
+            } else if (obj.name === 'KNIGHT') {
+                this.entities.push(new Knight(qr2xy({ q: obj.x, r: obj.y })));
+                this.enemies++;
             }
         }
 
@@ -93,6 +100,12 @@ export class LevelScreen {
         if (r < 0 || r >= this.tiles.length) return true;
         if (q < 0 || q >= this.tiles[0].length) return true;
         return this.tiles[r][q] < 1;
+    }
+
+    entityIsOnSolidGround(entity) {
+        let qr = xy2qr({ x: entity.pos.x, y: entity.pos.y + entity.bb[1].y });
+
+        return !this.tileIsPassable(qr.q, qr.r);
     }
 
     landedOnTile(tile) {
