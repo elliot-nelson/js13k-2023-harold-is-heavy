@@ -44,7 +44,8 @@ export const Text = {
         Text.shadow = recolor(Text.white, rgba(240, 240, 255, 0.25));
         Text.red = recolor(Text.white, rgba(240, 50, 50, 1));
 
-        Text.duotone = recolorDuotone(Text.white, '#ffaa5e', '#ffd4a3');
+        //Text.duotone = recolorDuotone(Text.white, '#ffaa5e', '#ffd4a3');
+        Text.duotone = recolorDuotone(Text.white, '#f2b63d', '#fff4e0');
         Text.duotone_red = recolorDuotone(Text.white, '#ffaa5e', '#ffd4a3', rgba(255, 0, 0, 0.7));
     },
 
@@ -76,7 +77,7 @@ export const Text = {
                         (k / 180 | 0) * 6,
                         C_WIDTH,
                         C_HEIGHT,
-                        u + 1,
+                        u,
                         v + 1,
                         C_WIDTH * scale,
                         C_HEIGHT * scale

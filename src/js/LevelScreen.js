@@ -56,7 +56,7 @@ export class LevelScreen {
     }
 
     draw() {
-        Viewport.ctx.fillStyle = rgba(36, 26, 200, 1);
+        Viewport.ctx.fillStyle = '#457cd6';
         Viewport.ctx.fillRect(0, 0, Viewport.width, Viewport.height);
 
         this.drawTiles();
@@ -65,7 +65,7 @@ export class LevelScreen {
             entity.draw();
         }
 
-        Text.drawText(Viewport.ctx, `${this.littlePigsRescued}/${this.littlePigs}`, 180, 5, 1);
+        Text.drawText(Viewport.ctx, `${this.littlePigsRescued}/${this.littlePigs}`, 180, 5, 1, Text.duotone, Text.black);
     }
 
     drawTiles() {
