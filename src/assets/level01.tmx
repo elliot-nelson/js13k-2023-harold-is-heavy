@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="8">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="9">
  <tileset firstgid="1" source="generated/tiles-gen.tsx"/>
  <group id="3" name="FLOOR1">
   <layer id="1" name="TILES" width="30" height="20">
@@ -33,7 +33,10 @@
    <object id="5" name="BOX" x="20.0257" y="76.2516">
     <point/>
    </object>
-   <object id="7" name="BOX" x="172.144" y="29.6534">
+   <object id="7" name="BOX" x="179.461" y="35.43">
+    <point/>
+   </object>
+   <object id="8" name="BOX" x="139.409" y="92.8113">
     <point/>
    </object>
   </objectgroup>

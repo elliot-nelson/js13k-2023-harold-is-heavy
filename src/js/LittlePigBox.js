@@ -8,6 +8,7 @@ import { Input } from './input/Input';
 import { game } from './Game';
 import { LittlePigBoxParticle } from './LittlePigBoxParticle';
 import { ExplosionAParticle } from './ExplosionAParticle';
+import { LittlePig } from './LittlePig';
 import { qr2xy, xy2qr, centerxy } from './Util';
 
 export class LittlePigBox {
@@ -29,8 +30,6 @@ export class LittlePigBox {
     }
 
     landedOnTile(tile) {
-        console.log('yeah');
-
         if (this.qr.r === tile.r - 1 && Math.abs(this.qr.q - tile.q) <= 2) {
             game.screen.entities.push(new ExplosionAParticle({ x: this.pos.x, y: this.pos.y }));
             game.screen.entities.push(new LittlePigBoxParticle(1, { x: this.pos.x, y: this.pos.y }, 225 * Math.PI / 180, 0));
@@ -38,6 +37,8 @@ export class LittlePigBox {
             game.screen.entities.push(new LittlePigBoxParticle(2, { x: this.pos.x + 2, y: this.pos.y }, 292 * Math.PI / 180, R180));
             game.screen.entities.push(new LittlePigBoxParticle(3, { x: this.pos.x + 4, y: this.pos.y }, 270 * Math.PI / 180, R45));
             game.screen.entities.push(new LittlePigBoxParticle(1, { x: this.pos.x + 10, y: this.pos.y }, 315 * Math.PI / 180, 0));
+            game.screen.entities.push(new LittlePig(this.pos));
+            this.cull = true;
         }
     }
 }

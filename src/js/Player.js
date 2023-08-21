@@ -47,7 +47,7 @@ export class Player {
             this.isJumping = true;
             //this.jumpFrames = 16;
             //this.jumpLength = 0;
-            this.vel.y = 0 - JUMP_VELOCITY - GRAVITY;
+            this.vel.y = JUMP_VELOCITY - GRAVITY;
         }
 
         /*if (this.jumpFrames > 0) {

@@ -10,6 +10,7 @@ import { qr2xy, rgba, xy2uv, vectorBetween } from './Util';
 import { Movement } from './systems/Movement';
 import { LittlePigBox } from './LittlePigBox';
 import { LandingParticle } from './Particle';
+import { Text } from './Text';
 
 export class LevelScreen {
     constructor(levelName) {
@@ -21,9 +22,13 @@ export class LevelScreen {
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
         this.entities.push(this.player);
 
+        this.littlePigs = 0;
+        this.littlePigsRescued = 0;
+
         for (const obj of this.levelData.floors[0].objects) {
             if (obj.name === 'BOX') {
                 this.entities.push(new LittlePigBox({ q: obj.x, r: obj.y }));
+                this.littlePigs++;
             }
         }
 
@@ -59,6 +64,8 @@ export class LevelScreen {
         for (const entity of this.entities) {
             entity.draw();
         }
+
+        Text.drawText(Viewport.ctx, `${this.littlePigsRescued}/${this.littlePigs}`, 180, 5, 1);
     }
 
     drawTiles() {
@@ -93,5 +100,9 @@ export class LevelScreen {
         this.entities.push(new LandingParticle(this.pos));
         this.entities.push(new LandingParticle(this.pos));
         this.entities.push(new LandingParticle(this.pos));
+    }
+
+    rescueLittlePig() {
+        this.littlePigsRescued++;
     }
 }
