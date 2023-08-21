@@ -8,6 +8,7 @@ import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { qr2xy, rgba, xy2uv, vectorBetween, xy2qr } from './Util';
 import { Movement } from './systems/Movement';
+import { Attack } from './systems/Attack';
 import { LittlePigBox } from './LittlePigBox';
 import { LandingParticle } from './Particle';
 import { Text } from './Text';
@@ -52,14 +53,15 @@ export class LevelScreen {
             entity.update();
         }
 
+        Movement.perform(this, this.entities);
+        Attack.perform(this, this.entities);
+
         for (let i = 0; i < this.entities.length; i++) {
             if (this.entities[i].cull) {
                 this.entities.splice(i, 1);
                 i--;
             }
         }
-
-        Movement.perform(this, this.entities);
     }
 
     draw() {

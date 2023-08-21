@@ -27,7 +27,6 @@ export class Knight {
         this.bb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
 
         // temp
-        this.noClipEntity = true;
         this.noClipWall = true;
         this.newClip = true;
 

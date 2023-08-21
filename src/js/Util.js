@@ -566,3 +566,8 @@ export function partialText(text, t, d) {
 
     return substr;
 }
+
+export function isBoundingBoxOverlap(left, right) {
+    return left[1].x >= right[0].x && right[1].x >= left[0].x &&
+           left[1].y >= right[0].y && right[1].y >= left[0].y;
+}

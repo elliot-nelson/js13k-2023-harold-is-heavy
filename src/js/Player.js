@@ -23,7 +23,6 @@ export class Player {
         this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
 
         // temp
-        this.noClipEntity = true;
         this.noClipWall = true;
         this.newClip = true;
     }

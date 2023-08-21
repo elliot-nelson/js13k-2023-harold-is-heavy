@@ -50,6 +50,9 @@ export const Movement = {
     },
 
     clipVelocityEntityVsEntity(entity, other) {
+        return;
+        // we don't clip entities against each other anymore
+
         if (entity.noClipEntity || other.noClipEntity) return;
 
         let hit = intersectCircleCircle(
