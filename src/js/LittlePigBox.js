@@ -19,14 +19,31 @@ export class LittlePigBox {
         this.pos = centerxy(qr2xy(qr));
         this.pos.y = (qr.r + 1) * TILE_SIZE - this.bb[1].y;
         this.t = 0;
+
+        this.shakeY = 0;
     }
 
     update() {
         this.t++;
+
+        if (this.shakeX > 0) this.shakeX--;
+        if (this.shakeY > 0) this.shakeY--;
+
+        if (!this.shakeY && !this.shakeX && Math.random() < 0.01) {
+            this.shakeX = 30;
+        }
+        if (!this.shakeY && !this.shakeX && Math.random() < 0.01) {
+            this.shakeY = 8;
+        }
     }
 
     draw() {
-        Sprite.drawViewportSprite(Sprite.littlepigbox[0], this.pos);
+        let shakeX = 0, shakeY = 0;
+        if (this.shakeY) shakeY = -1;
+        if (this.shakeX) {
+            if (this.shakeX > 20 || this.shakeX < 10) shakeX = 1;
+        }
+        Sprite.drawViewportSprite(Sprite.littlepigbox[0], { x: this.pos.x + shakeX, y: this.pos.y + shakeY });
     }
 
     landedOnTile(tile) {

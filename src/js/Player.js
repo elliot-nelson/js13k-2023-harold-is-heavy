@@ -20,7 +20,7 @@ export class Player {
         this.facing = 0;
         this.isJumping = true;
 
-        this.bb = [{ x: -7, y: -4 }, { x: 7, y: 5 }];
+        this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
 
         // temp
         this.noClipEntity = true;

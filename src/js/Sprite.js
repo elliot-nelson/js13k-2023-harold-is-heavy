@@ -40,6 +40,8 @@ export const Sprite = {
 
         Sprite.tilebg = SpriteSheet.tilebg.map(initBasicSprite);
 
+        Sprite.star = SpriteSheet.star.map(initBasicSprite);
+
         // Base pixel font and icons (see `Text.init` for additional variations)
         Sprite.font = initBasicSprite(SpriteSheet.font[0]);
         //Sprite.icon_mouse_lmb = initBasicSprite(SpriteSheet.icon_mouse[0]);

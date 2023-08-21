@@ -10,6 +10,7 @@ import { game } from './Game';
 import { LittlePigBoxParticle } from './LittlePigBoxParticle';
 import { ExplosionAParticle } from './ExplosionAParticle';
 import { qr2xy, xy2qr, centerxy, xy2uv } from './Util';
+import { StarParticle } from './StarParticle';
 
 export class LittlePig {
     constructor(pos) {
@@ -36,6 +37,10 @@ export class LittlePig {
             this.r = 0;
             this.vel.x = 1.5;
             this.vel.y = JUMP_VELOCITY - GRAVITY;
+
+            game.screen.entities.push(new StarParticle(this.pos));
+            game.screen.entities.push(new StarParticle(this.pos));
+            game.screen.entities.push(new StarParticle(this.pos));
         } else if (this.t > 64) {
             this.vel.y -= GRAVITY * 0.3;
         }
