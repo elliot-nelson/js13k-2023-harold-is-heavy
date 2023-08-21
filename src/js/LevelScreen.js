@@ -75,6 +75,14 @@ export class LevelScreen {
         for (let r = 0; r < tiles.length; r++) {
             for (let q = 0; q < tiles[0].length; q++) {
                 if (tiles[r][q] > 0) {
+                    Viewport.ctx.drawImage(Sprite.tilebg[0].img, q * TILE_SIZE + offset.u - 1, r * TILE_SIZE + offset.v - 1);
+                }
+            }
+        }
+
+        for (let r = 0; r < tiles.length; r++) {
+            for (let q = 0; q < tiles[0].length; q++) {
+                if (tiles[r][q] > 0) {
                     Viewport.ctx.drawImage(Sprite.tiles[tiles[r][q]].img, q * TILE_SIZE + offset.u, r * TILE_SIZE + offset.v);
                 }
             }

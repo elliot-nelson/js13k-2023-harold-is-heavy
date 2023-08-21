@@ -38,6 +38,8 @@ export const Sprite = {
 
         Sprite.particle = SpriteSheet.particle.map(initBasicSprite);
 
+        Sprite.tilebg = SpriteSheet.tilebg.map(initBasicSprite);
+
         // Base pixel font and icons (see `Text.init` for additional variations)
         Sprite.font = initBasicSprite(SpriteSheet.font[0]);
         //Sprite.icon_mouse_lmb = initBasicSprite(SpriteSheet.icon_mouse[0]);
@@ -81,7 +83,7 @@ export const Sprite = {
         // Buttons
         Sprite.buttons = SpriteSheet.buttons.map(initBasicSprite);
 
-        Sprite.tilebg = initDynamicSprite(createTileBg(Sprite.tiles[0].img));
+        //Sprite.tilebg = initDynamicSprite(createTileBg(Sprite.tiles[0].img));
         Sprite.shadow = initDynamicSprite(createShadow());
 
         Sprite.attack = SpriteSheet.attack.map(initBasicSprite);
