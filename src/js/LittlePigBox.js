@@ -15,6 +15,7 @@ export class LittlePigBox {
     constructor(qr) {
         this.qr = { ...qr };
         this.bb = [{ x: -7, y: -5 }, { x: 7, y: 6 }];
+        this.immune = true;
 
         this.pos = centerxy(qr2xy(qr));
         this.pos.y = (qr.r + 1) * TILE_SIZE - this.bb[1].y;

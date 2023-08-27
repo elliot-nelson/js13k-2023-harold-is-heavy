@@ -19,8 +19,10 @@ export class Player {
         this.jumpFrames = 0;
         this.facing = 0;
         this.isJumping = true;
+        this.team = 0;
 
         this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
+        this.abb = [{ x: -4, y: 4 }, { x: 4, y: 5 }];
 
         // temp
         this.noClipWall = true;
@@ -78,5 +80,9 @@ export class Player {
 
     draw() {
         Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.pos.x, y: this.pos.y });
+    }
+
+    attack(victim) {
+        victim.crushedBy(this);
     }
 }

@@ -111,8 +111,6 @@ export class LevelScreen {
     }
 
     landedOnTile(tile) {
-        console.log('LAND on tile');
-
         for (let entity of this.entities) {
             if (entity.landedOnTile) entity.landedOnTile(tile);
         }

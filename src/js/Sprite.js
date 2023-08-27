@@ -42,6 +42,8 @@ export const Sprite = {
 
         Sprite.star = SpriteSheet.star.map(initBasicSprite);
 
+        Sprite.bleed = SpriteSheet.bleed.map(initBasicSprite, { x: 4, y: 0 });
+
         Sprite.knight = [SpriteSheet.knight.map(initBasicSprite, { x: 3, y: 6 })];
         Sprite.knight.push(Sprite.knight[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
 
@@ -127,6 +129,15 @@ export const Sprite = {
         } else {
             Viewport.ctx.drawImage(sprite.img, u, v);
         }
+    },
+
+    drawSmashedSprite(sprite, pos, height) {
+        let { u, v } = this.viewportSprite2uv(
+            sprite,
+            pos
+        );
+
+        Viewport.ctx.drawImage(sprite.img, u - 1, v - height + sprite.img.height, sprite.img.width + 2, height);
     },
 
     viewportSprite2uv(sprite, pos) {

@@ -1,5 +1,5 @@
 
-import { isBoundingBoxOverlap } from '../Util';
+import { isBoundingBoxOverlap, entityBB, entityABB } from '../Util';
 
 export const Attack = {
     perform(level, entities) {
@@ -8,8 +8,10 @@ export const Attack = {
         for (let attacker of relevantEntities) {
             if (attacker.abb) {
                 for (let victim of relevantEntities) {
+                    if (attacker.team === victim.team || victim.immune) continue;
+
                     if (victim.bb) {
-                        if (isBoundingBoxOverlap(attacker.abb, victim.bb)) {
+                        if (isBoundingBoxOverlap(entityABB(attacker), entityBB(victim))) {
                             attacker.attack(victim);
                         }
                     }

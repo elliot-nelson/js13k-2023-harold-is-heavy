@@ -100,14 +100,14 @@ export const JUMP_HEIGHT_DISTANCE = 2 * TILE_SIZE;
 
 //export const JUMP_VELOCITY = 2 * JUMP_HEIGHT / JUMP_DURATION;
 
-export const PLAYER_FOOT_SPEED = 0.5;
+export const PLAYER_FOOT_SPEED = 1.1;
 
 export const JUMP_VELOCITY = -2 * JUMP_HEIGHT * PLAYER_FOOT_SPEED / JUMP_HEIGHT_DISTANCE;
 export const GRAVITY = 2 * JUMP_HEIGHT * PLAYER_FOOT_SPEED * PLAYER_FOOT_SPEED / (JUMP_HEIGHT_DISTANCE * JUMP_HEIGHT_DISTANCE);
 
 //export const GRAVITY = 2 * JUMP_HEIGHT / JUMP_DURATION * JUMP_DURATION;
 
-export const TERMINAL_VELOCITY = 1.4;
+export const TERMINAL_VELOCITY = 2.5;
 
 // If the bounding box of a jumping character hits a platform and the feet of
 // the character are within this many pixels of the top of the floor, pretend

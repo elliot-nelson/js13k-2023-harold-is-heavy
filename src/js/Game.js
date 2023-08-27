@@ -91,6 +91,7 @@ export class Game {
 
         if (currentms - this.lastFrame >= 1000 / FPS) {
             this.frame++;
+            this.lastFrame = currentms;
             Viewport.resize();
             this.update();
             this.draw(Viewport.ctx);

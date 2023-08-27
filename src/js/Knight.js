@@ -8,9 +8,10 @@ import { Input } from './input/Input';
 import { game } from './Game';
 import { LandingParticle } from './Particle';
 import { clamp, xy2qr } from './Util';
+import { BloodPoolParticle } from './BloodPoolParticle';
 
 const PATROL = 0;
-const MOVE_SPEED = 0.25;
+const MOVE_SPEED = 0.5;
 const PAUSE_FRAMES = 5;
 
 export class Knight {
@@ -23,6 +24,7 @@ export class Knight {
         this.jumpFrames = 0;
         this.facing = 1;
         this.isJumping = true;
+        this.team = 1;
 
         this.bb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
 
@@ -33,29 +35,23 @@ export class Knight {
         this.t = 0;
 
         this.stack = [];
+        this.stack.push({ walk: -1 });
+        this.stack.push({ pause: 5 });
     }
 
     update() {
         this.t++;
 
-        if (this.stack.length === 0) {
-            this.stack.push({ walk: -1 });
-            this.stack.push({ pause: 5 });
-        }
-
         let action = this.stack[this.stack.length - 1];
 
         if (!game.screen.entityIsOnSolidGround(this)) {
-            console.log('falling', this.vel.y, this.pos, this.pos.y + this.bb[1].y);
             this.frame = 0;
-            this.vel.x *= 0.95;
+            this.vel.x *= 0.9;
         } else if (action.pause) {
-            console.log('paused');
             this.frame = 0;
             action.pause--;
             if (action.pause < 1) this.stack.pop();
         } else if (action.walk) {
-            console.log('walking');
             this.vel.x += this.facing * MOVE_SPEED / 5;
             this.vel.x = clamp(this.vel.x, -MOVE_SPEED, MOVE_SPEED);
 
@@ -63,20 +59,41 @@ export class Knight {
             if (game.screen.tileIsPassable(nextTile.q, nextTile.r + 1)) {
                 this.vel.x = 0;
                 this.stack.push({ turn: -1 });
-                this.stack.push({ pause: 35 });
+                this.stack.push({ pause: 20 });
             }
-            this.frame = Math.floor(this.t / 20) % 2 + 1;
+            this.frame = Math.floor(this.t / 10) % 2 + 1;
         } else if (action.turn) {
             this.frame = 0;
             this.facing = -this.facing;
             this.vel.x = -this.vel.x;
             this.stack.pop();
+        } else if (action.crush) {
+            let gap = (this.pos.y + this.bb[1].y) - (this.crusher.pos.y + this.crusher.bb[1].y);
+            console.log('gap', gap);
+            if (gap <= 2 && !this.exploded) {
+                this.exploded = true;
+                game.screen.entities.push(new BloodPoolParticle(this.pos));
+            }
+            if (gap === 0) {
+                this.cull = true;
+            }
+            // do nothing forever
         }
 
         this.vel.y += GRAVITY;
     }
 
     draw() {
-        Sprite.drawViewportSprite(Sprite.knight[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y });
+        if (this.crusher) {
+            let gap = (this.pos.y + this.bb[1].y) - (this.crusher.pos.y + this.crusher.bb[1].y);
+            Sprite.drawSmashedSprite(Sprite.knight[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y }, gap);
+        } else {
+            Sprite.drawViewportSprite(Sprite.knight[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y });
+        }
+    }
+
+    crushedBy(enemy) {
+        this.crusher = enemy;
+        this.stack = [{ crush: -1 }];
     }
 }

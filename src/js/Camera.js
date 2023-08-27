@@ -18,6 +18,9 @@ export const Camera = {
 
     update() {
         if (this.forceTarget) {
+            this.pos = this.forceTarget;
+
+            /*
             let dist = vectorBetween(this.pos, this.forceTarget);
 
             if (dist.m < 1) {
@@ -35,6 +38,8 @@ export const Camera = {
 
             this.pos.x += this.vel.x;
             this.pos.y += this.vel.y;
+
+            */
         }
 
         if (Input.pressed[Input.Action.RAW_TOUCH]) {
