@@ -76,6 +76,8 @@ export class LevelScreen {
         }
 
         Text.drawText(Viewport.ctx, `${this.littlePigsRescued}/${this.littlePigs}`, 180, 5, 1, Text.duotone, Text.black);
+
+        Text.drawText(Viewport.ctx, 'PRESS mnop\nTO DO', 10, 100, 1, Text.tan, Text.shadow);
     }
 
     drawTiles() {

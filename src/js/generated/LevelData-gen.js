@@ -2346,6 +2346,11 @@ export const LevelData =
                         "name": "KNIGHT",
                         "x": 25,
                         "y": 6
+                    },
+                    {
+                        "name": "TEXT1",
+                        "x": 19,
+                        "y": 7
                     }
                 ],
                 "areas": [],

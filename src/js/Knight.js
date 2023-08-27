@@ -69,7 +69,6 @@ export class Knight {
             this.stack.pop();
         } else if (action.crush) {
             let gap = (this.pos.y + this.bb[1].y) - (this.crusher.pos.y + this.crusher.bb[1].y);
-            console.log('gap', gap);
             if (gap <= 2 && !this.exploded) {
                 this.exploded = true;
                 game.screen.entities.push(new BloodPoolParticle(this.pos));

@@ -30,8 +30,6 @@ export class Player {
     }
 
     update() {
-        console.log(this.vel.y, this.pos.x, this.pos.y);
-
         let v = {
             x: Input.direction.x * Input.direction.m * PLAYER_FOOT_SPEED,
             y: Input.direction.y * Input.direction.m * 0.4
@@ -61,7 +59,6 @@ export class Player {
             this.jumpFrames = 1;
         }*/
 
-        console.log(GRAVITY);
         this.vel.y += GRAVITY;
         //this.vel.y += 0.12;
 

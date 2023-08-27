@@ -2,6 +2,7 @@
 
 import { Input } from './Input';
 import { R0, R45, R90 } from '../Constants';
+import { game } from '../Game';
 
 export const KeyboardAdapter = {
     init() {
@@ -53,6 +54,11 @@ export const KeyboardAdapter = {
             let k = KeyboardAdapter.map[event.code];
             if (k) {
                 KeyboardAdapter.held[k] = false;
+            }
+
+            if (event.key >= '1' && event.key <= '9') {
+                game.nextLevel = Number(event.key) - 1;
+                game.screens.pop();
             }
         });
 

@@ -41,8 +41,11 @@ export const Text = {
         Text.black_shadow = recolor(Text.white, rgba(90, 20, 90, 0.15));
         Text.blue = recolor(Text.white, rgba(200, 40, 220, 1));
         Text.blue_shadow = recolor(Text.white, rgba(240, 50, 200, 0.2));
-        Text.shadow = recolor(Text.white, rgba(240, 240, 255, 0.25));
+        //Text.shadow = recolor(Text.white, rgba(240, 240, 255, 0.25));
         Text.red = recolor(Text.white, rgba(240, 50, 50, 1));
+
+        Text.shadow = recolor(Text.white, rgba(44, 27, 46, 1));
+        Text.tan = recolor(Text.white, rgba(209, 180, 140, 1));
 
         //Text.duotone = recolorDuotone(Text.white, '#ffaa5e', '#ffd4a3');
         Text.duotone = recolorDuotone(Text.white, '#f2b63d', '#fff4e0');
@@ -50,9 +53,17 @@ export const Text = {
     },
 
     drawText(ctx, text, u, v, scale = 1, font = Text.duotone, shadow) {
+        let originalU = u;
+
         for (let idx = 0; idx < text.length; idx++) {
             let c = text.charCodeAt(idx);
-            if (c === 119) {
+
+            if (c === 10) {
+                // newline
+                u = originalU;
+                v += C_HEIGHT + 2;
+                continue;
+            } else if (c === 119) {
                 // w
                 font = Text.duotone;
                 continue;
