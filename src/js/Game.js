@@ -51,6 +51,7 @@ export class Game {
     reset() {
         this.screens = [];
         this.lastFrame = 0;
+        this.nextLevel = 0;
 
         return;
 
@@ -106,7 +107,7 @@ export class Game {
         Input.update();
 
         if (this.screens.length === 0) {
-            this.screens.push(new LevelScreen('level01'));
+            this.screens.push(new LevelScreen(this.nextLevel));
         }
         this.screen = this.screens[this.screens.length - 1];
         this.screen.update();

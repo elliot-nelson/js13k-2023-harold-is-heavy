@@ -13,11 +13,12 @@ import { LittlePigBox } from './LittlePigBox';
 import { LandingParticle } from './Particle';
 import { Text } from './Text';
 import { Knight } from './Knight';
+import { game } from './Game';
 
 export class LevelScreen {
-    constructor(levelName) {
-        this.levelName = levelName;
-        this.levelData = LevelData[0];
+    constructor(levelNumber) {
+        this.levelName = 'something';
+        this.levelData = LevelData[levelNumber];
         this.tiles = this.levelData.floors[0].tiles.map(row => [...row]);
         this.entities = [];
 
@@ -125,5 +126,10 @@ export class LevelScreen {
 
     rescueLittlePig() {
         this.littlePigsRescued++;
+
+        if (this.littlePigsRescued === this.littlePigs) {
+            game.nextLevel++;
+            game.screens.pop();
+        }
     }
 }
