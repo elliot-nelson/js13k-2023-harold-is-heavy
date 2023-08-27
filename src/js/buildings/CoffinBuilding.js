@@ -50,7 +50,7 @@ export class CoffinBuilding {
                 Audio.play(Audio.buildingFinished);
                 for (let building of World.buildings) {
                     if (building instanceof CoffinBuilding && building !== this) {
-                        game.entities.push(new AttackAnimation(centerxy(qr2xy(building.qr))));
+                        game.addEntity(new AttackAnimation(centerxy(qr2xy(building.qr))));
                         building.cull = true;
                     }
                 }

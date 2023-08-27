@@ -19,7 +19,7 @@ export const Damage = {
                     if (entity.state !== DEAD && entity.state !== SPAWN) {
                         for (let damage of entity.damage) {
                             if (entity === game.player) {
-                                game.entities.push(
+                                game.addEntity(
                                     new HealthChunkAnimation(
                                         entity.hp,
                                         damage.amount
@@ -31,7 +31,7 @@ export const Damage = {
                             entity.vel = vectorAdd(entity.vel, damage.vector);
                             entity.lastDamage = damage;
                             Gore.damage(entity);
-                            game.entities.push(new AttackAnimation(entity.pos));
+                            game.addEntity(new AttackAnimation(entity.pos));
                             hit = true;
                         }
                     }

@@ -53,34 +53,15 @@ export const Text = {
     },
 
     drawText(ctx, text, u, v, scale = 1, font = Text.duotone, shadow) {
-        let originalU = u;
-
-        for (let idx = 0; idx < text.length; idx++) {
-            let c = text.charCodeAt(idx);
-
-            if (c === 10) {
-                // newline
-                u = originalU;
-                v += C_HEIGHT + 2;
-                continue;
-            } else if (c === 119) {
-                // w
-                font = Text.duotone;
-                continue;
-            } else if (c === 114) {
-                // r
-                font = Text.duotone_red;
-                continue;
-            }
-
-            if (C_ICONS[c]) {
+        for (let c of this.charactersToDraw(text, scale)) {
+            if (C_ICONS[c.c]) {
                 ctx.drawImage(
-                    C_ICONS[c].img,
-                    u,
-                    v - (C_ICONS[c].img.height + 4) / 2
+                    C_ICONS[c.c].img,
+                    u + c.u,
+                    v + c.v - (C_ICONS[c.c].img.height + 4) / 2
                 );
             } else {
-                let k = (c - 32) * (C_WIDTH + 1);
+                let k = (c.c - 32) * (C_WIDTH + 1);
                 if (shadow) {
                     ctx.drawImage(
                         shadow,
@@ -88,8 +69,8 @@ export const Text = {
                         (k / 180 | 0) * 6,
                         C_WIDTH,
                         C_HEIGHT,
-                        u,
-                        v + 1,
+                        u + c.u,
+                        v + c.v + 1,
                         C_WIDTH * scale,
                         C_HEIGHT * scale
                     );
@@ -100,13 +81,12 @@ export const Text = {
                     (k / 180 | 0) * 6,
                     C_WIDTH,
                     C_HEIGHT,
-                    u,
-                    v,
+                    u + c.u,
+                    v + c.v,
                     C_WIDTH * scale,
                     C_HEIGHT * scale
                 );
             }
-            u += (C_SHIFT[c] || C_WIDTH + 1) * scale;
         }
     },
 
@@ -140,6 +120,35 @@ export const Text = {
 
     measureWidth(text, scale) {
         return text.split('').reduce((sum, c) => sum + (C_SHIFT[c.charCodeAt(0)] || 4), 0) * scale;
+    },
+
+    measure(text, scale = 1) {
+        let w = 0, h = 0;
+
+        for (let c of this.charactersToDraw(text, scale)) {
+            w = c.u + (C_SHIFT[c.c] || C_WIDTH + 1) * scale;
+            h = c.v + (C_HEIGHT + 2) * scale;
+        }
+
+        return { w, h };
+    },
+
+    *charactersToDraw(text, scale = 1) {
+        let u = 0, v = 0;
+
+        for (let idx = 0; idx < text.length; idx++) {
+            let c = text.charCodeAt(idx);
+
+            if (c === 10) {
+                u = 0;
+                v += (C_HEIGHT + 2) * scale;
+                continue;
+            }
+
+            yield { c, u, v };
+
+            u += (C_SHIFT[c] || C_WIDTH + 1) * scale;
+        }
     }
 };
 

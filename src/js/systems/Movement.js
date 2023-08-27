@@ -14,6 +14,7 @@ import {
     uv2xy,
     vectorBetween
 } from '../Util';
+import { Sign } from '../Sign';
 
 export const Movement = {
     perform(level, entities) {
@@ -44,6 +45,9 @@ export const Movement = {
 
         // Now we perform all movement, even if it's not going to be perfect.
         for (let entity of movers) {
+            if (entity instanceof Sign) {
+                throw new Error('fuck');
+            }
             entity.pos.x += entity.vel.x;
             entity.pos.y += entity.vel.y;
         }

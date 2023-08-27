@@ -39,9 +39,9 @@ export class LittlePig {
             this.vel.x = 3.5;
             this.vel.y = JUMP_VELOCITY - GRAVITY;
 
-            game.screen.entities.push(new StarParticle(this.pos));
-            game.screen.entities.push(new StarParticle(this.pos));
-            game.screen.entities.push(new StarParticle(this.pos));
+            game.screen.addEntity(new StarParticle(this.pos));
+            game.screen.addEntity(new StarParticle(this.pos));
+            game.screen.addEntity(new StarParticle(this.pos));
         } else if (this.t > 32) {
             this.vel.y -= GRAVITY * 0.4;
         }

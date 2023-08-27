@@ -13,6 +13,7 @@ import { LittlePigBox } from './LittlePigBox';
 import { LandingParticle } from './Particle';
 import { Text } from './Text';
 import { Knight } from './Knight';
+import { Sign } from './Sign';
 import { game } from './Game';
 
 export class LevelScreen {
@@ -23,7 +24,7 @@ export class LevelScreen {
         this.entities = [];
 
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
-        this.entities.push(this.player);
+        this.addEntity(this.player);
 
         this.littlePigs = 0;
         this.littlePigsRescued = 0;
@@ -33,11 +34,14 @@ export class LevelScreen {
 
         for (const obj of this.levelData.floors[0].objects) {
             if (obj.name === 'BOX') {
-                this.entities.push(new LittlePigBox({ q: obj.x, r: obj.y }));
+                this.addEntity(new LittlePigBox({ q: obj.x, r: obj.y }));
                 this.littlePigs++;
             } else if (obj.name === 'KNIGHT') {
-                this.entities.push(new Knight(qr2xy({ q: obj.x, r: obj.y })));
+                this.addEntity(new Knight(qr2xy({ q: obj.x, r: obj.y })));
                 this.enemies++;
+            } else if (obj.name.startsWith('SIGN')) {
+                this.addEntity(new Sign({ q: obj.x, r: obj.y }, Number(obj.name.slice(4))));
+                console.log('after sign', this.entities);
             }
         }
 
@@ -71,13 +75,23 @@ export class LevelScreen {
 
         this.drawTiles();
 
-        for (const entity of this.entities) {
+        let overlayEntities = [];
+
+        for (let entity of this.entities) {
             entity.draw();
+
+            if (entity.displayOverlay) {
+                overlayEntities.push(entity);
+            }
         }
 
         Text.drawText(Viewport.ctx, `${this.littlePigsRescued}/${this.littlePigs}`, 180, 5, 1, Text.duotone, Text.black);
 
         Text.drawText(Viewport.ctx, 'PRESS mnop\nTO DO', 10, 100, 1, Text.tan, Text.shadow);
+
+        for (let entity of overlayEntities) {
+            entity.drawOverlay();
+        }
     }
 
     drawTiles() {
@@ -118,12 +132,12 @@ export class LevelScreen {
             if (entity.landedOnTile) entity.landedOnTile(tile);
         }
 
-        this.entities.push(new LandingParticle(this.pos));
-        this.entities.push(new LandingParticle(this.pos));
-        this.entities.push(new LandingParticle(this.pos));
-        this.entities.push(new LandingParticle(this.pos));
-        this.entities.push(new LandingParticle(this.pos));
-        this.entities.push(new LandingParticle(this.pos));
+        this.addEntity(new LandingParticle(this.pos));
+        this.addEntity(new LandingParticle(this.pos));
+        this.addEntity(new LandingParticle(this.pos));
+        this.addEntity(new LandingParticle(this.pos));
+        this.addEntity(new LandingParticle(this.pos));
+        this.addEntity(new LandingParticle(this.pos));
     }
 
     rescueLittlePig() {
@@ -133,5 +147,20 @@ export class LevelScreen {
             game.nextLevel++;
             game.screens.pop();
         }
+    }
+
+    addEntity(entity) {
+        if (!entity.z) {
+            entity.z = 1;
+        }
+
+        for (let i = 0; i < this.entities.length; i++) {
+            if (this.entities[i].z > entity.z) {
+                this.entities.splice(i, 0, entity);
+                return;
+            }
+        }
+
+        this.entities.push(entity);
     }
 }

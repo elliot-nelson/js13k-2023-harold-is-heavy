@@ -57,7 +57,7 @@ export const SpawnMothAction = {
 
         if (game.canAfford(...costs)) {
             game.payCost(...costs);
-            game.entities.push(new Moth(centerxy(qr2xy(World.selected))));
+            game.addEntity(new Moth(centerxy(qr2xy(World.selected))));
             return true;
         }
     }

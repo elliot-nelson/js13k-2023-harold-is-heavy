@@ -118,6 +118,10 @@ export function manhattan(qr1, qr2) {
     return Math.abs(qr1.q - qr2.q) + Math.abs(qr1.r - qr2.r);
 }
 
+export function manhattanXY(xy1, xy2) {
+    return Math.abs(xy1.x - xy2.x) + Math.abs(xy1.y - xy2.y);
+}
+
 // The parameters to this function are (Q, Q) or (R, R) - i.e. horizontal or
 // vertical coordinates in tile space.
 export function calculateRayIntersectionAndStep(startPos, endPos) {
