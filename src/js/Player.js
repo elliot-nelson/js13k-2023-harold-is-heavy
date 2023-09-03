@@ -74,8 +74,8 @@ export class Player {
         if (this.isJumping) {
             this.isJumping = false;
             game.screen.landedOnTile(tile);
-            //game.screen.screenshakes.push(new ScreenShake(15, 5, 5));
-            game.screen.addTileShake(new ScreenShake(30, 5, 5), tile);
+            game.screen.screenshakes.push(new ScreenShake(12, 0, 3));
+            game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
         }
     }
 

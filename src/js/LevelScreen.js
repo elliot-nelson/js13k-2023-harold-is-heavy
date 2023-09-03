@@ -81,7 +81,7 @@ export class LevelScreen {
 
         // Tick tileshakes and cull finished tileshakes
         for (let i = 0; i < this.tileshakes.length; i++) {
-            if (!this.tileshakes[i].screenshake.update()) {
+            if ((this.tileshakes[i].s++ > 15)) {
                 this.tileshakes.splice(i, 1);
                 i--;
                 console.log('tile shake gone');
@@ -169,16 +169,14 @@ export class LevelScreen {
 
         for (let i = 0; i < this.tileshakes.length; i++) {
             let tileshake = this.tileshakes[i];
-            let r1 = clamp(tileshake.originQR.r - 2, 0, this.tileshakemap.length - 1);
-            let r2 = clamp(tileshake.originQR.r + 2, 0, this.tileshakemap.length - 1);
-            let q1 = clamp(tileshake.originQR.q - 2, 0, this.tileshakemap[0].length - 1);
-            let q2 = clamp(tileshake.originQR.q + 2, 0, this.tileshakemap[0].length - 1);
-
-            for (let r = r1; r <= r2; r++) {
-                for (let q = q1; q <= q2; q++) {
-                    this.tileshakemap[r][q].x += tileshake.screenshake.x * Math.abs(q - tileshake.originQR.q) / 3;
-                    this.tileshakemap[r][q].y += tileshake.screenshake.y * Math.abs(r - tileshake.originQR.r) / 3;
-                }
+            for (let tile of tileshake.tiles) {
+                //this.tileshakemap[tile.r][tile.q].x += tileshake.screenshake.x;
+                let k = 0;
+                if (tileshake.s < 9) k++;
+                if (tileshake.s < 6) k++;
+                if (tileshake.s < 4) k++;
+                if (tileshake.s < 2) k++;
+                this.tileshakemap[tile.r][tile.q].y += k;
             }
         }
     }
@@ -239,9 +237,28 @@ export class LevelScreen {
 
     addTileShake(screenshake, originQR) {
         console.log('add tile shake');
+
+        let tiles = [];
+
+        for (let q = originQR.q; q >= 0; q--) {
+            if (this.tileIsPassable(q, originQR.r - 1) && !this.tileIsPassable(q, originQR.r)) {
+                tiles.push({ q: q, r: originQR.r });
+            } else {
+                break;
+            }
+        }
+        for (let q = originQR.q + 1; q < this.tiles[0].length; q++) {
+            if (this.tileIsPassable(q, originQR.r - 1) && !this.tileIsPassable(q, originQR.r)) {
+                tiles.push({ q: q, r: originQR.r });
+            } else {
+                break;
+            }
+        }
+
         this.tileshakes.push({
             screenshake: screenshake,
-            originQR: originQR
+            tiles: tiles,
+            s: 0
         });
     }
 }
