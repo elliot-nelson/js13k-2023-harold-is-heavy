@@ -15,13 +15,17 @@ import { Text } from './Text';
 import { Knight } from './Knight';
 import { Sign } from './Sign';
 import { game } from './Game';
+import { ScreenShake } from './ScreenShake';
 
 export class LevelScreen {
     constructor(levelNumber) {
         this.levelName = 'something';
         this.levelData = LevelData[levelNumber];
         this.tiles = this.levelData.floors[0].tiles.map(row => [...row]);
+        this.tileshakemap = this.levelData.floors[0].tiles.map(row => row.map(x => ({ x: 0, y: 0 })));
         this.entities = [];
+        this.screenshakes = [];
+        this.tileshakes = [];
 
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
         this.addEntity(this.player);
@@ -41,7 +45,6 @@ export class LevelScreen {
                 this.enemies++;
             } else if (obj.name.startsWith('SIGN')) {
                 this.addEntity(new Sign({ q: obj.x, r: obj.y }, Number(obj.name.slice(4))));
-                console.log('after sign', this.entities);
             }
         }
 
@@ -67,12 +70,38 @@ export class LevelScreen {
                 i--;
             }
         }
+
+        // Tick screenshakes and cull finished screenshakes
+        for (let i = 0; i < this.screenshakes.length; i++) {
+            if (!this.screenshakes[i].update()) {
+                this.screenshakes.splice(i, 1);
+                i--;
+            }
+        }
+
+        // Tick tileshakes and cull finished tileshakes
+        for (let i = 0; i < this.tileshakes.length; i++) {
+            if (!this.tileshakes[i].screenshake.update()) {
+                this.tileshakes.splice(i, 1);
+                i--;
+                console.log('tile shake gone');
+            }
+        }
     }
 
     draw() {
         Viewport.ctx.fillStyle = '#457cd6';
         Viewport.ctx.fillRect(0, 0, Viewport.width, Viewport.height);
 
+        // Render screenshakes (canvas translation)
+        let shakeX = 0, shakeY = 0;
+        this.screenshakes.forEach(shake => {
+            shakeX += shake.x;
+            shakeY += shake.y;
+        });
+        Viewport.ctx.translate(shakeX, shakeY);
+
+        this.drawTileShakemap();
         this.drawTiles();
 
         let overlayEntities = [];
@@ -97,6 +126,7 @@ export class LevelScreen {
     drawTiles() {
         const offset = xy2uv({ x: 0, y: 0 });
         const tiles = this.tiles;
+        const tileshakemap = this.tileshakemap;
 
         // When we draw the tilesheet on the screen, we don't need to draw the ENTIRE tilesheet,
         // so let's clamp what we draw the portion on-screen (and up to one tile off-screen,
@@ -108,18 +138,46 @@ export class LevelScreen {
         const q1 = clamp(topleft.q - 1, 0, tiles[0].length - 1);
         const q2 = clamp(bottomright.q + 2, 0, tiles[0].length - 1);
 
-        for (let r = r1; r < r2; r++) {
-            for (let q = q1; q < q2; q++) {
+        for (let r = r1; r <= r2; r++) {
+            for (let q = q1; q <= q2; q++) {
                 if (tiles[r][q] > 0) {
-                    Viewport.ctx.drawImage(Sprite.tilebg[0].img, q * TILE_SIZE + offset.u - 1, r * TILE_SIZE + offset.v - 1);
+                    Viewport.ctx.drawImage(Sprite.tilebg[0].img,
+                        q * TILE_SIZE + offset.u - 1 + tileshakemap[r][q].x,
+                        r * TILE_SIZE + offset.v - 1 + tileshakemap[r][q].y);
                 }
             }
         }
 
-        for (let r = r1; r < r2; r++) {
-            for (let q = q1; q < q2; q++) {
+        for (let r = r1; r <= r2; r++) {
+            for (let q = q1; q <= q2; q++) {
                 if (tiles[r][q] > 0) {
-                    Viewport.ctx.drawImage(Sprite.tiles[tiles[r][q]].img, q * TILE_SIZE + offset.u, r * TILE_SIZE + offset.v);
+                    Viewport.ctx.drawImage(Sprite.tiles[tiles[r][q]].img,
+                        q * TILE_SIZE + offset.u + tileshakemap[r][q].x,
+                        r * TILE_SIZE + offset.v + tileshakemap[r][q].y);
+                }
+            }
+        }
+    }
+
+    drawTileShakemap() {
+        for (let r = 0; r < this.tileshakemap.length; r++) {
+            for (let q = 0; q < this.tileshakemap[0].length; q++) {
+                this.tileshakemap[r][q].x = 0;
+                this.tileshakemap[r][q].y = 0;
+            }
+        }
+
+        for (let i = 0; i < this.tileshakes.length; i++) {
+            let tileshake = this.tileshakes[i];
+            let r1 = clamp(tileshake.originQR.r - 2, 0, this.tileshakemap.length - 1);
+            let r2 = clamp(tileshake.originQR.r + 2, 0, this.tileshakemap.length - 1);
+            let q1 = clamp(tileshake.originQR.q - 2, 0, this.tileshakemap[0].length - 1);
+            let q2 = clamp(tileshake.originQR.q + 2, 0, this.tileshakemap[0].length - 1);
+
+            for (let r = r1; r <= r2; r++) {
+                for (let q = q1; q <= q2; q++) {
+                    this.tileshakemap[r][q].x += tileshake.screenshake.x * Math.abs(q - tileshake.originQR.q) / 3;
+                    this.tileshakemap[r][q].y += tileshake.screenshake.y * Math.abs(r - tileshake.originQR.r) / 3;
                 }
             }
         }
@@ -172,5 +230,18 @@ export class LevelScreen {
         }
 
         this.entities.push(entity);
+    }
+
+    addScreenShake(screenshake) {
+        // This screen shake applies to the entire rendered screen, including GUI
+        this.screenshakes.push(screenshake);
+    }
+
+    addTileShake(screenshake, originQR) {
+        console.log('add tile shake');
+        this.tileshakes.push({
+            screenshake: screenshake,
+            originQR: originQR
+        });
     }
 }

@@ -19,7 +19,6 @@ export class BloodPoolParticle {
         this.noClipWall = true;
 
         this.pos.y = this.pos.y + 8 - (this.pos.y % 8) + 2;
-        console.log('computed', this.pos.y);
     }
 
     update() {

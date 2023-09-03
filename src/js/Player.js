@@ -8,6 +8,7 @@ import { Input } from './input/Input';
 import { game } from './Game';
 import { LandingParticle } from './Particle';
 import { clamp } from './Util';
+import { ScreenShake } from './ScreenShake';
 
 export class Player {
     constructor(pos) {
@@ -73,6 +74,8 @@ export class Player {
         if (this.isJumping) {
             this.isJumping = false;
             game.screen.landedOnTile(tile);
+            //game.screen.screenshakes.push(new ScreenShake(15, 5, 5));
+            game.screen.addTileShake(new ScreenShake(30, 5, 5), tile);
         }
     }
 
