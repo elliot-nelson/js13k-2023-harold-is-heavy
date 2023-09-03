@@ -1,12 +1,12 @@
 // LevelScreen
 
-import { TILE_SIZE } from './Constants';
+import { TILE_SIZE, TARGET_GAME_WIDTH, TARGET_GAME_HEIGHT } from './Constants';
 import { LevelData } from './generated/LevelData-gen';
 import { Player } from './Player';
 import { Viewport } from './Viewport';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
-import { qr2xy, rgba, xy2uv, vectorBetween, xy2qr } from './Util';
+import { qr2xy, rgba, xy2uv, vectorBetween, xy2qr, uv2xy, clamp } from './Util';
 import { Movement } from './systems/Movement';
 import { Attack } from './systems/Attack';
 import { LittlePigBox } from './LittlePigBox';
@@ -98,16 +98,26 @@ export class LevelScreen {
         const offset = xy2uv({ x: 0, y: 0 });
         const tiles = this.tiles;
 
-        for (let r = 0; r < tiles.length; r++) {
-            for (let q = 0; q < tiles[0].length; q++) {
+        // When we draw the tilesheet on the screen, we don't need to draw the ENTIRE tilesheet,
+        // so let's clamp what we draw the portion on-screen (and up to one tile off-screen,
+        // mostly for screenshake purposes).
+        const topleft = xy2qr(uv2xy({ u: 0, v: 0 }));
+        const bottomright = xy2qr(uv2xy({ u: TARGET_GAME_WIDTH, v: TARGET_GAME_HEIGHT }));
+        const r1 = clamp(topleft.r - 1, 0, tiles.length - 1);
+        const r2 = clamp(bottomright.r + 2, 0, tiles.length - 1);
+        const q1 = clamp(topleft.q - 1, 0, tiles[0].length - 1);
+        const q2 = clamp(bottomright.q + 2, 0, tiles[0].length - 1);
+
+        for (let r = r1; r < r2; r++) {
+            for (let q = q1; q < q2; q++) {
                 if (tiles[r][q] > 0) {
                     Viewport.ctx.drawImage(Sprite.tilebg[0].img, q * TILE_SIZE + offset.u - 1, r * TILE_SIZE + offset.v - 1);
                 }
             }
         }
 
-        for (let r = 0; r < tiles.length; r++) {
-            for (let q = 0; q < tiles[0].length; q++) {
+        for (let r = r1; r < r2; r++) {
+            for (let q = q1; q < q2; q++) {
                 if (tiles[r][q] > 0) {
                     Viewport.ctx.drawImage(Sprite.tiles[tiles[r][q]].img, q * TILE_SIZE + offset.u, r * TILE_SIZE + offset.v);
                 }

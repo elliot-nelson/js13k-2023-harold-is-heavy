@@ -2997,7 +2997,7 @@ export const LevelData =
                     {
                         "name": "SPAWN",
                         "x": 2,
-                        "y": 8
+                        "y": 0
                     },
                     {
                         "name": "SIGN01",
@@ -3051,7 +3051,7 @@ export const LevelData =
         ],
         "spawn": [
             2,
-            8,
+            0,
             0
         ]
     },
