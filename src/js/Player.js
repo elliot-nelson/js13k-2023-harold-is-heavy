@@ -66,6 +66,16 @@ export class Player {
             this.jumpFrames = 1;
         }*/
 
+        if (this.vel.y < 0) {
+            this.frame = 3;
+        } else if (this.vel.y > 0) {
+            this.frame = 4;
+        } else if (Math.abs(this.vel.x) < 0.1) {
+            this.frame = 0;
+        } else {
+            this.frame = (Math.floor(this.pos.x / 8) % 2) + 1;
+        }
+
         this.vel.y += GRAVITY;
         //this.vel.y += 0.12;
 
