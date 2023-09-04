@@ -99,6 +99,8 @@ export class Player {
 
         if (this.vel.x > 0) this.facing = 0;
         if (this.vel.x < 0) this.facing = 1;
+
+        console.log(this.isJumping);
     }
 
     landedOnTile(tile) {
