@@ -63,6 +63,15 @@
     "duration": 100
    },
    {
+    "filename": "bigpig 5.aseprite",
+    "frame": { "x": 75, "y": 10, "w": 15, "h": 10 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 15, "h": 10 },
+    "sourceSize": { "w": 15, "h": 10 },
+    "duration": 100
+   },
+   {
     "filename": "bleed 0.aseprite",
     "frame": { "x": 0, "y": 20, "w": 9, "h": 7 },
     "rotated": false,

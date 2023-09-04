@@ -83,6 +83,9 @@ export class Player {
             this.frame = 3;
         } else if (this.vel.y > 0) {
             this.frame = 4;
+            if (this.pos.y - this.highestY > 12) {
+                this.frame = 5;
+            }
         } else if (Math.abs(this.vel.x) < 0.1) {
             this.frame = 0;
         } else {
