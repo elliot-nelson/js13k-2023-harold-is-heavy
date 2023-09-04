@@ -276,6 +276,9 @@ export class Game {
         }
     }
 
+    restartLevel() {
+        this.screens.pop();
+    }
 }
 
 export const game = new Game();

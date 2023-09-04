@@ -52,10 +52,17 @@ export class LevelScreen {
     }
 
     update() {
-        //if (vectorBetween(Camera.pos, this.player.pos).m > 48) {
-            Camera.forceTarget = this.player.pos;
-        //}
+        let levelBottomY = qr2xy({ q: 0, r: this.tiles.length - 1 }).y;
+        let cameraMaxY = levelBottomY - (TARGET_GAME_HEIGHT / 2);
+        Camera.forceTarget = {
+            x: this.player.pos.x,
+            y: Math.min(this.player.pos.y, cameraMaxY)
+        };
         Camera.update();
+
+        if (this.player.pos.y > levelBottomY) {
+            this.player.dieFalling(levelBottomY);
+        }
 
         for (const entity of this.entities) {
             entity.update();

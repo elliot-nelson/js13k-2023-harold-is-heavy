@@ -13,18 +13,19 @@ export class ExplosionBParticle {
         this.pos = { ...pos };
         this.noClipEntity = true;
         this.t = -1;
-        this.d = 40;
+        this.d = 30;
 
         // TEMPORARY
         this.noClipWall = true;
+        console.log(this.pos);
     }
 
     update() {
         if (++this.t === this.d) this.cull = true;
-        if (this.t === 8) this.frame++;
-        if (this.t === 16) this.frame++;
+        if (this.t === 6) this.frame++;
+        if (this.t === 12) this.frame++;
+        if (this.t === 18) this.frame++;
         if (this.t === 24) this.frame++;
-        if (this.t === 32) this.frame++;
     }
 
     draw() {

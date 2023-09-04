@@ -1,14 +1,18 @@
 // Player
 
-import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED } from './Constants';
+import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TARGET_GAME_HEIGHT } from './Constants';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { Viewport } from './Viewport';
 import { Input } from './input/Input';
 import { game } from './Game';
 import { LandingParticle } from './Particle';
-import { clamp } from './Util';
+import { clamp, uv2xy } from './Util';
 import { ScreenShake } from './ScreenShake';
+import { ExplosionBParticle } from './ExplosionBParticle';
+
+const PLAYING = 1;
+const DYING = 2;
 
 export class Player {
     constructor(pos) {
@@ -23,6 +27,7 @@ export class Player {
         this.team = 0;
         this.z = 10;
         this.highestY = this.pos.y;
+        this.state = PLAYING;
 
         this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
         this.abb = [{ x: -4, y: 4 }, { x: 4, y: 5 }];
@@ -33,6 +38,14 @@ export class Player {
     }
 
     update() {
+        if (this.state === DYING) {
+            this.stateFrames++;
+            if (this.stateFrames > 30) {
+                game.restartLevel();
+            }
+            return;
+        }
+
         if (this.pos.y < this.highestY) {
             this.highestY = this.pos.y;
         }
@@ -106,5 +119,14 @@ export class Player {
 
     attack(victim) {
         victim.crushedBy(this);
+    }
+
+    dieFalling(levelBottomY) {
+        if (this.state !== DYING) {
+            this.state = DYING;
+            this.vel.x = 0;
+            this.stateFrames = 0;
+            game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: levelBottomY - 2 }));
+        }
     }
 }
