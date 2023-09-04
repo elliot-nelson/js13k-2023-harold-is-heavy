@@ -22,6 +22,7 @@ export class Player {
         this.isJumping = true;
         this.team = 0;
         this.z = 10;
+        this.highestY = this.pos.y;
 
         this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
         this.abb = [{ x: -4, y: 4 }, { x: 4, y: 5 }];
@@ -32,6 +33,10 @@ export class Player {
     }
 
     update() {
+        if (this.pos.y < this.highestY) {
+            this.highestY = this.pos.y;
+        }
+
         let v = {
             x: Input.direction.x * Input.direction.m * PLAYER_FOOT_SPEED,
             y: Input.direction.y * Input.direction.m * 0.4
@@ -71,8 +76,14 @@ export class Player {
     }
 
     landedOnTile(tile) {
+        let distanceFallen = this.pos.y - this.highestY;
+        this.highestY = this.pos.y;
+
         if (this.isJumping) {
             this.isJumping = false;
+        }
+
+        if (distanceFallen > 4) {
             game.screen.landedOnTile(tile);
             game.screen.screenshakes.push(new ScreenShake(12, 0, 3));
             game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
