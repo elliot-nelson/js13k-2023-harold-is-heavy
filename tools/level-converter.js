@@ -351,7 +351,7 @@ const LevelConverter = {
         for (let floor of floors) {
             for (let y = 0; y < floor.tiles.length; y++) {
                 for (let x = 0; x < floor.tiles[y].length; x++) {
-                    if (floor.tiles[y][x] !== 0) {
+                    if ((floor.tiles[y][x] & 0xff) > 1) {
                         if (x < bounds[0][0]) bounds[0][0] = x;
                         if (x > bounds[1][0]) bounds[1][0] = x;
                         if (y < bounds[0][1]) bounds[0][1] = y;
@@ -364,6 +364,7 @@ const LevelConverter = {
         bounds[1][0]++;
         bounds[1][1]++;
 
+        console.log('LEVEL BOUNDS: ', bounds);
         return bounds;
     },
 
@@ -430,7 +431,7 @@ const LevelConverter = {
             for (let y = 0; y < floor.tiles.length; y++) {
                 for (let x = 0; x < floor.tiles[y].length; x++) {
                     // Strip any rotation / special effects
-                    floor.tiles[y][x] = floor.tiles[y][x] & 0xf;
+                    floor.tiles[y][x] = (floor.tiles[y][x] & 0xff);
 
                     // Offset by 1 (the first tile in the list is 0)
                     //
