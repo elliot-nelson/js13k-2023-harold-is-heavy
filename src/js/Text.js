@@ -126,7 +126,7 @@ export const Text = {
         let w = 0, h = 0;
 
         for (let c of this.charactersToDraw(text, scale)) {
-            w = c.u + (C_SHIFT[c.c] || C_WIDTH + 1) * scale;
+            w = Math.max(w, c.u + (C_SHIFT[c.c] || C_WIDTH + 1) * scale);
             h = c.v + (C_HEIGHT + 2) * scale;
         }
 

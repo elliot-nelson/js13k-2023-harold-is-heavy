@@ -7,7 +7,7 @@ import { Viewport } from './Viewport';
 import { Input } from './input/Input';
 import { game } from './Game';
 import { LandingParticle } from './Particle';
-import { clamp, uv2xy } from './Util';
+import { clamp, uv2xy, xy2qr } from './Util';
 import { ScreenShake } from './ScreenShake';
 import { ExplosionBParticle } from './ExplosionBParticle';
 
@@ -117,7 +117,11 @@ export class Player {
     }
 
     draw() {
-        Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.pos.x, y: this.pos.y });
+        let qr = xy2qr(this.pos);
+        let shakemap = game.screen.tileshakemap[qr.r + 1]?.[qr.q];
+        let y = shakemap && shakemap.y ? shakemap.y : 0;
+
+        Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.pos.x, y: this.pos.y + y });
     }
 
     attack(victim) {

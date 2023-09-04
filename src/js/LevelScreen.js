@@ -145,9 +145,21 @@ export class LevelScreen {
         const q1 = clamp(topleft.q - 1, 0, tiles[0].length - 1);
         const q2 = clamp(bottomright.q + 2, 0, tiles[0].length - 1);
 
+        // "Background" tiles
         for (let r = r1; r <= r2; r++) {
             for (let q = q1; q <= q2; q++) {
-                if (tiles[r][q] > 0) {
+                if (tiles[r][q] === 6) {
+                    Viewport.ctx.drawImage(Sprite.tiles[tiles[r][q]].img,
+                        q * TILE_SIZE + offset.u + tileshakemap[r][q].x,
+                        r * TILE_SIZE + offset.v + tileshakemap[r][q].y);
+                }
+            }
+        }
+
+        // "Foreground" tile outlines
+        for (let r = r1; r <= r2; r++) {
+            for (let q = q1; q <= q2; q++) {
+                if (tiles[r][q] > 0 && tiles[r][q] !== 6) {
                     Viewport.ctx.drawImage(Sprite.tilebg[0].img,
                         q * TILE_SIZE + offset.u - 1 + tileshakemap[r][q].x,
                         r * TILE_SIZE + offset.v - 1 + tileshakemap[r][q].y);
@@ -155,9 +167,10 @@ export class LevelScreen {
             }
         }
 
+        // "Foreground" tiles
         for (let r = r1; r <= r2; r++) {
             for (let q = q1; q <= q2; q++) {
-                if (tiles[r][q] > 0) {
+                if (tiles[r][q] > 0 && tiles[r][q] !== 6) {
                     Viewport.ctx.drawImage(Sprite.tiles[tiles[r][q]].img,
                         q * TILE_SIZE + offset.u + tileshakemap[r][q].x,
                         r * TILE_SIZE + offset.v + tileshakemap[r][q].y);
@@ -191,7 +204,7 @@ export class LevelScreen {
     tileIsPassable(q, r) {
         if (r < 0 || r >= this.tiles.length) return true;
         if (q < 0 || q >= this.tiles[0].length) return true;
-        return this.tiles[r][q] < 1;
+        return this.tiles[r][q] < 1 || this.tiles[r][q] === 6;
     }
 
     entityIsOnSolidGround(entity) {
