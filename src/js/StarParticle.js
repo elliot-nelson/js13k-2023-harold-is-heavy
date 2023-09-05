@@ -8,7 +8,7 @@ import { Viewport } from './Viewport';
 import { clamp } from './Util';
 
 export class StarParticle {
-    constructor(pos) {
+    constructor(pos, extra) {
         this.frame = 0;
         this.pos = { ...pos };
         this.angle = Math.random() * Math.PI * 2;
@@ -17,8 +17,9 @@ export class StarParticle {
         this.noClipEntity = true;
         this.radius = 1;
         this.r = Math.random() * Math.PI * 2;
-        this.t = -1;
-        this.d = 60;
+        this.t = -1 - (extra || 0);
+        this.d = 12;
+        this.z = 1;
 
         // TEMPORARY
         this.noClipWall = true;
@@ -26,6 +27,8 @@ export class StarParticle {
 
     update() {
         if (++this.t === this.d) this.cull = true;
+        this.vel.x *= 0.9;
+        this.vel.y *= 0.9;
         //this.vel.x *= 0.9;
         //this.vel.y = clamp(this.vel.y + 0.11, -10, 2);
         this.a *= 0.99;

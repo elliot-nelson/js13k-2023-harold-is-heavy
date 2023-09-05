@@ -25,6 +25,7 @@ export class Knight {
         this.facing = 1;
         this.isJumping = true;
         this.team = 2;
+        this.z = 4;
 
         this.bb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
         this.hbb = [{ x: -3, y: -6 }, { x: 3, y: -4 }];

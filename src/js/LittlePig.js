@@ -19,6 +19,7 @@ export class LittlePig {
         this.bb = [{ x: -7, y: -5 }, { x: 7, y: 6 }];
         this.t = 0;
         this.r = 0;
+        this.z = 5;
         this.immune = true;
 
         this.noClipWall = true;
@@ -36,17 +37,17 @@ export class LittlePig {
             this.r = (this.t / 32) * Math.PI * 2;
         } else if (this.t === 32) {
             this.r = 0;
-            this.vel.x = 3.5;
-            this.vel.y = JUMP_VELOCITY - GRAVITY;
-
-            game.screen.addEntity(new StarParticle(this.pos));
-            game.screen.addEntity(new StarParticle(this.pos));
-            game.screen.addEntity(new StarParticle(this.pos));
+            this.vel.x = 3.7;
+            this.vel.y = JUMP_VELOCITY - GRAVITY - GRAVITY;
         } else if (this.t > 32) {
-            this.vel.y -= GRAVITY * 0.4;
+            this.vel.y -= GRAVITY * 0.5;
         }
 
-        this.vel.y += GRAVITY;
+        if (this.t % 3 === 0) {
+            game.screen.addEntity(new StarParticle(this.pos, 0));
+        }
+
+        this.vel.y += GRAVITY * 0.9;
 
 /*        if (this.t > 80) {
             this.r += 2 * Math.PI / 180;
