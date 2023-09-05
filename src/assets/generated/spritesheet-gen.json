@@ -783,6 +783,15 @@
     "duration": 100
    },
    {
+    "filename": "littlepig 3.aseprite",
+    "frame": { "x": 30, "y": 232, "w": 10, "h": 7 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 10, "h": 7 },
+    "sourceSize": { "w": 10, "h": 7 },
+    "duration": 100
+   },
+   {
     "filename": "littlepigbox 0.aseprite",
     "frame": { "x": 0, "y": 239, "w": 15, "h": 11 },
     "rotated": false,

@@ -26,6 +26,7 @@ export class LevelScreen {
         this.entities = [];
         this.screenshakes = [];
         this.tileshakes = [];
+        this.t = 0;
 
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
         this.addEntity(this.player);
@@ -52,6 +53,8 @@ export class LevelScreen {
     }
 
     update() {
+        this.t++;
+
         let levelBottomY = qr2xy({ q: 0, r: this.tiles.length - 1 }).y;
         let cameraMaxY = levelBottomY - (TARGET_GAME_HEIGHT / 2);
         Camera.forceTarget = {
@@ -144,6 +147,12 @@ export class LevelScreen {
 
         for (let entity of overlayEntities) {
             entity.drawOverlay();
+        }
+
+        let pigsToShow = clamp(Math.floor(this.t / 5) - 5, 0, this.littlePigs);
+        for (let i = 0; i < pigsToShow; i++) {
+            let frame = (this.littlePigsRescued > i) ? 0 : 3;
+            Viewport.ctx.drawImage(Sprite.littlepig[0][frame].img, Viewport.width - i * 11 - 13, 3);
         }
     }
 
