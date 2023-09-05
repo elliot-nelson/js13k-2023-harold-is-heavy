@@ -100,6 +100,23 @@ export class LevelScreen {
         Viewport.ctx.fillStyle = '#457cd6';
         Viewport.ctx.fillRect(0, 0, Viewport.width, Viewport.height);
 
+        let bottomSea = 5;
+        let topSea = 40;
+        let percentage = Math.floor(clamp(this.player.pos.y / (this.tiles.length * TILE_SIZE), 0, Infinity) * (topSea - bottomSea) + bottomSea);
+
+        Viewport.ctx.fillStyle = '#4b3b9c';
+        Viewport.ctx.fillRect(0, Viewport.height - percentage, Viewport.width, percentage);
+
+        Viewport.ctx.fillStyle = '#8fcccb';
+        Viewport.ctx.fillRect(0, Viewport.height - percentage - 2, Viewport.width, 1);
+
+        Viewport.ctx.fillStyle = '#449489';
+        Viewport.ctx.fillRect(0, Viewport.height - percentage - 4, Viewport.width, 1);
+
+        Viewport.ctx.fillStyle = '#285763';
+        Viewport.ctx.fillRect(0, Viewport.height - percentage - 6, Viewport.width, 1);
+
+
         // Render screenshakes (canvas translation)
         let shakeX = 0, shakeY = 0;
         this.screenshakes.forEach(shake => {

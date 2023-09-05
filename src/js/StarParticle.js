@@ -11,7 +11,7 @@ export class StarParticle {
     constructor(pos) {
         this.frame = 0;
         this.pos = { ...pos };
-        this.angle = Math.random() * Math.PI;
+        this.angle = Math.random() * Math.PI * 2;
         this.vel = vector2point(angle2vector(this.angle, 2.7));
         this.a = 10 * Math.PI / 180;
         this.noClipEntity = true;
@@ -26,13 +26,13 @@ export class StarParticle {
 
     update() {
         if (++this.t === this.d) this.cull = true;
-        this.vel.x *= 0.9;
-        this.vel.y = clamp(this.vel.y + 0.11, -10, 2);
+        //this.vel.x *= 0.9;
+        //this.vel.y = clamp(this.vel.y + 0.11, -10, 2);
         this.a *= 0.99;
         this.r += this.a;
     }
 
     draw() {
-        Sprite.drawViewportSprite(Sprite.star[this.frame], this.pos, this.r);
+        Sprite.drawViewportSprite(Sprite.star2[this.frame], this.pos, this.r);
     }
 }

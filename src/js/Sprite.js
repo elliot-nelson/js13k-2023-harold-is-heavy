@@ -42,6 +42,7 @@ export const Sprite = {
         Sprite.tilebg = SpriteSheet.tilebg.map(initBasicSprite);
 
         Sprite.star = SpriteSheet.star.map(initBasicSprite);
+        Sprite.star2 = SpriteSheet.star2.map(initBasicSprite);
 
         Sprite.bleed = SpriteSheet.bleed.map(initBasicSprite, { x: 4, y: 0 });
 

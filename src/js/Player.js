@@ -10,6 +10,7 @@ import { LandingParticle } from './Particle';
 import { clamp, uv2xy, xy2qr } from './Util';
 import { ScreenShake } from './ScreenShake';
 import { ExplosionBParticle } from './ExplosionBParticle';
+import { StarParticle } from './StarParticle';
 
 const PLAYING = 1;
 const DYING = 2;
@@ -24,12 +25,13 @@ export class Player {
         this.jumpFrames = 0;
         this.facing = 0;
         this.isJumping = true;
-        this.team = 0;
+        this.team = 1;
         this.z = 10;
         this.highestY = this.pos.y;
         this.state = PLAYING;
 
         this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
+        this.hbb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
         this.abb = [{ x: -4, y: 4 }, { x: 4, y: 5 }];
 
         // temp
@@ -115,15 +117,19 @@ export class Player {
             game.screen.landedOnTile(tile);
             game.screen.screenshakes.push(new ScreenShake(12, 0, 3));
             game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
+
+            game.screen.addEntity(new StarParticle(this.pos));
         }
     }
 
     draw() {
-        let qr = xy2qr(this.pos);
-        let shakemap = game.screen.tileshakemap[qr.r + 1]?.[qr.q];
-        let y = shakemap && shakemap.y ? shakemap.y : 0;
+        if (this.state !== DYING) {
+            let qr = xy2qr(this.pos);
+            let shakemap = game.screen.tileshakemap[qr.r + 1]?.[qr.q];
+            let y = shakemap && shakemap.y ? shakemap.y : 0;
 
-        Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.pos.x, y: this.pos.y + y });
+            Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.pos.x, y: this.pos.y + y });
+        }
     }
 
     attack(victim) {
@@ -136,6 +142,15 @@ export class Player {
             this.vel.x = 0;
             this.stateFrames = 0;
             game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: levelBottomY - 2 }));
+        }
+    }
+
+    dieHit(enemy) {
+        if (this.state !== DYING) {
+            this.state = DYING;
+            this.vel.x = 0;
+            this.stateFrames = 0;
+            game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: this.pos.y }));
         }
     }
 }

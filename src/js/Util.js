@@ -575,6 +575,13 @@ export function entityBB(entity) {
     return entity.bb.map(p => ({ x: p.x + entity.pos.x, y: p.y + entity.pos.y }));
 }
 
+export function entityHBB(entity) {
+    if (!entity.hbb) {
+        return entityBB(entity);
+    }
+    return entity.hbb.map(p => ({ x: p.x + entity.pos.x, y: p.y + entity.pos.y }));
+}
+
 export function entityABB(entity) {
     return entity.abb.map(p => ({ x: p.x + entity.pos.x, y: p.y + entity.pos.y }));
 }

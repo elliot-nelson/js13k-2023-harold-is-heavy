@@ -24,9 +24,11 @@ export class Knight {
         this.jumpFrames = 0;
         this.facing = 1;
         this.isJumping = true;
-        this.team = 1;
+        this.team = 2;
 
         this.bb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
+        this.hbb = [{ x: -3, y: -6 }, { x: 3, y: -4 }];
+        this.abb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
 
         // temp
         this.noClipWall = true;
@@ -94,5 +96,10 @@ export class Knight {
     crushedBy(enemy) {
         this.crusher = enemy;
         this.stack = [{ crush: -1 }];
+        this.abb = undefined;
+    }
+
+    attack(victim) {
+        victim.dieHit(this);
     }
 }
