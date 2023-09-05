@@ -11,6 +11,7 @@ import { LittlePigBoxParticle } from './LittlePigBoxParticle';
 import { ExplosionAParticle } from './ExplosionAParticle';
 import { qr2xy, xy2qr, centerxy, xy2uv } from './Util';
 import { StarParticle } from './StarParticle';
+import { Audio } from './Audio';
 
 export class LittlePig {
     constructor(pos) {
@@ -33,12 +34,14 @@ export class LittlePig {
         if (this.t === 5) {
             this.vel.y = JUMP_VELOCITY - GRAVITY;
             this.newClip = false;
+            Audio.play(Audio.littleJump);
         } else if (this.t > 5 && this.t < 32) {
             this.r = (this.t / 32) * Math.PI * 2;
         } else if (this.t === 32) {
             this.r = 0;
             this.vel.x = 3.7;
             this.vel.y = JUMP_VELOCITY - GRAVITY - GRAVITY;
+            Audio.play(Audio.littleEscape);
         } else if (this.t > 32) {
             this.vel.y -= GRAVITY * 0.5;
         }

@@ -11,6 +11,15 @@ export const Audio = {
     init() {
         Audio.readyToPlay = false;
 
+        Audio.playerJump = [,,315,,.08,.07,,.77,-16,,,,,,,,,.91,.01];
+        Audio.playerLand = [1.33,,423,.01,,.06,2,2.64,-3.8,,,,,.1,,.2,,.54,.01]; // Hit 491
+        Audio.playerDeath = [1.11,,779,.01,.2,.48,4,4.56,.4,,,,.02,.9,,1,,.34,.13]; // Explosion 566
+
+        Audio.littleJump = [1.01,,491,,.01,.05,,1.02,25,,,,,,,.1,,.45,.08]; // Jump 438
+        Audio.littleEscape = [,,433,.01,.18,.24,,.51,,,418,,.06,.1,,,,.43,.25,.11]; // Powerup 426
+
+        Audio.enemyDeath = [1.81,,135,.01,.04,.18,1,.11,-6.6,,,,,.2,,.3,.15,.74,.09]; // Hit 569
+
         Audio.towerShoot = [1.01,,1250,.01,.09,.14,,1.77,-6.3,,,,,,23,,,.46,.02];
         Audio.mothDeath = [1.04,,363,.01,.08,.52,2,.31,.3,,,,,1.5,,.9,,.34,.07];
         Audio.ghostDeath = [2.01,,332,.02,.05,.16,1,.53,-0.8,,-7,.01,,.1,,,.03,.48,.04];
@@ -56,7 +65,8 @@ export const Audio = {
                 this.musicStartTime = Audio.ctx.currentTime + 0.1;
 
                 for (let i = 0; i < song.numChannels; i++) {
-                    this.songSources[i].start(this.musicStartTime);
+                    //this.songSources[i].start(this.musicStartTime);
+                    // comment out music
                 }
 
                 Audio.musicPlaying = true;

@@ -11,6 +11,7 @@ import { clamp, uv2xy, xy2qr } from './Util';
 import { ScreenShake } from './ScreenShake';
 import { ExplosionBParticle } from './ExplosionBParticle';
 import { StarParticle } from './StarParticle';
+import { Audio } from './Audio';
 
 const PLAYING = 1;
 const DYING = 2;
@@ -69,6 +70,7 @@ export class Player {
             //this.jumpFrames = 16;
             //this.jumpLength = 0;
             this.vel.y = JUMP_VELOCITY - GRAVITY;
+            Audio.play(Audio.playerJump);
         }
 
         /*if (this.jumpFrames > 0) {
@@ -119,6 +121,7 @@ export class Player {
             game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
 
             game.screen.addEntity(new StarParticle(this.pos));
+            //Audio.play(Audio.playerLand);
         }
     }
 
@@ -142,6 +145,7 @@ export class Player {
             this.vel.x = 0;
             this.stateFrames = 0;
             game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: levelBottomY - 2 }));
+            Audio.play(Audio.playerDeath);
         }
     }
 
@@ -151,6 +155,7 @@ export class Player {
             this.vel.x = 0;
             this.stateFrames = 0;
             game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: this.pos.y }));
+            Audio.play(Audio.playerDeath);
         }
     }
 }

@@ -3,6 +3,7 @@
 import { Input } from './Input';
 import { R0, R45, R90 } from '../Constants';
 import { game } from '../Game';
+import { Audio } from '../Audio';
 
 export const KeyboardAdapter = {
     init() {
@@ -45,6 +46,8 @@ export const KeyboardAdapter = {
             let k = KeyboardAdapter.map[event.code];
             // Debugging - key presses
              console.log(event.key, event.keyCode, event.code, k);
+                         // Hack to ensure we initialize audio after user interacts with game
+            Audio.markReady();
             if (k) {
                 KeyboardAdapter.held[k] = true;
             }

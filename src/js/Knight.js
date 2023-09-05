@@ -9,6 +9,7 @@ import { game } from './Game';
 import { LandingParticle } from './Particle';
 import { clamp, xy2qr } from './Util';
 import { BloodPoolParticle } from './BloodPoolParticle';
+import { Audio } from './Audio';
 
 const PATROL = 0;
 const MOVE_SPEED = 0.5;
@@ -98,6 +99,7 @@ export class Knight {
         this.crusher = enemy;
         this.stack = [{ crush: -1 }];
         this.abb = undefined;
+        Audio.play(Audio.enemyDeath);
     }
 
     attack(victim) {

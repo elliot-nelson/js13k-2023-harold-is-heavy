@@ -33,7 +33,7 @@ export class Game {
             Sprite.init();
             Text.init();
             Input.init();
-            //Audio.init();
+            Audio.init();
             Hud.init();
 
             Camera.init();
@@ -104,13 +104,18 @@ export class Game {
     }
 
     update() {
+        // Gather user input
         Input.update();
 
+        // Hand off control to the current "screen" (for example, game screen or menu)
         if (this.screens.length === 0) {
             this.screens.push(new LevelScreen(this.nextLevel));
         }
         this.screen = this.screens[this.screens.length - 1];
         this.screen.update();
+
+        // Do per-frame audio updates
+        Audio.update();
 
         return;
 
@@ -141,8 +146,6 @@ export class Game {
 
         // End Handle Input
 
-        // perform any per-frame audio updates
-        Audio.update();
 
         this.wave.update();
 
