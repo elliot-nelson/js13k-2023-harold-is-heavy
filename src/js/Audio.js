@@ -10,6 +10,10 @@ export const TRACK_WAVE = 6;
 export const Audio = {
     init() {
         Audio.readyToPlay = false;
+        Audio.musicEnabled = true;
+        Audio.sfxEnabled = true;
+        Audio.musicVolume = 0;
+        Audio.sfxVolume = 0;
 
         Audio.playerJump = [,,315,,.08,.07,,.77,-16,,,,,,,,,.91,.01];
         Audio.playerLand = [1.33,,423,.01,,.06,2,2.64,-3.8,,,,,.1,,.2,,.54,.01]; // Hit 491
@@ -30,6 +34,21 @@ export const Audio = {
 
     update() {
         if (!Audio.readyToPlay) return;
+
+        this.sfxVolume = this.sfxEnabled ? 0.3 : 0;
+        this.musicVolume = this.musicEnabled ? 1 : 0;
+
+        ZZFX.volume = this.sfxVolume;
+
+        if (this.sfxEnabled) {
+            ZZFX.volume = 0.3;
+        } else {
+            ZZFX.volume = 0;
+        }
+
+        if (this.musicEnabled) {
+            Audio.gain_.gain.linearRampToValueAtTime(0, Audio.ctx.currentTime + 1);
+        }
 
         // This is goofy, but unfortunately we cannot generate our audio buffer until
         // after a user clicks when in Safari. (I'll try to find a more elegant solution

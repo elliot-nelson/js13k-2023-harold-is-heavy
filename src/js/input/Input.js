@@ -24,9 +24,10 @@ export const Input = {
         JUMP: 22,
         ATTACK: 21,
         RELOAD: 30,
+        CONTINUE: 95,
         MENU: 96,
-        MUTE: 97,
-        FREEZE: 98,
+        MUSIC_TOGGLE: 97,
+        SFX_TOGGLE: 98,
         RAW_TOUCH: 40,
         DRAG: 41,
         TAP: 42

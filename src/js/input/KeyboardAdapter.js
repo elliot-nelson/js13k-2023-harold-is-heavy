@@ -13,6 +13,7 @@ export const KeyboardAdapter = {
             KeyS:        Input.Action.DOWN,
             KeyD:        Input.Action.RIGHT,
             Space:       Input.Action.JUMP,
+            Enter:       Input.Action.CONTINUE,
             ArrowUp:     Input.Action.UP,
             ArrowLeft:   Input.Action.LEFT,
             ArrowDown:   Input.Action.DOWN,

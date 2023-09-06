@@ -22,6 +22,7 @@ import { DefeatScreen } from './DefeatScreen';
 import { LittlePigBox } from './LittlePigBox';
 
 import { LevelScreen } from './LevelScreen';
+import { IntroScreen } from './IntroScreen';
 
 /**
  * Game state.
@@ -43,7 +44,6 @@ export class Game {
             window.addEventListener('focus', () => this.unpause());
 
             this.reset();
-
             this.start();
         });
     }
@@ -52,6 +52,8 @@ export class Game {
         this.screens = [];
         this.lastFrame = 0;
         this.nextLevel = 0;
+
+        this.screens.push(new IntroScreen());
 
         return;
 
@@ -106,6 +108,14 @@ export class Game {
     update() {
         // Gather user input
         Input.update();
+
+        // Handle special keys that are screen-independent
+        if (Input.pressed[Input.Action.MUSIC_TOGGLE]) {
+            Audio.musicEnabled = !Audio.musicEnabled;
+        }
+        if (Input.pressed[Input.Action.SFX_TOGGLE]) {
+            Audio.sfxEnabled = !Audio.sfxEnabled;
+        }
 
         // Hand off control to the current "screen" (for example, game screen or menu)
         if (this.screens.length === 0) {

@@ -47,6 +47,8 @@ export const Text = {
         Text.shadow = recolor(Text.white, rgba(44, 27, 46, 1));
         Text.tan = recolor(Text.white, rgba(209, 180, 140, 1));
 
+        Text.pig = recolor(Text.white, rgba(227, 66, 98, 1));
+
         //Text.duotone = recolorDuotone(Text.white, '#ffaa5e', '#ffd4a3');
         Text.duotone = recolorDuotone(Text.white, '#f2b63d', '#fff4e0');
         Text.duotone_red = recolorDuotone(Text.white, '#ffaa5e', '#ffd4a3', rgba(255, 0, 0, 0.7));
