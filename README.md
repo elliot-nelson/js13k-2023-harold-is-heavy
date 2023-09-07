@@ -1,6 +1,6 @@
-# js13k-2022-moth
+# js13k-2023-harold-is-heavy
 
-> My 2022 entry for the js13kgames competition, Moth.
+> My 2023 entry for the js13kgames competition, Harold is Heavy.
 
 ![Welcome Screenshot](dist/final/400x250.png)
 
@@ -18,10 +18,6 @@ Ambushed, beheaded, burned, and trapped in a wrought iron coffin. Once an almost
 Escape your tomb, now full of vengeful ghosts, by possessing an army of restless moths. Gather resources, build defenses, and then strike out for the tomb's exit. Are you ready to reclaim your former glory?
 
 Playable on your phone, tablet, or any desktop browser.
-
-## POSTMORTEM
-
-Check out my postmortem / making-of at https://7tonshark.com/posts/making-of-js13k-2022-moth/
 
 ## BUILD
 
