@@ -9,6 +9,7 @@ import { Camera } from './Camera';
 import { qr2xy, rgba, xy2uv, vectorBetween, xy2qr, uv2xy, clamp } from './Util';
 import { Movement } from './systems/Movement';
 import { Attack } from './systems/Attack';
+import { LittlePig } from './LittlePig';
 import { LittlePigBox } from './LittlePigBox';
 import { LandingParticle } from './Particle';
 import { Text } from './Text';
@@ -24,6 +25,7 @@ export class LevelScreen {
         this.tiles = this.levelData.floors[0].tiles.map(row => [...row]);
         this.tileshakemap = this.levelData.floors[0].tiles.map(row => row.map(x => ({ x: 0, y: 0 })));
         this.entities = [];
+        this.entitiesToAdd = [];
         this.screenshakes = [];
         this.tileshakes = [];
         this.t = 0;
@@ -94,8 +96,28 @@ export class LevelScreen {
             if ((this.tileshakes[i].s++ > 15)) {
                 this.tileshakes.splice(i, 1);
                 i--;
-                console.log('tile shake gone');
             }
+        }
+
+        // To ensure that nothing changes the list of entities during a frame, we queue
+        // them up and add them all at the end of the current frame.
+        if (this.entitiesToAdd.length > 0) {
+            for (let entity of this.entitiesToAdd) {
+                if (!entity.z) {
+                    entity.z = 1;
+                }
+
+                for (let i = 0; i < this.entities.length; i++) {
+                    if (this.entities[i].z > entity.z) {
+                        this.entities.splice(i, 0, entity);
+                        return;
+                    }
+                }
+
+                this.entities.push(entity);
+            }
+
+            this.entitiesToAdd = [];
         }
     }
 
@@ -118,7 +140,6 @@ export class LevelScreen {
 
         Viewport.ctx.fillStyle = '#285763';
         Viewport.ctx.fillRect(0, Viewport.height - percentage - 6, Viewport.width, 1);
-
 
         // Render screenshakes (canvas translation)
         let shakeX = 0, shakeY = 0;
@@ -261,18 +282,7 @@ export class LevelScreen {
     }
 
     addEntity(entity) {
-        if (!entity.z) {
-            entity.z = 1;
-        }
-
-        for (let i = 0; i < this.entities.length; i++) {
-            if (this.entities[i].z > entity.z) {
-                this.entities.splice(i, 0, entity);
-                return;
-            }
-        }
-
-        this.entities.push(entity);
+        this.entitiesToAdd.push(entity);
     }
 
     addScreenShake(screenshake) {

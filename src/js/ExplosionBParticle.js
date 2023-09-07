@@ -17,7 +17,6 @@ export class ExplosionBParticle {
 
         // TEMPORARY
         this.noClipWall = true;
-        console.log(this.pos);
     }
 
     update() {

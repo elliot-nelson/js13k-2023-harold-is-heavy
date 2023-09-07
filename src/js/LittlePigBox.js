@@ -48,7 +48,7 @@ export class LittlePigBox {
     }
 
     landedOnTile(tile) {
-        if (this.qr.r === tile.r - 1 && Math.abs(this.qr.q - tile.q) <= 2) {
+        if (this.qr.r === tile.r - 1 && Math.abs(this.qr.q - tile.q) <= 2 && !this.cull) {
             game.screen.addEntity(new ExplosionAParticle({ x: this.pos.x, y: this.pos.y }));
             game.screen.addEntity(new LittlePigBoxParticle(1, { x: this.pos.x, y: this.pos.y }, 225 * Math.PI / 180, 0));
             game.screen.addEntity(new LittlePigBoxParticle(2, { x: this.pos.x + 2, y: this.pos.y }, 246 * Math.PI / 180, 0));

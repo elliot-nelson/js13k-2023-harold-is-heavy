@@ -2,7 +2,7 @@
 
 import { ZZFX } from './lib/zzfx';
 import { CPlayer } from './lib/player-small';
-import { song } from './songs/WindyCave';
+import { song } from './songs/ThirteenthCenturyVibes';
 
 export const TRACK_COMBAT = 5;
 export const TRACK_WAVE = 6;
@@ -50,46 +50,46 @@ export const Audio = {
     },
 
     initTracks() {
-        // This is goofy, but unfortunately we cannot generate our audio buffer until
-        // after a user clicks when in Safari. (I'll try to find a more elegant solution
-        // for this in the future.)
+        // In this game, we ensure the screen that calls this function happens after the
+        // user has interacted at least once (and that interaction called initContext above),
+        // so we know it's safe to interact with the audio context.
         if (!Audio.musicPlaying) {
-            if (!this.player) {
-                this.player = new CPlayer();
-                this.player.init(song);
+            this.player = new CPlayer();
+            this.player.init(song);
+
+            for (;;) {
+                if (this.player.generate() === 1) break;
             }
 
-            if (this.player.generate() === 1) {
-                this.musicGainNodes = [];
-                this.songSources = [];
+            this.musicGainNodes = [];
+            this.songSources = [];
 
-                for (let i = 0; i < song.numChannels; i++) {
-                    let buffer = this.player.createAudioBuffer(Audio.ctx, i);
-                    this.songSource = Audio.ctx.createBufferSource();
+            for (let i = 0; i < song.numChannels; i++) {
+                let buffer = this.player.createAudioBuffer(Audio.ctx, i);
+                this.songSource = Audio.ctx.createBufferSource();
 
-                    let gainNode = Audio.ctx.createGain();
-                    gainNode.connect(Audio.gain_);
-                    this.musicGainNodes.push(gainNode);
+                let gainNode = Audio.ctx.createGain();
+                gainNode.connect(Audio.gain_);
+                this.musicGainNodes.push(gainNode);
 
-                    if (i === TRACK_COMBAT || i === TRACK_WAVE) {
-                        gainNode.gain.value = 0;
-                    }
+                /*if (i === TRACK_COMBAT || i === TRACK_WAVE) {
+                    gainNode.gain.value = 0;
+                }*/
 
-                    this.songSource.buffer = buffer;
-                    this.songSource.loop = true;
-                    this.songSource.connect(gainNode);
-                    this.songSources.push(this.songSource);
-                }
-
-                this.musicStartTime = Audio.ctx.currentTime + 0.1;
-
-                for (let i = 0; i < song.numChannels; i++) {
-                    //this.songSources[i].start(this.musicStartTime);
-                    // comment out music
-                }
-
-                Audio.musicPlaying = true;
+                this.songSource.buffer = buffer;
+                this.songSource.loop = true;
+                this.songSource.connect(gainNode);
+                this.songSources.push(this.songSource);
             }
+
+            this.musicStartTime = Audio.ctx.currentTime + 0.1;
+
+            for (let i = 0; i < song.numChannels; i++) {
+                this.songSources[i].start(this.musicStartTime);
+                // comment out music
+            }
+
+            Audio.musicPlaying = true;
         }
 
         Audio.readyToPlay = true;
