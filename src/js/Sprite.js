@@ -26,6 +26,8 @@ export const Sprite = {
     },
 
     init() {
+        Sprite.attack = SpriteSheet.attack.map(initBasicSprite);
+
         Sprite.bigpig = [SpriteSheet.bigpig.map(initBasicSprite, { x: 7, y: 4 })];
         Sprite.bigpig.push(Sprite.bigpig[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
 
@@ -38,8 +40,6 @@ export const Sprite = {
         Sprite.explosionb = SpriteSheet.explosionb.map(initBasicSprite);
 
         Sprite.particle = SpriteSheet.particle.map(initBasicSprite);
-
-        Sprite.tilebg = SpriteSheet.tilebg.map(initBasicSprite);
 
         Sprite.star = SpriteSheet.star.map(initBasicSprite);
         Sprite.star2 = SpriteSheet.star2.map(initBasicSprite);
@@ -57,53 +57,13 @@ export const Sprite = {
         //Sprite.icon_mouse_rmb = initBasicSprite(SpriteSheet.icon_mouse[1]);
 
         // Enemies
-        //Sprite.stabguts = SpriteSheet.stabguts.map(initBasicSprite);
-        //Sprite.spindoctor = SpriteSheet.spindoctor.map(initBasicSprite);
-
-        Sprite.moth = SpriteSheet.moth.map(initBasicSprite);
 
         // Gore/blood
         Sprite.gore = SpriteSheet.gore.map(initBasicSprite);
 
-        // GUI
-        //Sprite.hud_healthbar = SpriteSheet.hud_healthbar.map(initBasicSprite);
-        //Sprite.hud_healthbar.push(initDynamicSprite(createHealthChunk(Sprite.hud_healthbar[1].img)));
-        //Sprite.hud_crosshair = SpriteSheet.hud_crosshair.map(initBasicSprite);
-
-        Sprite.hud_mouse = SpriteSheet.cursor.map(data => initBasicSprite(data, { x: 0, y: 0 }))[0];
-
-        Sprite.bullet1 = SpriteSheet.bullet1.map(initBasicSprite);
-
-        Sprite.hud_tray_building = SpriteSheet.hud_tray_building.map(initBasicSprite);
-        Sprite.hud_tray_divider = SpriteSheet.hud_tray_divider.map(initBasicSprite);
-        Sprite.hud_tray_popup = SpriteSheet.hud_tray_popup.map(initBasicSprite);
-        Sprite.hud_select = SpriteSheet.hud_select.map(initBasicSprite);
-
-        Sprite.hud_wip = SpriteSheet.hud_wip.map(data => initBasicSprite(data, { x: -1, y: -1 }));
-
         // Tiles
         Sprite.tiles = SpriteSheet.tiles.map(initBasicSprite);
-        Sprite.tile_background = SpriteSheet.tile_background.map(initBasicSprite);
-
-        // Ghost enemy
-        Sprite.ghost = SpriteSheet.ghost.map(initBasicSprite);
-
-        // Buildins
-        Sprite.buildings = SpriteSheet.buildings.map(data => initBasicSprite(data, { x: 0, y: 8 }));
-
-        // Buttons
-        Sprite.buttons = SpriteSheet.buttons.map(initBasicSprite);
-
-        //Sprite.tilebg = initDynamicSprite(createTileBg(Sprite.tiles[0].img));
-        Sprite.shadow = initDynamicSprite(createShadow());
-
-        Sprite.attack = SpriteSheet.attack.map(initBasicSprite);
-        Sprite.enemy_healthbar = SpriteSheet.enemy_healthbar.map(initBasicSprite);
-
-        // Dialog
-        //let dialog = SpriteSheet.dialog.map(initBasicSprite);
-        //Sprite.dialog_speech = initDynamicSprite(createDialogSpeech(dialog[0].img, dialog[2].img));
-        //Sprite.dialog_hint = initDynamicSprite(createDialogHint(dialog[1].img));
+        Sprite.tilebg = SpriteSheet.tilebg.map(initBasicSprite);
     },
 
     /**
@@ -193,84 +153,6 @@ function loadCacheSlice(x, y, w, h) {
     const sliceCanvas = createCanvas(w, h);
     sliceCanvas.ctx.drawImage(source, x, y, w, h, 0, 0, w, h);
     return sliceCanvas.canvas;
-}
-
-// Add some chunky noise pixels to a wip canvas
-function addNoise(canvas) {
-    canvas.ctx.globalCompositeOperation = 'source-atop';
-    for (let y = 0; y < 36; y++) {
-        for (let x = 0; x < 36; x++) {
-            canvas.ctx.fillStyle = rgba(0, 0, 0, Math.random() * 0.6);
-            canvas.ctx.fillRect(x, y, 1, 1);
-        }
-    }
-}
-
-// Given wall tile, create a full screen tiled version to render in background
-function createTileBg(source) {
-    let canvas = createCanvas(544, 334);
-    for (let y = 0; y < 334; y += 32) {
-        for (let x = 0; x < 544; x += 32) {
-            canvas.ctx.drawImage(source, x, y);
-        }
-    }
-    return canvas.canvas;
-}
-
-// "Shadow" overlay (gives flickering shadows in corners)
-function createShadow() {
-    let canvas = createCanvas(500, 500);
-    let gradient = canvas.ctx.createRadialGradient(
-        250,
-        250,
-        0,
-        250,
-        250,
-        250
-    );
-    gradient.addColorStop(0.3, rgba(0, 0, 0, 0));
-    gradient.addColorStop(1, rgba(0, 0, 0, 0.9));
-    canvas.ctx.fillStyle = gradient;
-    canvas.ctx.fillRect(0, 0, 500, 500);
-    return canvas.canvas;
-}
-
-// "Speech" bubble (character talking)
-function createDialogSpeech(source, tail) {
-    let canvas = createCanvas(130, 45);
-    canvas.ctx.drawImage(expandNineTile(source).canvas, 0, 5);
-    canvas.ctx.drawImage(tail, 5, 0);
-    return canvas.canvas;
-}
-
-// "Hint" dialog (instructional for player)
-function createDialogHint(source) {
-    let canvas = expandNineTile(source);
-    return canvas.canvas;
-}
-
-function expandNineTile(source) {
-    let canvas = createCanvas(130, 40);
-    for (let y = 0; y < 40; y += 5) {
-        for (let x = 0; x < 130; x += 5) {
-            let sx = x === 0 ? 0 : (x === 125 ? 10 : 5);
-            let sy = y === 0 ? 0 : (y === 35 ? 10 : 5);
-            canvas.ctx.drawImage(source, sx, sy, 5, 5, x, y, 5, 5);
-        }
-    }
-    return canvas;
-}
-
-// Given the wall tile, do some color manipulation to get a nice floor tile
-function createSecondTile(source) {
-    let canvas = createCanvas(32, 32);
-    canvas.ctx.fillStyle = rgba(48, 0, 0, 1);
-    canvas.ctx.fillRect(0, 0, 32, 32);
-    canvas.ctx.globalAlpha = 0.6;
-    canvas.ctx.globalCompositeOperation = 'hard-light';
-    canvas.ctx.drawImage(source, 0, 0);
-    addNoise(canvas);
-    return canvas.canvas;
 }
 
 function createDynamicTile(tiles, bitmask) {

@@ -6,7 +6,6 @@
 
 import { Game } from './Game';
 import { Input } from './input/Input';
-import { Hud } from './Hud';
 import { clamp, vectorBetween, vector2point } from './Util';
 
 export const Camera = {

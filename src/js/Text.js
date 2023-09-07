@@ -26,17 +26,6 @@ export const Text = {
     init() {
         Text.white = Sprite.font.img;
 
-        let icons = [
-            [101, Sprite.buildings[2]],      // e = Earth
-            [102, Sprite.buildings[4]],      // f = Fervor
-            //[108, Sprite.icon_mouse_lmb],  // l
-            //[114, Sprite.icon_mouse_rmb],  // r
-        ];
-        for (let icon of icons) {
-            C_ICONS[icon[0]] = icon[1];
-            C_SHIFT[icon[0]] = icon[1].img.width + 1;
-        }
-
         Text.black = recolor(Text.white, rgba(0, 0, 0, 1));
         Text.black_shadow = recolor(Text.white, rgba(90, 20, 90, 0.15));
         Text.blue = recolor(Text.white, rgba(200, 40, 220, 1));

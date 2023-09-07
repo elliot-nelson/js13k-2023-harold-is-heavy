@@ -9,13 +9,8 @@ import { rgba, createCanvas, clamp, partialText, uv2xy, xy2qr, xy2uv, qr2xy, cen
 import { Audio } from './Audio';
 import { Movement } from './systems/Movement';
 import { Damage } from './systems/Damage';
-import { Hud } from './Hud';
 
-import { World } from './World';
 import { Camera } from './Camera';
-import { Moth } from './Moth';
-import { Ghost } from './Ghost';
-import { Wave } from './Wave';
 import { VictoryScreen } from './VictoryScreen';
 import { DefeatScreen } from './DefeatScreen';
 
@@ -35,10 +30,8 @@ export class Game {
             Text.init();
             Input.init();
             Audio.init();
-            Hud.init();
 
             Camera.init();
-            World.init();
 
             window.addEventListener('blur', () => this.pause());
             window.addEventListener('focus', () => this.unpause());
@@ -144,8 +137,6 @@ export class Game {
             this.tap(Input.pointer);
         }
 
-        Hud.update();
-
         //if (Input.pressed[Input.Action.MENU]) {
         //    this.paused ? this.unpause() : this.pause();
         //}
@@ -218,8 +209,6 @@ export class Game {
         }
 
         World.drawLightmap();
-
-        Hud.draw();
 
         if (game.frame < 120) {
             Viewport.ctx.fillStyle = rgba(0, 0, 0, 1 - game.frame / 120);

@@ -4,7 +4,6 @@ import { R90, R270, R360, TILE_SIZE } from './Constants';
 import { game } from './Game';
 import { Viewport } from './Viewport';
 import { Camera } from './Camera';
-import { World } from './World';
 
 export function normalizeVector(p) {
     let m = Math.sqrt(p.x * p.x + p.y * p.y);
@@ -432,12 +431,14 @@ export function floodTarget(maze, from, to) {
     let result = array2d(maze[0].length, maze.length, () => Infinity);
     let stack = [{ ...to, cost: 0 }];
 
+    /*
     if (!tileIsPassable(to.q, to.r)) {
         throw new Error(['fuck first', to.q, to.r, World.tiles[to.r][to.q]].join(' '));
     }
     if (!tileIsPassable(from.q, from.r)) {
         throw new Error('fuck bhencho', from, World.tiles[from.r][from.q]);
     }
+    */
 
     while (stack.length > 0) {
         let { q, r, cost } = stack.shift();
