@@ -27,14 +27,20 @@ export class IntroScreen {
             'HEAVY'
         ];
         this.t = 0;
+        this.fadet = -1;
     }
 
     update() {
         this.t++;
+        if (this.fadet >= 0) this.fadet++;
 
-        if (Input.pressed[Input.Action.JUMP] || Input.pressed[Input.Action.CONTINUE]) {
+        if (this.fadet > 30) {
             game.screens.pop();
             game.screens.push(new LoadingScreen());
+        }
+
+        if (Input.pressed[Input.Action.JUMP] || Input.pressed[Input.Action.CONTINUE]) {
+            this.fadet = 0;
         }
     }
 
@@ -47,15 +53,32 @@ export class IntroScreen {
             //Text.drawText(Viewport.ctx, this.text[i], 20, 50, 2, Text.pig);
 
             Viewport.ctx.globalAlpha = 0.3;
-            Text.drawText(Viewport.ctx, this.text[i], (TARGET_GAME_WIDTH - width) / 2, 50 + i * 15 - 4, 2, Text.pig);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, 50 + i * 15 - 4, 2, Text.pig);
 
             Viewport.ctx.globalAlpha = 1;
-            Text.drawText(Viewport.ctx, this.text[i], (TARGET_GAME_WIDTH - width) / 2 - 1, 50 + i * 15, 2, Text.shadow);
-            Text.drawText(Viewport.ctx, this.text[i], (TARGET_GAME_WIDTH - width) / 2 + 1, 50 + i * 15, 2, Text.shadow);
-            Text.drawText(Viewport.ctx, this.text[i], (TARGET_GAME_WIDTH - width) / 2, 50 + i * 15, 2, Text.pig);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2 - 1, 50 + i * 15, 2, Text.shadow);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2 + 1, 50 + i * 15, 2, Text.shadow);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, 50 + i * 15, 2, Text.pig);
         }
 
         this.drawInstructions();
+
+        // Fade to load screen
+        if (this.fadet >= 0) {
+            let fade = 0;
+            if (this.fadet > 8) {
+                fade = (this.fadet - 8) * (Viewport.width / 2 - 40) / 20;
+            }
+
+            Viewport.ctx.fillStyle = '#2c1b2e';
+            Viewport.ctx.beginPath();
+            Viewport.ctx.moveTo(Viewport.width / 2 - 0 - fade, 0);
+            Viewport.ctx.lineTo(Viewport.width / 2 + 40 + fade, 0);
+            Viewport.ctx.lineTo(Viewport.width / 2 + 0 + fade, Viewport.height);
+            Viewport.ctx.lineTo(Viewport.width / 2 - 40 - fade, Viewport.height);
+            Viewport.ctx.closePath();
+            Viewport.ctx.fill();
+        }
     }
 
     drawInstructions() {
@@ -63,7 +86,7 @@ export class IntroScreen {
         let width = Text.measure(text, 1).w;
 
         if (this.t % 30 < 24) {
-            Text.drawText(Viewport.ctx, text, (Viewport.width - width) / 2, Viewport.height - 10, 1, Text.duotone, Text.shadow);
+            Text.drawText(Viewport.ctx, text, (Viewport.width - width) / 2, Viewport.height - 10, 1, Text.tan, Text.shadow);
         }
     }
 }

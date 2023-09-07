@@ -25,7 +25,6 @@ export class LevelScreen {
         this.tiles = this.levelData.floors[0].tiles.map(row => [...row]);
         this.tileshakemap = this.levelData.floors[0].tiles.map(row => row.map(x => ({ x: 0, y: 0 })));
         this.entities = [];
-        this.entitiesToAdd = [];
         this.screenshakes = [];
         this.tileshakes = [];
         this.t = 0;
@@ -69,12 +68,14 @@ export class LevelScreen {
             this.player.dieFalling(levelBottomY);
         }
 
-        for (const entity of this.entities) {
+        let entities = [...this.entities];
+
+        for (const entity of entities) {
             entity.update();
         }
 
-        Movement.perform(this, this.entities);
-        Attack.perform(this, this.entities);
+        Movement.perform(this, entities);
+        Attack.perform(this, entities);
 
         for (let i = 0; i < this.entities.length; i++) {
             if (this.entities[i].cull) {
@@ -97,27 +98,6 @@ export class LevelScreen {
                 this.tileshakes.splice(i, 1);
                 i--;
             }
-        }
-
-        // To ensure that nothing changes the list of entities during a frame, we queue
-        // them up and add them all at the end of the current frame.
-        if (this.entitiesToAdd.length > 0) {
-            for (let entity of this.entitiesToAdd) {
-                if (!entity.z) {
-                    entity.z = 1;
-                }
-
-                for (let i = 0; i < this.entities.length; i++) {
-                    if (this.entities[i].z > entity.z) {
-                        this.entities.splice(i, 0, entity);
-                        return;
-                    }
-                }
-
-                this.entities.push(entity);
-            }
-
-            this.entitiesToAdd = [];
         }
     }
 
@@ -282,7 +262,18 @@ export class LevelScreen {
     }
 
     addEntity(entity) {
-        this.entitiesToAdd.push(entity);
+        if (!entity.z) {
+            entity.z = 1;
+        }
+
+        for (let i = 0; i < this.entities.length; i++) {
+            if (this.entities[i].z > entity.z) {
+                this.entities.splice(i, 0, entity);
+                return;
+            }
+        }
+
+        this.entities.push(entity);
     }
 
     addScreenShake(screenshake) {
