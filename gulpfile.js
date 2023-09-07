@@ -89,6 +89,8 @@ function minifyBuild() {
                         'ArrowDown',
                         'ArrowRight',
                         'Escape',
+                        'Space',
+                        'Enter',
                         'OS13kMusic,Wizard with a Shotgun - Oblique Mystique'
                     ]
                 }
