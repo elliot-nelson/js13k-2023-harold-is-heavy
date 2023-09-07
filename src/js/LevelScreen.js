@@ -27,6 +27,7 @@ export class LevelScreen {
         this.entities = [];
         this.screenshakes = [];
         this.tileshakes = [];
+        this.superslamTiles = [];
         this.t = 0;
 
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
@@ -47,6 +48,9 @@ export class LevelScreen {
                 this.enemies++;
             } else if (obj.name.startsWith('SIGN')) {
                 this.addEntity(new Sign({ q: obj.x, r: obj.y }, Number(obj.name.slice(4))));
+            } else if (obj.name === 'SLAM') {
+                console.log('SLAM');
+                this.superslamTiles.push(this.extractSuperslamTiles({ q: obj.x, r: obj.y }));
             }
         }
 
@@ -240,6 +244,18 @@ export class LevelScreen {
     }
 
     landedOnTile(tile) {
+        console.log(this.superslamTiles);
+        console.log(tile);
+        for (let i = 0; i < this.superslamTiles.length; i++) {
+            let slam = this.superslamTiles[i];
+            if (tile.r === slam.r && tile.q >= slam.q1 && tile.q <= slam.q2) {
+                for (let q = slam.q1; q <= slam.q2; q++) {
+                    this.tiles[slam.r + 1][q] = this.tiles[slam.r][q];
+                    this.tiles[slam.r][q] = 0;
+                }
+            }
+        }
+
         for (let entity of this.entities) {
             if (entity.landedOnTile) entity.landedOnTile(tile);
         }
@@ -306,5 +322,32 @@ export class LevelScreen {
             tiles: tiles,
             s: 0
         });
+    }
+
+    extractSuperslamTiles(originQR) {
+        let r = originQR.r;
+        let q1 = originQR.q;
+        let q2 = originQR.q;
+
+        for (let q = originQR.q; q >= 0; q--) {
+            if (this.tileIsPassable(q, originQR.r + 1) && !this.tileIsPassable(q, originQR.r)) {
+                q1 = q;
+            } else {
+                break;
+            }
+        }
+        for (let q = originQR.q + 1; q < this.tiles[0].length; q++) {
+            if (this.tileIsPassable(q, originQR.r + 1) && !this.tileIsPassable(q, originQR.r)) {
+                q2 = q;
+            } else {
+                break;
+            }
+        }
+
+        return {
+            r: r,
+            q1: q1,
+            q2: q2
+        };
     }
 }
