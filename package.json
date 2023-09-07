@@ -1,7 +1,7 @@
 {
-  "name": "js13k-2022-tbd",
-  "version": "1.0.2",
-  "description": "My 2022 entry for the js13kgames compo, 'Moth'.",
+  "name": "js13k-2023-harold-is-heavy",
+  "version": "1.0.0",
+  "description": "My 2023 entry for the js13kgames compo, 'Harold is Heavy'.",
   "main": "index.js",
   "scripts": {
     "test": "exit 0",
