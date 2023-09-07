@@ -188,7 +188,7 @@ export class Game {
         Viewport.ctx.scale(Viewport.scale, Viewport.scale);
 
         this.screen.draw();
-        Text.drawText(Viewport.ctx, 'HELLO hello', 10, 10, 1);
+        //Text.drawText(Viewport.ctx, 'HELLO hello', 10, 10, 1);
 
         return;
 

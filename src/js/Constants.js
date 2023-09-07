@@ -88,28 +88,21 @@ export const ONLINE    = 22;
 
 export const FPS = 60;
 
-// Fiddle with these numbers to customize jump
+// Player movement constants
+export const PLAYER_FOOT_SPEED = 1.3;
 export const JUMP_HEIGHT = 3.5 * TILE_SIZE;
 export const JUMP_HEIGHT_DISTANCE = 2 * TILE_SIZE;
-
-// Ask again
-//export const GRAVITY = (JUMP_HEIGHT / 2 * JUMP_DURATION * JUMP_DURATION) / 2;
-//export const JUMP_VELOCITY = Math.sqrt(2 * JUMP_HEIGHT * GRAVITY) / 2;
-//export const GRAVITY = 0.11;
-//export const JUMP_VELOCITY = 2.4;
-
-//export const JUMP_VELOCITY = 2 * JUMP_HEIGHT / JUMP_DURATION;
-
-export const PLAYER_FOOT_SPEED = 1.3;
-
 export const JUMP_VELOCITY = -2 * JUMP_HEIGHT * PLAYER_FOOT_SPEED / JUMP_HEIGHT_DISTANCE;
+
+// Gravity
 export const GRAVITY = 2 * JUMP_HEIGHT * PLAYER_FOOT_SPEED * PLAYER_FOOT_SPEED / (JUMP_HEIGHT_DISTANCE * JUMP_HEIGHT_DISTANCE);
-
-//export const GRAVITY = 2 * JUMP_HEIGHT / JUMP_DURATION * JUMP_DURATION;
-
 export const TERMINAL_VELOCITY = 5;
 
 // If the bounding box of a jumping character hits a platform and the feet of
 // the character are within this many pixels of the top of the floor, pretend
 // that they "made the jump".
 export const JUMP_CHEAT_Y_PIXELS = 2;
+
+// Tapping jump before you've landed will trigger another jump if you're
+// "about" to land on the ground (within this many frames).
+export const JUMP_CHEAT_LANDING_FRAMES = 8;

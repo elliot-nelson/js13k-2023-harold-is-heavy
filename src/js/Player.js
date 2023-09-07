@@ -1,6 +1,6 @@
 // Player
 
-import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TARGET_GAME_HEIGHT } from './Constants';
+import { JUMP_VELOCITY, JUMP_CHEAT_LANDING_FRAMES, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TARGET_GAME_HEIGHT } from './Constants';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { Viewport } from './Viewport';
@@ -65,7 +65,11 @@ export class Player {
         ///this.pos.x += this.vel.x;
         ///this.pos.y += this.vel.y;
 
-        if (Input.pressed[Input.Action.JUMP] && !this.isJumping) {
+        if (Input.pressed[Input.Action.JUMP]) {
+            this.lastJumpPressed = game.frame;
+        }
+
+        if (!this.isJumping && game.frame - this.lastJumpPressed <= JUMP_CHEAT_LANDING_FRAMES) {
             this.isJumping = true;
             //this.jumpFrames = 16;
             //this.jumpLength = 0;
@@ -86,6 +90,9 @@ export class Player {
         if (this.vel.y < 0) {
             this.frame = 3;
         } else if (this.vel.y > 0) {
+            // If you start falling, you can't jump anymore
+            this.isJumping = true;
+
             this.frame = 4;
             if (this.pos.y - this.highestY > 12) {
                 this.frame = 5;
@@ -103,8 +110,6 @@ export class Player {
 
         if (this.vel.x > 0) this.facing = 0;
         if (this.vel.x < 0) this.facing = 1;
-
-        console.log(this.isJumping);
     }
 
     landedOnTile(tile) {
