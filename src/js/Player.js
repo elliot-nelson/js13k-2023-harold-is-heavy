@@ -26,6 +26,7 @@ export class Player {
         this.jumpFrames = 0;
         this.facing = 0;
         this.isJumping = true;
+        this.lastJumpPressed = 0;
         this.team = 1;
         this.z = 10;
         this.highestY = this.pos.y;
@@ -71,6 +72,7 @@ export class Player {
 
         if (!this.isJumping && game.frame - this.lastJumpPressed <= JUMP_CHEAT_LANDING_FRAMES) {
             this.isJumping = true;
+            this.lastJumpPressed = 0;
             //this.jumpFrames = 16;
             //this.jumpLength = 0;
             this.vel.y = JUMP_VELOCITY - GRAVITY;
