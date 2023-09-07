@@ -9,6 +9,7 @@ export const TRACK_WAVE = 6;
 
 export const Audio = {
     init() {
+        Audio.contextCreated = false;
         Audio.readyToPlay = false;
         Audio.musicEnabled = true;
         Audio.sfxEnabled = true;
@@ -32,24 +33,23 @@ export const Audio = {
         Audio.tile = [1.68,,0,.01,.01,0,,1.83,-28,-7,,,,,,,.02,,.01];
     },
 
-    update() {
-        if (!Audio.readyToPlay) return;
+    initContext() {
+        if (Audio.contextCreated) return;
 
-        this.sfxVolume = this.sfxEnabled ? 0.3 : 0;
-        this.musicVolume = this.musicEnabled ? 1 : 0;
+        // In Safari, ensure our target AudioContext is created inside a
+        // click or tap event (this ensures we don't interact with it until
+        // after user input).
+        //
+        // Chrome and Firefox are more relaxed, but this approach works for all 3.
+        ZZFX.x = Audio.ctx = new AudioContext();
+        Audio.gain_ = Audio.ctx.createGain();
+        Audio.gain_.connect(Audio.ctx.destination);
+        ZZFX.destination = Audio.gain_;
 
-        ZZFX.volume = this.sfxVolume;
+        Audio.contextCreated = true;
+    },
 
-        if (this.sfxEnabled) {
-            ZZFX.volume = 0.3;
-        } else {
-            ZZFX.volume = 0;
-        }
-
-        if (this.musicEnabled) {
-            Audio.gain_.gain.linearRampToValueAtTime(0, Audio.ctx.currentTime + 1);
-        }
-
+    initTracks() {
         // This is goofy, but unfortunately we cannot generate our audio buffer until
         // after a user clicks when in Safari. (I'll try to find a more elegant solution
         // for this in the future.)
@@ -91,27 +91,28 @@ export const Audio = {
                 Audio.musicPlaying = true;
             }
         }
+
+        Audio.readyToPlay = true;
+    },
+
+    update() {
+        if (!Audio.readyToPlay) return;
+
+        this.sfxVolume = this.sfxEnabled ? 0.3 : 0;
+        this.musicVolume = this.musicEnabled ? 1 : 0;
+
+        ZZFX.volume = this.sfxVolume;
+
+        if (this.sfxEnabled) {
+            ZZFX.volume = 0.3;
+        } else {
+            ZZFX.volume = 0;
+        }
     },
 
     play(sound) {
         if (!Audio.readyToPlay) return;
         ZZFX.play(...sound);
-    },
-
-    markReady() {
-        if (Audio.readyToPlay) return;
-
-        // In Safari, ensure our target AudioContext is created inside a
-        // click or tap event (this ensures we don't interact with it until
-        // after user input).
-        //
-        // Chrome and Firefox are more relaxed, but this approach works for all 3.
-        ZZFX.x = Audio.ctx = new AudioContext();
-        Audio.gain_ = Audio.ctx.createGain();
-        Audio.gain_.connect(Audio.ctx.destination);
-        ZZFX.destination = Audio.gain_;
-
-        Audio.readyToPlay = true;
     },
 
     startWave() {

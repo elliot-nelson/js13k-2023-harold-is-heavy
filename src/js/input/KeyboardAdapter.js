@@ -48,7 +48,7 @@ export const KeyboardAdapter = {
             // Debugging - key presses
              console.log(event.key, event.keyCode, event.code, k);
                          // Hack to ensure we initialize audio after user interacts with game
-            Audio.markReady();
+            Audio.initContext();
             if (k) {
                 KeyboardAdapter.held[k] = true;
             }

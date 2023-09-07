@@ -30,7 +30,7 @@ export const MouseAdapter = {
             if (k) this.held[k] = true;
 
             // Hack to ensure we initialize audio after user interacts with game
-            Audio.markReady();
+            Audio.initContext();
             Input.mode = INPUT_MODE_MOUSE;
 
             this.pointerDragStart = {

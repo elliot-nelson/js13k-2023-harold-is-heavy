@@ -17,53 +17,56 @@ import { Sign } from './Sign';
 import { game } from './Game';
 import { ScreenShake } from './ScreenShake';
 import { Input } from './input/Input';
-import { LoadingScreen } from './LoadingScreen';
+import { Audio } from './Audio';
 
-export class IntroScreen {
+export class LoadingScreen {
     constructor() {
         this.text = [
             'HAROLD',
             'IS',
             'HEAVY'
         ];
-        this.t = 0;
+        this.t = -12;
     }
 
     update() {
         this.t++;
 
-        if (Input.pressed[Input.Action.JUMP] || Input.pressed[Input.Action.CONTINUE]) {
+        if (this.t === 36) {
+            Audio.initTracks();
+        }
+
+        if (this.t > 65) {
             game.screens.pop();
-            game.screens.push(new LoadingScreen());
         }
     }
 
     draw() {
-        Viewport.ctx.fillStyle = '#457cd6';
+        Viewport.ctx.fillStyle = '#2c1b2e';
         Viewport.ctx.fillRect(0, 0, Viewport.width, Viewport.height);
 
-        for (let i = 0; i < this.text.length; i++) {
-            let width = Text.measure(this.text[i], 2).w;
-            //Text.drawText(Viewport.ctx, this.text[i], 20, 50, 2, Text.pig);
+        Viewport.ctx.fillStyle = '#457cd6';
+        Viewport.ctx.fillRect(Viewport.width / 2 - 65, Viewport.height / 2 - 8, 130, 16);
+        Viewport.ctx.fillRect(Viewport.width / 2 - 64, Viewport.height / 2 - 9, 128, 18);
 
-            Viewport.ctx.globalAlpha = 0.3;
-            Text.drawText(Viewport.ctx, this.text[i], (TARGET_GAME_WIDTH - width) / 2, 50 + i * 15 - 4, 2, Text.pig);
+        let total = 10;
+        let loaded = clamp(this.t / 6, 0, 10);
 
-            Viewport.ctx.globalAlpha = 1;
-            Text.drawText(Viewport.ctx, this.text[i], (TARGET_GAME_WIDTH - width) / 2 - 1, 50 + i * 15, 2, Text.shadow);
-            Text.drawText(Viewport.ctx, this.text[i], (TARGET_GAME_WIDTH - width) / 2 + 1, 50 + i * 15, 2, Text.shadow);
-            Text.drawText(Viewport.ctx, this.text[i], (TARGET_GAME_WIDTH - width) / 2, 50 + i * 15, 2, Text.pig);
+        for (let i = 0; i < total; i++) {
+            let frame = (loaded > i) ? 0 : 3;
+            let y = Math.sin(i * Math.PI * 2 / 9 + (this.t * Math.PI * 2 / 60)) * 3;
+            Viewport.ctx.drawImage(Sprite.littlepig[0][frame].img, i * 12 + (Viewport.width - 120) / 2, Viewport.height / 2 - 3 + y);
         }
 
         this.drawInstructions();
     }
 
     drawInstructions() {
-        let text = 'PRESS SPACE OR ENTER TO START';
+        let text = 'LOADING...';
         let width = Text.measure(text, 1).w;
 
         if (this.t % 30 < 24) {
-            Text.drawText(Viewport.ctx, text, (Viewport.width - width) / 2, Viewport.height - 10, 1, Text.duotone, Text.shadow);
+            Text.drawText(Viewport.ctx, text, (Viewport.width - width) / 2, Viewport.height / 20 + 25, Text.duotone, Text.shadow);
         }
     }
 }
