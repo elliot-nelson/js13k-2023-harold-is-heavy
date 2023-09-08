@@ -49,6 +49,9 @@ export const Sprite = {
         Sprite.knight = [SpriteSheet.knight.map(initBasicSprite, { x: 3, y: 6 })];
         Sprite.knight.push(Sprite.knight[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
 
+        Sprite.bigarrow = SpriteSheet.bigarrow.map(initBasicSprite);
+        Sprite.dirt = SpriteSheet.dirt.map(initBasicSprite);
+
         Sprite.sign = SpriteSheet.sign.map(initBasicSprite);
 
         // Base pixel font and icons (see `Text.init` for additional variations)

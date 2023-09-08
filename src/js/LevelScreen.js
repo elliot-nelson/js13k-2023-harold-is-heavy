@@ -17,6 +17,8 @@ import { Knight } from './Knight';
 import { Sign } from './Sign';
 import { game } from './Game';
 import { ScreenShake } from './ScreenShake';
+import { BigArrowParticle } from './BigArrowParticle';
+import { FallingDirtParticle } from './FallingDirtParticle';
 
 export class LevelScreen {
     constructor(levelNumber) {
@@ -102,6 +104,11 @@ export class LevelScreen {
                 this.tileshakes.splice(i, 1);
                 i--;
             }
+        }
+
+        if (this.fallingDirtCounter > 0) {
+            this.fallingDirtCounter--;
+            this.spawnFallingDirt();
         }
     }
 
@@ -243,15 +250,18 @@ export class LevelScreen {
         return !this.tileIsPassable(qr.q, qr.r);
     }
 
-    landedOnTile(tile) {
-        console.log(this.superslamTiles);
-        console.log(tile);
-        for (let i = 0; i < this.superslamTiles.length; i++) {
-            let slam = this.superslamTiles[i];
-            if (tile.r === slam.r && tile.q >= slam.q1 && tile.q <= slam.q2) {
-                for (let q = slam.q1; q <= slam.q2; q++) {
-                    this.tiles[slam.r + 1][q] = this.tiles[slam.r][q];
-                    this.tiles[slam.r][q] = 0;
+    landedOnTile(tile, superslamFlag) {
+        if (superslamFlag) {
+            for (let i = 0; i < this.superslamTiles.length; i++) {
+                let slam = this.superslamTiles[i];
+                if (tile.r === slam.r && tile.q >= slam.q1 && tile.q <= slam.q2) {
+                    for (let q = slam.q1; q <= slam.q2; q++) {
+                        this.tiles[slam.r + 1][q] = this.tiles[slam.r][q];
+                        this.tiles[slam.r][q] = 0;
+
+                        let xy = this.player.pos;
+                        this.addEntity(new BigArrowParticle({ x: xy.x, y: xy.y }));
+                    }
                 }
             }
         }
@@ -266,6 +276,17 @@ export class LevelScreen {
         this.addEntity(new LandingParticle(this.pos));
         this.addEntity(new LandingParticle(this.pos));
         this.addEntity(new LandingParticle(this.pos));
+
+        this.fallingDirtCounter = 4;
+    }
+
+    spawnFallingDirt() {
+        for (let i = 0; i < this.superslamTiles.length; i++) {
+            let slam = this.superslamTiles[i];
+            let x = (slam.q1 + Math.random() * (slam.q2 + 1 - slam.q1)) * TILE_SIZE;
+            let y = slam.r * TILE_SIZE + TILE_SIZE + 1;
+            this.addEntity(new FallingDirtParticle({ x: x, y: y }));
+        }
     }
 
     rescueLittlePig() {

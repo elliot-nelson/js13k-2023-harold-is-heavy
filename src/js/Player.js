@@ -31,6 +31,7 @@ export class Player {
         this.z = 10;
         this.highestY = this.pos.y;
         this.state = PLAYING;
+        this.last = [this.pos, this.pos];
 
         this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
         this.hbb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
@@ -42,6 +43,9 @@ export class Player {
     }
 
     update() {
+        this.last[1] = { ...this.last[0] };
+        this.last[0] = { ...this.pos };
+
         if (this.state === DYING) {
             this.stateFrames++;
             if (this.stateFrames > 30) {
@@ -99,6 +103,9 @@ export class Player {
             if (this.pos.y - this.highestY > 12) {
                 this.frame = 5;
             }
+            /*if (this.pos.y - this.highestY > 32) {
+                this.frame = 6;
+            }*/
         } else if (Math.abs(this.vel.x) < 0.1) {
             this.frame = 0;
         } else {
@@ -123,7 +130,7 @@ export class Player {
         }
 
         if (distanceFallen > 4) {
-            game.screen.landedOnTile(tile);
+            game.screen.landedOnTile(tile, distanceFallen > 48);
             game.screen.screenshakes.push(new ScreenShake(12, 0, 3));
             game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
 
@@ -138,6 +145,15 @@ export class Player {
             let shakemap = game.screen.tileshakemap[qr.r + 1]?.[qr.q];
             let y = shakemap && shakemap.y ? shakemap.y : 0;
 
+            if (this.pos.y - this.highestY > 48) {
+                Viewport.ctx.globalAlpha = 0.2;
+                Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.last[1].x, y: this.pos.y + y - 4 });
+            }
+            if (this.pos.y - this.highestY > 48) {
+                Viewport.ctx.globalAlpha = 0.4;
+                Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.last[0].x, y: this.pos.y + y - 2 });
+            }
+            Viewport.ctx.globalAlpha = 1;
             Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.pos.x, y: this.pos.y + y });
         }
     }
