@@ -58,6 +58,8 @@ export const Sprite = {
         //Sprite.icon_mouse_lmb = initBasicSprite(SpriteSheet.icon_mouse[0]);
         //Sprite.icon_mouse_rmb = initBasicSprite(SpriteSheet.icon_mouse[1]);
 
+        Sprite.clouds = SpriteSheet.clouds.map(initBasicSprite);
+
         // Enemies
 
         // Gore/blood

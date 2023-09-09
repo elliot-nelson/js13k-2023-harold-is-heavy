@@ -19,6 +19,7 @@ import { game } from './Game';
 import { ScreenShake } from './ScreenShake';
 import { BigArrowParticle } from './BigArrowParticle';
 import { FallingDirtParticle } from './FallingDirtParticle';
+import { CloudParticle } from './CloudParticle';
 
 export class LevelScreen {
     constructor(levelNumber) {
@@ -31,9 +32,11 @@ export class LevelScreen {
         this.tileshakes = [];
         this.superslamTiles = [];
         this.t = 0;
+        this.lastCloud = 0;
 
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
         this.addEntity(this.player);
+        this.addEntity(new CloudParticle(true));
 
         this.littlePigs = 0;
         this.littlePigsRescued = 0;
@@ -110,6 +113,8 @@ export class LevelScreen {
             this.fallingDirtCounter--;
             this.spawnFallingDirt();
         }
+
+        this.spawnClouds();
     }
 
     draw() {
@@ -140,13 +145,17 @@ export class LevelScreen {
         });
         Viewport.ctx.translate(shakeX, shakeY);
 
+        for (let entity of this.entities) {
+            if (entity.z === -1) entity.draw();
+        }
+
         this.drawTileShakemap();
         this.drawTiles();
 
         let overlayEntities = [];
 
         for (let entity of this.entities) {
-            entity.draw();
+            if (entity.z > -1) entity.draw();
 
             if (entity.displayOverlay) {
                 overlayEntities.push(entity);
@@ -370,5 +379,18 @@ export class LevelScreen {
             q1: q1,
             q2: q2
         };
+    }
+
+    spawnClouds() {
+        let clouds = this.entities.filter(entity => entity instanceof CloudParticle).length;
+        if (clouds < 1) {
+            this.addEntity(new CloudParticle());
+            this.lastCloud = this.t;
+        }
+
+        if (this.t - this.lastCloud > 60 * 5 && Math.random() < 0.01) {
+            this.addEntity(new CloudParticle());
+            this.lastCloud = this.t;
+        }
     }
 }
