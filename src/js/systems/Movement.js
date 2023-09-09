@@ -4,6 +4,7 @@ import { TILE_SIZE, JUMP_CHEAT_Y_PIXELS } from '../Constants';
 import { game } from '../Game';
 import {
     qr2xy,
+    xy2qr,
     intersectCircleCircle,
     intersectCircleRectangle,
     normalizeVector,

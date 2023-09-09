@@ -135,7 +135,9 @@ export class Player {
             game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
 
             //game.screen.addEntity(new StarParticle(this.pos));
-            //Audio.play(Audio.playerLand);
+        }
+        if (distanceFallen > SUPER_SLAM_FALL_DISTANCE) {
+            Audio.play(Audio.playerSlam);
         }
     }
 
