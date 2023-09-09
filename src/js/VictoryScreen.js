@@ -7,6 +7,15 @@ import { game } from './Game';
 
 export class VictoryScreen {
     constructor() {
+        this.text = [
+            'THANKS FOR PLAYING ACT 1 OF HAROLD IS HEAVY!',
+            '',
+            'ACT 1 IS SHAREWARE. TO FINISH HAROLD\'S ADVENTURE,',
+            'ORDER THE FULL GAME VIA CHECK OR MONEY ORDER USING',
+            'THE ORDER.FRM FILE DISTRIBUTED WITH YOUR GAME.',
+            '',
+            'THANK YOU FOR SUPPORTING THE SHAREWARE MOVEMENT.'
+        ];
         this.frames = 0;
     }
 
@@ -17,30 +26,12 @@ export class VictoryScreen {
     }
 
     draw() {
-        //Viewport.ctx.fillStyle = rgba(13, 43, 69, clamp(this.frames / 200, 0, 1));
-        Viewport.ctx.fillStyle = rgba(36, 26, 20, clamp(this.frames / 200, 0, 1));
+        Viewport.ctx.fillStyle = '#457cd6';
         Viewport.ctx.fillRect(0, 0, Viewport.width, Viewport.height);
 
-        let width = Viewport.width - 32;
-        let x = 16;
-        let y = 16;
-
-        let message = 'ESCAPE! \n' +
-            '                    \n' +
-            'VILLAGERS STIR UNEASILY IN THEIR BEDS AS YOU EMERGE INTO MOONLIGHT. YOU SENSE WARM BODIES ALL AROUND YOU, RIPE FOR PICKING. IT IS ONLY A MATTER OF TIME NOW BEFORE YOU REGAIN YOUR FULL NECROMANTIC POWER. \n' +
-            '                    \n' +
-            'CONGRATULATIONS... AND THE END.  ' + game.fervor + 'f';
-
-        message = message.slice(0, this.frames);
-
-        Text.drawParagraph(
-            Viewport.ctx,
-            message,
-            x,
-            y,
-            width,
-            1,
-            1
-        );
+        for (let i = 0; i < this.text.length; i++) {
+            let width = Text.measure(this.text[i], 1).w;
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, 24 + i * 10, 1, Text.white, Text.shadow);
+        }
     }
 }

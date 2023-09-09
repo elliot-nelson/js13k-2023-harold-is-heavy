@@ -14,6 +14,7 @@ import { Camera } from './Camera';
 import { VictoryScreen } from './VictoryScreen';
 import { DefeatScreen } from './DefeatScreen';
 
+import { LevelData } from './generated/LevelData-gen';
 import { LevelScreen } from './LevelScreen';
 import { IntroScreen } from './IntroScreen';
 
@@ -90,7 +91,11 @@ export class Game {
 
         // Hand off control to the current "screen" (for example, game screen or menu)
         if (this.screens.length === 0) {
-            this.screens.push(new LevelScreen(this.nextLevel));
+            if (this.nextLevel >= LevelData.length) {
+                this.screens.push(new VictoryScreen());
+            } else {
+                this.screens.push(new LevelScreen(this.nextLevel));
+            }
         }
         this.screen = this.screens[this.screens.length - 1];
         this.screen.update();
