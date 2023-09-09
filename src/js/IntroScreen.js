@@ -1,6 +1,6 @@
 // LevelScreen
 
-import { TILE_SIZE, TARGET_GAME_WIDTH, TARGET_GAME_HEIGHT } from './Constants';
+import { TILE_SIZE, TARGET_GAME_WIDTH, TARGET_GAME_HEIGHT, GRAVITY, TERMINAL_VELOCITY } from './Constants';
 import { LevelData } from './generated/LevelData-gen';
 import { Player } from './Player';
 import { Viewport } from './Viewport';
@@ -26,12 +26,41 @@ export class IntroScreen {
             'IS',
             'HEAVY'
         ];
+        this.pos = [
+            { y: -20 },
+            { y: -20 },
+            { y: -20 }
+        ];
+        this.vel = [
+            { y: 0 },
+            { y: 0 },
+            { y: 0 }
+        ];
         this.t = 0;
         this.fadet = -1;
     }
 
     update() {
         this.t++;
+
+        this.vel[0].y = clamp(this.vel[0].y + GRAVITY, 0, TERMINAL_VELOCITY);
+        if (this.pos[0].y > 15) {
+            this.vel[1].y = clamp(this.vel[1].y + GRAVITY, 0, TERMINAL_VELOCITY);
+        }
+        if (this.pos[1].y > 15) {
+            this.vel[2].y = clamp(this.vel[2].y + GRAVITY, 0, TERMINAL_VELOCITY);
+        }
+
+        if (this.pos[0].y < 45) {
+            this.pos[0].y += this.vel[0].y;
+        }
+        if (this.pos[1].y < 60) {
+            this.pos[1].y += this.vel[1].y;
+        }
+        if (this.pos[2].y < 75) {
+            this.pos[2].y += this.vel[2].y;
+        }
+
         if (this.fadet >= 0) this.fadet++;
 
         if (this.fadet > 30) {
@@ -50,18 +79,21 @@ export class IntroScreen {
 
         for (let i = 0; i < this.text.length; i++) {
             let width = Text.measure(this.text[i], 2).w;
-            //Text.drawText(Viewport.ctx, this.text[i], 20, 50, 2, Text.pig);
 
-            Viewport.ctx.globalAlpha = 0.3;
-            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, 50 + i * 15 - 4, 2, Text.pig);
+            //Viewport.ctx.globalAlpha = 0.3;
+            //Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, 50 + i * 15 - 4, 2, Text.pig);
 
             Viewport.ctx.globalAlpha = 1;
-            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2 - 1, 50 + i * 15, 2, Text.shadow);
-            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2 + 1, 50 + i * 15, 2, Text.shadow);
-            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, 50 + i * 15, 2, Text.pig);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, this.pos[i].y - 1, 2, Text.shadow);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, this.pos[i].y + 1, 2, Text.shadow);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2 - 1, this.pos[i].y, 2, Text.shadow);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2 + 1, this.pos[i].y, 2, Text.shadow);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, this.pos[i].y, 2, Text.pig);
         }
 
-        this.drawInstructions();
+        if (this.pos[2].y > 50) {
+            this.drawInstructions();
+        }
 
         // Fade to load screen
         if (this.fadet >= 0) {

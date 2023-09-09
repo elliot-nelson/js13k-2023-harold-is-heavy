@@ -67,9 +67,8 @@ export class Sign {
         let v = (Viewport.height / 2) + 24;
 
         Viewport.ctx.fillStyle = rgba(44, 27, 46, 0.6);
-        //Viewport.ctx.fillStyle = rgba(148, 53, 61, 0.66);
         Viewport.ctx.fillRect(u - 2, v - 2, this.overlaySize.w + 3, this.overlaySize.h + 2);
 
-        Text.drawText(Viewport.ctx, this.text, (Viewport.width - this.overlaySize.w) / 2, (Viewport.height / 2) + 24, 1, Text.tan, Text.shadow);
+        Text.drawText(Viewport.ctx, this.text, (Viewport.width - this.overlaySize.w) / 2, (Viewport.height / 2) + 24, 1, Text.white, Text.shadow);
     }
 }

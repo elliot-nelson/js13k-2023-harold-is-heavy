@@ -134,7 +134,7 @@ export class Player {
             game.screen.screenshakes.push(new ScreenShake(12, 0, 3));
             game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
 
-            game.screen.addEntity(new StarParticle(this.pos));
+            //game.screen.addEntity(new StarParticle(this.pos));
             //Audio.play(Audio.playerLand);
         }
     }
