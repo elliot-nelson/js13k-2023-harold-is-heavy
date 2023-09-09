@@ -86,7 +86,7 @@ export class IntroScreen {
         let width = Text.measure(text, 1).w;
 
         if (this.t % 30 < 24) {
-            Text.drawText(Viewport.ctx, text, (Viewport.width - width) / 2, Viewport.height - 10, 1, Text.tan, Text.shadow);
+            Text.drawText(Viewport.ctx, text, (Viewport.width - width) / 2, Viewport.height - 10, 1, Text.white, Text.shadow);
         }
     }
 }
