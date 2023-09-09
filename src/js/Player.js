@@ -35,7 +35,7 @@ export class Player {
 
         this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
         this.hbb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
-        this.abb = [{ x: -4, y: 4 }, { x: 4, y: 5 }];
+        this.abb = [{ x: -6, y: 4 }, { x: 6, y: 5 }];
 
         // temp
         this.noClipWall = true;
