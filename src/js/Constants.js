@@ -106,3 +106,6 @@ export const JUMP_CHEAT_Y_PIXELS = 2;
 // Tapping jump before you've landed will trigger another jump if you're
 // "about" to land on the ground (within this many frames).
 export const JUMP_CHEAT_LANDING_FRAMES = 8;
+
+// How many pixels you must fall to super slam
+export const SUPER_SLAM_FALL_DISTANCE = 72;

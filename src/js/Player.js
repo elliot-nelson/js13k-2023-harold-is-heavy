@@ -1,6 +1,6 @@
 // Player
 
-import { JUMP_VELOCITY, JUMP_CHEAT_LANDING_FRAMES, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TARGET_GAME_HEIGHT } from './Constants';
+import { JUMP_VELOCITY, JUMP_CHEAT_LANDING_FRAMES, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TARGET_GAME_HEIGHT, SUPER_SLAM_FALL_DISTANCE } from './Constants';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { Viewport } from './Viewport';
@@ -130,7 +130,7 @@ export class Player {
         }
 
         if (distanceFallen > 4) {
-            game.screen.landedOnTile(tile, distanceFallen > 48);
+            game.screen.landedOnTile(tile, distanceFallen > SUPER_SLAM_FALL_DISTANCE);
             game.screen.screenshakes.push(new ScreenShake(12, 0, 3));
             game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
 
@@ -145,11 +145,11 @@ export class Player {
             let shakemap = game.screen.tileshakemap[qr.r + 1]?.[qr.q];
             let y = shakemap && shakemap.y ? shakemap.y : 0;
 
-            if (this.pos.y - this.highestY > 48) {
+            if (this.pos.y - this.highestY > SUPER_SLAM_FALL_DISTANCE) {
                 Viewport.ctx.globalAlpha = 0.2;
                 Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.last[1].x, y: this.pos.y + y - 4 });
             }
-            if (this.pos.y - this.highestY > 48) {
+            if (this.pos.y - this.highestY > SUPER_SLAM_FALL_DISTANCE) {
                 Viewport.ctx.globalAlpha = 0.4;
                 Sprite.drawViewportSprite(Sprite.bigpig[this.facing][this.frame], { x: this.last[0].x, y: this.pos.y + y - 2 });
             }

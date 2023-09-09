@@ -13,16 +13,19 @@ import { qr2xy, xy2qr, centerxy, vectorBetween, manhattanXY, rgba } from './Util
 import { Text } from './Text';
 
 const SIGN_TEXT = [
-    'pn TO MOVE HAROLD',
-    'SPACEBAR TO JUMP',
-    'mo TO PEEK UP AND DOWN',
+    'pn TO MOVE HAROLD', //1
+    'SPACEBAR TO JUMP', //2
+    'mo TO PEEK UP AND DOWN', //3
     'HAROLD IS HEAVY! SLAM THE GROUND\n' +
-    'NEAR CRATES TO BREAK THEM OPEN',
+    'NEAR CRATES TO BREAK THEM OPEN', //4
     'THE KING IS CAPTURING YOUR FRIENDS\n' +
     'AND TURNING THEM INTO SANDALS!\n' +
-    'BREAK ALL THE CRATES TO RESCUE THEM',
+    'BREAK ALL THE CRATES TO RESCUE THEM', //5
     'THE KING\'S KNIGHTS ARE STILL LOOKING FOR \n' +
-    'YOU - TRY LANDING ON THEM!'
+    'YOU - TRY LANDING ON THEM!', //6
+    'SOME FLOATING PLATFORMS ARE UNSTABLE.\n' +
+    'LAND ON THEM HARD ENOUGH AND YOU CAN\n' +
+    'TEMPORARILY KNOCK THEM DOWN!' //7
 ];
 
 export class Sign {
