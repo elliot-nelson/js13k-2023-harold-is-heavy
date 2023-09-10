@@ -29,7 +29,7 @@ export class Knight {
         this.z = 4;
 
         this.bb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
-        this.hbb = [{ x: -3, y: -6 }, { x: 3, y: -4 }];
+        this.hbb = [{ x: -3, y: -6 }, { x: 3, y: 0 }];
         this.abb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
 
         // temp
