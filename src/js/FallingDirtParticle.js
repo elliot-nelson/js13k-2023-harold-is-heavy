@@ -9,7 +9,7 @@ import { clamp } from './Util';
 
 export class FallingDirtParticle {
     constructor(pos) {
-        this.frame = 0;
+        this.frame = Math.floor(Math.random() * 2);
         this.pos = { ...pos };
         this.t = 0;
         this.d = 15;

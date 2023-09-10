@@ -1,6 +1,6 @@
 // Player
 
-import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED } from './Constants';
+import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TILE_SIZE } from './Constants';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { Viewport } from './Viewport';
@@ -60,7 +60,9 @@ export class Knight {
             this.vel.x = clamp(this.vel.x, -MOVE_SPEED, MOVE_SPEED);
 
             let nextTile = xy2qr({ x: this.pos.x + this.vel.x, y: this.pos.y });
-            if (game.screen.tileIsPassable(nextTile.q, nextTile.r + 1)) {
+            if (game.screen.tileIsPassable(nextTile.q, nextTile.r + 1) ||
+                (this.vel.x < 0 && (this.pos.x - (nextTile.q - 1) * TILE_SIZE < 12) && !game.screen.tileIsPassable(nextTile.q - 1, nextTile.r)) ||
+                (this.vel.x > 0 && ((nextTile.q + 1) * TILE_SIZE - this.pos.x < 12) && !game.screen.tileIsPassable(nextTile.q + 1, nextTile.r))) {
                 this.vel.x = 0;
                 this.stack.push({ turn: -1 });
                 this.stack.push({ pause: 20 });

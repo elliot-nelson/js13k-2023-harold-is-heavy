@@ -270,8 +270,17 @@
     "duration": 100
    },
    {
-    "filename": "dirt.aseprite",
+    "filename": "dirt 0.aseprite",
     "frame": { "x": 0, "y": 56, "w": 1, "h": 1 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 1 },
+    "sourceSize": { "w": 1, "h": 1 },
+    "duration": 100
+   },
+   {
+    "filename": "dirt 1.aseprite",
+    "frame": { "x": 1, "y": 56, "w": 1, "h": 1 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 1 },
