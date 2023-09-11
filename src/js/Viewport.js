@@ -46,6 +46,7 @@ export const Viewport = {
             Viewport.canvas.height = dprHeight;
 
             Viewport.scale = ((Math.min(dprWidth / TARGET_GAME_WIDTH, dprHeight / TARGET_GAME_HEIGHT) * 10) | 0) / 10;
+            console.log(Viewport.scale);
             Viewport.width = Math.ceil(dprWidth / Viewport.scale);
             Viewport.height = Math.ceil(dprHeight / Viewport.scale);
             Viewport.center = {
