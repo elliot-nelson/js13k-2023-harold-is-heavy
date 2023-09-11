@@ -1,9 +1,6 @@
 // Input
 
-import { INPUT_MODE_MOUSE, INPUT_MODE_TOUCH } from '../Constants';
 import { KeyboardAdapter } from './KeyboardAdapter';
-import { MouseAdapter } from './MouseAdapter';
-import { TouchAdapter } from './TouchAdapter';
 
 export const Input = {
     // Game Inputs
@@ -54,12 +51,6 @@ export const Input = {
         this.framesHeld = {};
 
         KeyboardAdapter.init();
-        MouseAdapter.init();
-        TouchAdapter.init();
-
-        this.mode = INPUT_MODE_TOUCH;
-
-        this.dragging = false;
     },
 
     update() {
@@ -70,10 +61,8 @@ export const Input = {
 
         KeyboardAdapter.update();
 
-        let pointerAdapter = this.mode === INPUT_MODE_MOUSE ? MouseAdapter : TouchAdapter;
-
         for (let action of Object.values(Input.Action)) {
-            let held = pointerAdapter.held[action] || KeyboardAdapter.held[action];
+            let held = KeyboardAdapter.held[action];
             this.pressed[action] = !this.held[action] && held;
             this.released[action] = this.held[action] && !held;
 
@@ -86,36 +75,9 @@ export const Input = {
             this.held[action] = held;
         }
 
-        this.pointer = pointerAdapter.pointer;
+        //this.pointer = pointerAdapter.pointer;
         this.direction = KeyboardAdapter.direction;
         //this.direction = this.gamepad.direction.m > 0 ? this.gamepad.direction : this.keyboard.direction;
-
-        if (this.held[Input.Action.RAW_TOUCH]) {
-            if (this.framesHeld[Input.Action.RAW_TOUCH] > 20) {
-                this.dragging = true;
-            }
-
-            let diffPixels = Math.abs(pointerAdapter.pointerDragStart.u - pointerAdapter.pointer.u) + Math.abs(pointerAdapter.pointerDragStart.v - pointerAdapter.pointer.v);
-            if (diffPixels > 5) {
-                this.dragging = true;
-            }
-        }
-
-        if (this.dragging && pointerAdapter.pointer) {
-            this.dragVector = {
-                x: pointerAdapter.pointer.u - pointerAdapter.pointerDragStart.u,
-                y: pointerAdapter.pointer.v - pointerAdapter.pointerDragStart.v
-            };
-        }
-
-        if (this.released[Input.Action.RAW_TOUCH]) {
-            if (this.dragging) {
-                this.dragging = false;
-            } else {
-                this.pressed[Input.Action.TAP] = true;
-                this.framesHeld[Input.Action.TAP] = 1;
-            }
-        }
     },
 
     onDown(action) {},

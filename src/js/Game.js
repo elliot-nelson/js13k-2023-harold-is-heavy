@@ -8,7 +8,6 @@ import { Viewport } from './Viewport';
 import { rgba, createCanvas, clamp, partialText, uv2xy, xy2qr, xy2uv, qr2xy, centerxy } from './Util';
 import { Audio } from './Audio';
 import { Movement } from './systems/Movement';
-import { Damage } from './systems/Damage';
 
 import { Camera } from './Camera';
 import { VictoryScreen } from './VictoryScreen';

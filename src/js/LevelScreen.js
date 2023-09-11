@@ -205,7 +205,7 @@ export class LevelScreen {
                 //
                 // (The real fix for this of course is to have multiple LAYERS of tiles, with bg and
                 // fg in separate layers, but nobody has space for that!)
-                if (tiles[r][q] === 6 || (tileshakemap[r][q].y > 0 && tiles[r - 1][q] === 6)) {
+                if (tiles[r][q] === 6 || (r > 0 && tileshakemap[r][q].y > 0 && tiles[r - 1][q] === 6)) {
                     Viewport.ctx.drawImage(Sprite.tiles[6].img,
                         q * TILE_SIZE + offset.u,
                         r * TILE_SIZE + offset.v);

@@ -5,7 +5,7 @@ import { rgba, createCanvas } from './Util';
 import { SpriteSheet } from './generated/SpriteSheet-gen';
 import { Viewport } from './Viewport';
 import { Camera } from './Camera';
-import { TILE_SIZE, TILE_CORNER_OUTER, TILE_CORNER_INNER, TILE_DYNAMIC, TILE_WALL_LEFT, TILE_WALL_RIGHT, TILE_WALL_BOTTOM, TILE_WALL_TOP } from './Constants';
+import { TILE_SIZE } from './Constants';
 
 /**
  * Sprite
@@ -113,14 +113,6 @@ export const Sprite = {
             u: pos.x - sprite.anchor.x - Camera.pos.x + Viewport.center.u,
             v: pos.y - sprite.anchor.y - Camera.pos.y + Viewport.center.v
         };
-    },
-
-    getDynamicTile(bitmask) {
-        if (!this.tiles[bitmask + TILE_DYNAMIC - 1]) {
-            this.tiles[bitmask + TILE_DYNAMIC - 1] = initDynamicSprite(createDynamicTile(this.tiles, bitmask), { x: 0, y: 0 });
-        }
-
-        return this.tiles[bitmask + TILE_DYNAMIC - 1];
     }
 };
 
