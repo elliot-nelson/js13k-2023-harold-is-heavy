@@ -30,7 +30,6 @@ export class LittlePig {
     }
 
     update() {
-        console.log('UPDATE on little pig', this);
         this.t++;
 
         if (this.t === 5) {
@@ -73,11 +72,8 @@ export class LittlePig {
         if (this.vel.x < 0) this.facing = 1;
 
         if (xy2uv(this.pos).u > Viewport.width) {
-            let culled = this.cull;
             this.cull = true;
             game.screen.rescueLittlePig();
-            console.log('CALLING rescue pig ', this.pos, this.id, this.cull, culled);
-            console.log((new Error('hello')).stack);
         }
     }
 

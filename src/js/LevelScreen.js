@@ -59,7 +59,6 @@ export class LevelScreen {
             } else if (obj.name.startsWith('SIGN')) {
                 this.addEntity(new Sign({ q: obj.x, r: obj.y }, Number(obj.name.slice(4))));
             } else if (obj.name === 'SLAM') {
-                console.log('SLAM');
                 this.superslamTiles.push(this.extractSuperslamTiles({ q: obj.x, r: obj.y }));
             }
         }
@@ -331,8 +330,6 @@ export class LevelScreen {
     }
 
     addTileShake(screenshake, originQR) {
-        console.log('add tile shake');
-
         let tiles = [];
 
         for (let q = originQR.q; q >= 0; q--) {
