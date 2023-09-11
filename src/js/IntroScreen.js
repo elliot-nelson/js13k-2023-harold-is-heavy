@@ -36,6 +36,7 @@ export class IntroScreen {
             { y: 0 },
             { y: 0 }
         ];
+        this.screenshakes = [];
         this.t = 0;
         this.fadet = -1;
     }
@@ -53,12 +54,18 @@ export class IntroScreen {
 
         if (this.pos[0].y < 45) {
             this.pos[0].y += this.vel[0].y;
+        } else if (!this.screenshakes[0]) {
+            this.screenshakes[0] = new ScreenShake(12, 0, 3);
         }
         if (this.pos[1].y < 60) {
             this.pos[1].y += this.vel[1].y;
+        } else if (!this.screenshakes[1]) {
+            this.screenshakes[1] = new ScreenShake(12, 0, 3);
         }
         if (this.pos[2].y < 75) {
             this.pos[2].y += this.vel[2].y;
+        } else if (!this.screenshakes[2]) {
+            this.screenshakes[2] = new ScreenShake(12, 0, 3);
         }
 
         if (this.fadet >= 0) this.fadet++;
@@ -71,13 +78,28 @@ export class IntroScreen {
         if (Input.pressed[Input.Action.JUMP] || Input.pressed[Input.Action.CONTINUE]) {
             this.fadet = 0;
         }
+
+        for (let i = 0; i < 3; i++) {
+            if (this.screenshakes[i]) {
+                this.screenshakes[i].update();
+            }
+        }
     }
 
     draw() {
         Viewport.ctx.fillStyle = '#457cd6';
         Viewport.ctx.fillRect(0, 0, Viewport.width, Viewport.height);
 
-        for (let i = 0; i < this.text.length; i++) {
+        let shakeX = 0, shakeY = 0;
+        for (let i = 0; i < 3; i++) {
+            if (this.screenshakes[i]) {
+                shakeX += this.screenshakes[i].x;
+                shakeY += this.screenshakes[i].y;
+            }
+        }
+        Viewport.ctx.translate(shakeX, shakeY);
+
+        for (let i = this.text.length - 1; i >= 0; i--) {
             let width = Text.measure(this.text[i], 2).w;
 
             //Viewport.ctx.globalAlpha = 0.3;

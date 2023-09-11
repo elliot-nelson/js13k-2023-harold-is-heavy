@@ -19,6 +19,8 @@ export class ScreenShake {
     update() {
         this.frame++;
         if (this.frame >= this.frames) {
+            this.x = 0;
+            this.y = 0;
             return false;
         }
 
