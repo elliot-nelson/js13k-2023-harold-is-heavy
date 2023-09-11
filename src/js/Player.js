@@ -32,6 +32,7 @@ export class Player {
         this.highestY = this.pos.y;
         this.state = PLAYING;
         this.last = [this.pos, this.pos];
+        this.dead = false;
 
         this.bb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
         this.hbb = [{ x: -4, y: -4 }, { x: 4, y: 5 }];
@@ -122,6 +123,8 @@ export class Player {
     }
 
     landedOnTile(tile) {
+        if (this.dead) return;
+
         let distanceFallen = this.pos.y - this.highestY;
         this.highestY = this.pos.y;
 
@@ -135,9 +138,15 @@ export class Player {
             game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
 
             //game.screen.addEntity(new StarParticle(this.pos));
-        }
-        if (distanceFallen > SUPER_SLAM_FALL_DISTANCE) {
-            Audio.play(Audio.playerSlam);
+            for (let entity of game.screen.entities) {
+                if (entity.team && entity.team !== this.team && Math.abs(entity.pos.x - this.pos.x) < 32 && Math.abs(entity.pos.y - this.pos.y) < 4) {
+                    entity.landedNearby(this);
+                }
+            }
+
+            if (distanceFallen > SUPER_SLAM_FALL_DISTANCE) {
+                Audio.play(Audio.playerSlam);
+            }
         }
     }
 
@@ -167,6 +176,7 @@ export class Player {
     dieFalling(levelBottomY) {
         if (this.state !== DYING) {
             this.state = DYING;
+            this.dead = true;
             this.vel.x = 0;
             this.stateFrames = 0;
             game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: levelBottomY - 2 }));
@@ -177,6 +187,7 @@ export class Player {
     dieHit(enemy) {
         if (this.state !== DYING) {
             this.state = DYING;
+            this.dead = true;
             this.vel.x = 0;
             this.stateFrames = 0;
             game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: this.pos.y }));

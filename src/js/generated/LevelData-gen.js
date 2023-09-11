@@ -3682,7 +3682,7 @@ export const LevelData =
                         "y": 9
                     },
                     {
-                        "name": "KNIGHT",
+                        "name": "HEDGEHOG",
                         "x": 15,
                         "y": 13
                     },

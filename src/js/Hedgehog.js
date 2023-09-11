@@ -12,10 +12,13 @@ import { BloodPoolParticle } from './BloodPoolParticle';
 import { Audio } from './Audio';
 
 const PATROL = 0;
+const FLIPPING = 1;
+const FLIPPED = 2;
+
 const MOVE_SPEED = 0.5;
 const PAUSE_FRAMES = 5;
 
-export class Knight {
+export class Hedgehog {
     constructor(pos) {
         this.pos = { ...pos };
         this.vel = { x: 0, y: 0 };
@@ -27,10 +30,11 @@ export class Knight {
         this.isJumping = true;
         this.team = 2;
         this.z = 4;
+        this.r = 0;
 
-        this.bb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
-        this.hbb = [{ x: -3, y: -6 }, { x: 3, y: 0 }];
-        this.abb = [{ x: -3, y: -6 }, { x: 3, y: 6 }];
+        this.bb = [{ x: -5, y: -4 }, { x: 6, y: 4 }];
+        this.abb = [{ x: -5, y: -4 }, { x: 6, y: 4 }];
+        this.hbb = [{ x: -5, y: -4 }, { x: 6, y: 4 }];
 
         // temp
         this.noClipWall = true;
@@ -48,15 +52,18 @@ export class Knight {
 
         let action = this.stack[this.stack.length - 1];
 
-        if (!game.screen.entityIsOnSolidGround(this)) {
-            this.frame = 0;
-            this.vel.x *= 0.9;
-        } else if (action.pause) {
-            this.vel.x = 0;
+        this.immune = !action.vulnerable;
+        this.r = 0;
+
+        if (action.pause) {
             this.frame = 0;
             action.pause--;
             if (action.pause < 1) this.stack.pop();
         } else if (action.walk) {
+            if (!game.screen.entityIsOnSolidGround(this)) {
+                this.frame = 0;
+                this.vel.x *= 0.9;
+            }
             this.vel.x += this.facing * MOVE_SPEED / 5;
             this.vel.x = clamp(this.vel.x, -MOVE_SPEED, MOVE_SPEED);
 
@@ -84,6 +91,26 @@ export class Knight {
                 this.cull = true;
             }
             // do nothing forever
+        } else if (action.flip) {
+            action.flip++;
+            if (action.flip === 2) {
+                this.vel.x = 0;
+            }
+            if (action.flip === 4) {
+                this.vel.y = -2.3;
+            }
+            this.r = (action.flip / 10) * Math.PI;
+            if (action.flip === 10) {
+                this.stack.pop();
+                this.stack.push({ liedown: 1, vulnerable: true });
+            }
+        } else if (action.liedown) {
+            action.liedown++;
+            if (action.liedown > 120) {
+                this.stack.pop();
+            }
+            this.r = Math.PI;
+            this.frame = (Math.floor(action.liedown / 5) % 2) + 1;
         }
 
         this.vel.y += GRAVITY;
@@ -92,14 +119,14 @@ export class Knight {
     draw() {
         if (this.crusher) {
             let gap = (this.pos.y + this.bb[1].y) - (this.crusher.pos.y + this.crusher.bb[1].y);
-            Sprite.drawSmashedSprite(Sprite.knight[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y }, gap);
+            Sprite.drawSmashedSprite(Sprite.hedgehog[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y }, gap);
         } else {
-            Sprite.drawViewportSprite(Sprite.knight[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y });
+            Sprite.drawViewportSprite(Sprite.hedgehog[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y }, this.r);
         }
     }
 
     landedNearby(enemy) {
-        this.stack.push({ pause: 12 });
+        this.stack.push({ flip: 1 });
     }
 
     crushedBy(enemy) {

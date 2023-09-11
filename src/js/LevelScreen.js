@@ -14,6 +14,7 @@ import { LittlePigBox } from './LittlePigBox';
 import { LandingParticle } from './Particle';
 import { Text } from './Text';
 import { Knight } from './Knight';
+import { Hedgehog } from './Hedgehog';
 import { Sign } from './Sign';
 import { game } from './Game';
 import { ScreenShake } from './ScreenShake';
@@ -55,6 +56,9 @@ export class LevelScreen {
                 this.littlePigs++;
             } else if (obj.name === 'KNIGHT') {
                 this.addEntity(new Knight(qr2xy({ q: obj.x, r: obj.y })));
+                this.enemies++;
+            } else if (obj.name === 'HEDGEHOG') {
+                this.addEntity(new Hedgehog(qr2xy({ q: obj.x, r: obj.y })));
                 this.enemies++;
             } else if (obj.name.startsWith('SIGN')) {
                 this.addEntity(new Sign({ q: obj.x, r: obj.y }, Number(obj.name.slice(4))));

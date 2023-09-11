@@ -10,7 +10,7 @@ export const Attack = {
         for (let attacker of relevantEntities) {
             if (attacker.abb) {
                 for (let victim of relevantEntities) {
-                    if (attacker.team === victim.team || victim.immune) continue;
+                    if (attacker.team === victim.team || victim.immune || attacker.dead) continue;
 
                     if (victim.bb) {
                         if (isBoundingBoxOverlap(entityABB(attacker), entityHBB(victim))) {
