@@ -75,38 +75,37 @@ export class Knight {
             this.vel.x = -this.vel.x;
             this.stack.pop();
         } else if (action.crush) {
-            let gap = (this.pos.y + this.bb[1].y) - (this.crusher.pos.y + this.crusher.bb[1].y);
-            if (gap <= 2 && !this.exploded) {
-                this.exploded = true;
+            action.crush--;
+            if (action.crush === 2) {
                 game.screen.addEntity(new BloodPoolParticle(this.pos));
             }
-            if (gap === 0) {
+            if (action.crush === 0) {
                 this.cull = true;
             }
-            // do nothing forever
+            this.frame = 2 - Math.floor(action.crush / 3);
         }
 
         this.vel.y += GRAVITY;
     }
 
     draw() {
-        if (this.crusher) {
-            let gap = (this.pos.y + this.bb[1].y) - (this.crusher.pos.y + this.crusher.bb[1].y);
-            Sprite.drawSmashedSprite(Sprite.knight[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y }, gap);
+        if (this.dead) {
+            Sprite.drawViewportSprite(Sprite.explosiona[this.frame], this.pos);
         } else {
-            Sprite.drawViewportSprite(Sprite.knight[this.facing === 1 ? 0 : 1][this.frame], { x: this.pos.x, y: this.pos.y });
+            Sprite.drawViewportSprite(Sprite.knight[this.facing === 1 ? 0 : 1][this.frame], this.pos);
         }
     }
 
     landedNearby(enemy) {
-        this.stack.push({ pause: 12 });
+        if (!this.dead) {
+            this.stack.push({ pause: 12 });
+        }
     }
 
     crushedBy(enemy) {
-        if (!this.crusher) {
-            this.crusher = enemy;
-            this.stack = [{ crush: -1 }];
-            this.abb = undefined;
+        if (!this.dead) {
+            this.dead = true;
+            this.stack = [{ crush: 8 }];
             Audio.play(Audio.enemyDeath);
         }
     }

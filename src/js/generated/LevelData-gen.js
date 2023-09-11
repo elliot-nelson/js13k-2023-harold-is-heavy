@@ -4802,7 +4802,7 @@ export const LevelData =
                         0,
                         0,
                         0,
-                        10,
+                        5,
                         5,
                         6,
                         6,
@@ -5987,8 +5987,8 @@ export const LevelData =
                     },
                     {
                         "name": "SIGN07",
-                        "x": 35,
-                        "y": 17
+                        "x": 39,
+                        "y": 14
                     },
                     {
                         "name": "HEDGEHOG",
