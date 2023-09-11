@@ -495,8 +495,26 @@
     "duration": 100
    },
    {
-    "filename": "tilebg.aseprite",
+    "filename": "tilebg 0.aseprite",
     "frame": { "x": 0, "y": 165, "w": 10, "h": 10 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 10, "h": 10 },
+    "sourceSize": { "w": 10, "h": 10 },
+    "duration": 100
+   },
+   {
+    "filename": "tilebg 1.aseprite",
+    "frame": { "x": 10, "y": 165, "w": 10, "h": 10 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 10, "h": 10 },
+    "sourceSize": { "w": 10, "h": 10 },
+    "duration": 100
+   },
+   {
+    "filename": "tilebg 2.aseprite",
+    "frame": { "x": 20, "y": 165, "w": 10, "h": 10 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 10, "h": 10 },

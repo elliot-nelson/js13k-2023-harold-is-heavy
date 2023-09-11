@@ -35,6 +35,7 @@ export class LevelScreen {
         this.superslamTiles = [];
         this.t = 0;
         this.lastCloud = 0;
+        this.lightUpSlamTiles = 0;
 
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
         this.addEntity(this.player);
@@ -120,6 +121,10 @@ export class LevelScreen {
         if (this.fallingDirtCounter > 0) {
             this.fallingDirtCounter--;
             this.spawnFallingDirt();
+        }
+
+        if (this.lightUpSlamTiles > 0) {
+            this.lightUpSlamTiles--;
         }
 
         this.spawnClouds();
@@ -221,7 +226,19 @@ export class LevelScreen {
         for (let r = r1; r <= r2; r++) {
             for (let q = q1; q <= q2; q++) {
                 if (tiles[r][q] > 0 && tiles[r][q] !== 6) {
-                    Viewport.ctx.drawImage(Sprite.tilebg[0].img,
+                    let frame = 0;
+                    for (let i = 0; i < this.superslamTiles.length; i++) {
+                        if (r === this.superslamTiles[i].r && q >= this.superslamTiles[i].q1 && q <= this.superslamTiles[i].q2) {
+                            if (this.lightUpSlamTiles > 0) {
+                                frame++;
+                            }
+                            if (this.lightUpSlamTiles > 6) {
+                                frame++;
+                            }
+                        }
+                    }
+
+                    Viewport.ctx.drawImage(Sprite.tilebg[frame].img,
                         q * TILE_SIZE + offset.u - 1 + tileshakemap[r][q].x,
                         r * TILE_SIZE + offset.v - 1 + tileshakemap[r][q].y);
                 }
@@ -298,6 +315,8 @@ export class LevelScreen {
         this.addEntity(new LandingParticle(this.player.pos));
         this.addEntity(new LandingParticle(this.player.pos));
         this.addEntity(new LandingParticle(this.player.pos));
+
+        this.lightUpSlamTiles = 12;
 
         this.fallingDirtCounter = 4;
     }
