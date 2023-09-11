@@ -271,7 +271,7 @@ export class LevelScreen {
                 if (tile.r === slam.r && tile.q >= slam.q1 && tile.q <= slam.q2) {
                     for (let q = slam.q1; q <= slam.q2; q++) {
                         this.tiles[slam.r + 1][q] = this.tiles[slam.r][q];
-                        this.tiles[slam.r][q] = 0;
+                        this.tiles[slam.r][q] = this.tiles[slam.r + 1][q] === 5 ? 6 : 0;
 
                         let xy = this.player.pos;
                         this.addEntity(new BigArrowParticle({ x: xy.x, y: xy.y }));
