@@ -26,8 +26,6 @@ export const Sprite = {
     },
 
     init() {
-        Sprite.attack = SpriteSheet.attack.map(initBasicSprite);
-
         Sprite.bigpig = [SpriteSheet.bigpig.map(initBasicSprite, { x: 7, y: 4 })];
         Sprite.bigpig.push(Sprite.bigpig[0].map(sprite => initDynamicSprite(flipHorizontal(sprite.img), sprite.anchor)));
 
@@ -63,9 +61,6 @@ export const Sprite = {
         Sprite.clouds = SpriteSheet.clouds.map(initBasicSprite);
 
         // Enemies
-
-        // Gore/blood
-        Sprite.gore = SpriteSheet.gore.map(initBasicSprite);
 
         // Tiles
         Sprite.tiles = SpriteSheet.tiles.map(initBasicSprite);
