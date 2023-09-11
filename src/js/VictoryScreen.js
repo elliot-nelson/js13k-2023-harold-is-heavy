@@ -12,8 +12,7 @@ export class VictoryScreen {
             '',
             'HAROLD\'S ADVENTURE IS OVER FOR NOW, BUT YOU CAN KEEP',
             'PLAYING IF YOU WANT! TRY PRESSING 1 2 3 4 ON YOUR KEYBOARD',
-            'TO TELEPORT BACK TO YOUR FAVORITE LEVEL.',
-            '',
+            'TO TELEPORT BACK TO YOUR FAVORITE LEVEL.'
         ];
         this.frames = 0;
     }

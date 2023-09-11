@@ -13,11 +13,9 @@
 
 ## INSTRUCTIONS
 
-Ambushed, beheaded, burned, and trapped in a wrought iron coffin. Once an almost invincible necromancer, your last remaining toehold in this world is the only nearby creature -- a moth.
+It's the 13th century in the Floating Isles of Isildor, and the king has been rounding up cute baby dragonkin everywhere. All but the improbably heavy Harold, as he was simply too heavy for anyone to move.
 
-Escape your tomb, now full of vengeful ghosts, by possessing an army of restless moths. Gather resources, build defenses, and then strike out for the tomb's exit. Are you ready to reclaim your former glory?
-
-Playable on your phone, tablet, or any desktop browser.
+Throw Harold's weight around in this silly platformer and rescue your friends from the king's ugly, boring crates! Arrow keys or WASD to move, spacebar to jump.
 
 ## BUILD
 
