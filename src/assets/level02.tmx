@@ -53,7 +53,7 @@
    <object id="7" name="BOX" x="459.418" y="194.907">
     <point/>
    </object>
-   <object id="8" name="HEDGEHOG" x="204.176" y="227.4">
+   <object id="8" name="KNIGHT" x="204.176" y="227.4">
     <point/>
    </object>
    <object id="9" name="KNIGHT" x="259.815" y="219.91">
@@ -68,7 +68,7 @@
    <object id="12" name="BOX" x="635.486" y="203.604">
     <point/>
    </object>
-   <object id="13" name="BOX" x="547.951" y="202.532">
+   <object id="13" name="BOX" x="547.093" y="203.175">
     <point/>
    </object>
    <object id="14" name="SIGN06" x="292.212" y="195.237">

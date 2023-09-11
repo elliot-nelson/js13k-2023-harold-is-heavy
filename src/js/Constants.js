@@ -52,3 +52,6 @@ export const JUMP_CHEAT_LANDING_FRAMES = 8;
 
 // How many pixels you must fall to super slam
 export const SUPER_SLAM_FALL_DISTANCE = 72;
+
+// How many pixels away can you slam/bounce enemies?
+export const SLAM_ENEMY_DISTANCE = 24;

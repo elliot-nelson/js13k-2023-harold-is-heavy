@@ -1,6 +1,6 @@
 // Player
 
-import { JUMP_VELOCITY, JUMP_CHEAT_LANDING_FRAMES, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TARGET_GAME_HEIGHT, SUPER_SLAM_FALL_DISTANCE } from './Constants';
+import { JUMP_VELOCITY, JUMP_CHEAT_LANDING_FRAMES, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TARGET_GAME_HEIGHT, SUPER_SLAM_FALL_DISTANCE, SLAM_ENEMY_DISTANCE } from './Constants';
 import { Sprite } from './Sprite';
 import { Camera } from './Camera';
 import { Viewport } from './Viewport';
@@ -139,7 +139,7 @@ export class Player {
 
             //game.screen.addEntity(new StarParticle(this.pos));
             for (let entity of game.screen.entities) {
-                if (entity.team && entity.team !== this.team && Math.abs(entity.pos.x - this.pos.x) < 32 && Math.abs(entity.pos.y - this.pos.y) < 4) {
+                if (entity.team && entity.team !== this.team && Math.abs(entity.pos.x - this.pos.x) < SLAM_ENEMY_DISTANCE && Math.abs(entity.pos.y - this.pos.y) < 4) {
                     entity.landedNearby(this);
                 }
             }
