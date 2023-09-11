@@ -8,13 +8,12 @@ import { game } from './Game';
 export class VictoryScreen {
     constructor() {
         this.text = [
-            'THANKS FOR PLAYING ACT 1 OF HAROLD IS HEAVY!',
+            'THANKS FOR PLAYING HAROLD IS HEAVY!',
             '',
-            'ACT 1 IS SHAREWARE. TO FINISH HAROLD\'S ADVENTURE,',
-            'ORDER THE FULL GAME VIA CHECK OR MONEY ORDER USING',
-            'THE ORDER.FRM FILE DISTRIBUTED WITH YOUR GAME.',
+            'HAROLD\'S ADVENTURE IS OVER FOR NOW, BUT YOU CAN KEEP',
+            'PLAYING IF YOU WANT! TRY PRESSING 1 2 3 4 ON YOUR KEYBOARD',
+            'TO TELEPORT BACK TO YOUR FAVORITE LEVEL.',
             '',
-            'THANK YOU FOR SUPPORTING THE SHAREWARE MOVEMENT.'
         ];
         this.frames = 0;
     }
@@ -31,7 +30,7 @@ export class VictoryScreen {
 
         for (let i = 0; i < this.text.length; i++) {
             let width = Text.measure(this.text[i], 1).w;
-            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, 24 + i * 10, 1, Text.white, Text.shadow);
+            Text.drawText(Viewport.ctx, this.text[i], (Viewport.width - width) / 2, 30 + i * 10, 1, Text.white, Text.shadow);
         }
     }
 }
