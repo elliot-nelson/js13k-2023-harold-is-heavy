@@ -284,12 +284,10 @@ export class LevelScreen {
             if (entity.landedOnTile) entity.landedOnTile(tile);
         }
 
-        this.addEntity(new LandingParticle(this.pos));
-        this.addEntity(new LandingParticle(this.pos));
-        this.addEntity(new LandingParticle(this.pos));
-        this.addEntity(new LandingParticle(this.pos));
-        this.addEntity(new LandingParticle(this.pos));
-        this.addEntity(new LandingParticle(this.pos));
+        this.addEntity(new LandingParticle(this.player.pos));
+        this.addEntity(new LandingParticle(this.player.pos));
+        this.addEntity(new LandingParticle(this.player.pos));
+        this.addEntity(new LandingParticle(this.player.pos));
 
         this.fallingDirtCounter = 4;
     }
