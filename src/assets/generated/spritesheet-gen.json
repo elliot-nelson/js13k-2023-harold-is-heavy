@@ -556,42 +556,6 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
     "sourceSize": { "w": 8, "h": 8 },
     "duration": 100
-   },
-   {
-    "filename": "tiles 10.aseprite",
-    "frame": { "x": 80, "y": 160, "w": 8, "h": 8 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
-    "sourceSize": { "w": 8, "h": 8 },
-    "duration": 100
-   },
-   {
-    "filename": "tiles 11.aseprite",
-    "frame": { "x": 88, "y": 160, "w": 8, "h": 8 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
-    "sourceSize": { "w": 8, "h": 8 },
-    "duration": 100
-   },
-   {
-    "filename": "tiles 12.aseprite",
-    "frame": { "x": 96, "y": 160, "w": 8, "h": 8 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
-    "sourceSize": { "w": 8, "h": 8 },
-    "duration": 100
-   },
-   {
-    "filename": "tiles 13.aseprite",
-    "frame": { "x": 104, "y": 160, "w": 8, "h": 8 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
-    "sourceSize": { "w": 8, "h": 8 },
-    "duration": 100
    }
  ],
  "meta": {
