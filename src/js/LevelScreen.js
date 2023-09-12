@@ -324,9 +324,11 @@ export class LevelScreen {
     spawnFallingDirt() {
         for (let i = 0; i < this.superslamTiles.length; i++) {
             let slam = this.superslamTiles[i];
-            let x = (slam.q1 + Math.random() * (slam.q2 + 1 - slam.q1)) * TILE_SIZE;
-            let y = slam.r * TILE_SIZE + TILE_SIZE + 1;
-            this.addEntity(new FallingDirtParticle({ x: x, y: y }));
+            if (!this.tileIsPassable(slam.q1, slam.r)) {
+                let x = (slam.q1 + Math.random() * (slam.q2 + 1 - slam.q1)) * TILE_SIZE;
+                let y = slam.r * TILE_SIZE + TILE_SIZE + 1;
+                this.addEntity(new FallingDirtParticle({ x: x, y: y }));
+            }
         }
     }
 
