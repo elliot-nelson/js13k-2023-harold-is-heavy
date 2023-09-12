@@ -12,6 +12,7 @@ import { ScreenShake } from './ScreenShake';
 import { ExplosionBParticle } from './ExplosionBParticle';
 import { StarParticle } from './StarParticle';
 import { Audio } from './Audio';
+import { Replay } from './Replay';
 
 const PLAYING = 1;
 const DYING = 2;
@@ -44,6 +45,16 @@ export class Player {
     }
 
     update() {
+        let input = Input;
+
+        if (this.recording) {
+            this.recording.record();
+        } else if (this.replay) {
+            this.replay.replay();
+            input = this.replay;
+            console.log(input.direction, input.pressed, 'replay');
+        }
+
         this.last[1] = { ...this.last[0] };
         this.last[0] = { ...this.pos };
 
@@ -60,8 +71,8 @@ export class Player {
         }
 
         let v = {
-            x: Input.direction.x * Input.direction.m * PLAYER_FOOT_SPEED,
-            y: Input.direction.y * Input.direction.m * 0.4
+            x: input.direction.x * input.direction.m * PLAYER_FOOT_SPEED,
+            y: input.direction.y * input.direction.m * 0.4
         };
 
         this.vel.x = clamp((this.vel.x + v.x) / 2, -PLAYER_FOOT_SPEED, PLAYER_FOOT_SPEED);
@@ -71,7 +82,7 @@ export class Player {
         ///this.pos.x += this.vel.x;
         ///this.pos.y += this.vel.y;
 
-        if (Input.pressed[Input.Action.JUMP]) {
+        if (input.pressed[Input.Action.JUMP]) {
             this.lastJumpPressed = game.frame;
         }
 
@@ -133,12 +144,12 @@ export class Player {
         }
 
         if (distanceFallen > 4) {
-            game.screen.landedOnTile(tile, distanceFallen > SUPER_SLAM_FALL_DISTANCE);
-            game.screen.screenshakes.push(new ScreenShake(12, 0, 3));
-            game.screen.addTileShake(new ScreenShake(15, 0, 9), tile);
+            game.levelScreen.landedOnTile(tile, distanceFallen > SUPER_SLAM_FALL_DISTANCE);
+            game.levelScreen.screenshakes.push(new ScreenShake(12, 0, 3));
+            game.levelScreen.addTileShake(new ScreenShake(15, 0, 9), tile);
 
-            //game.screen.addEntity(new StarParticle(this.pos));
-            for (let entity of game.screen.entities) {
+            //game.levelScreen.addEntity(new StarParticle(this.pos));
+            for (let entity of game.levelScreen.entities) {
                 if (entity.team && entity.team !== this.team && Math.abs(entity.pos.x - this.pos.x) < SLAM_ENEMY_DISTANCE && Math.abs(entity.pos.y - this.pos.y) < 4) {
                     entity.landedNearby(this);
                 }
@@ -153,7 +164,7 @@ export class Player {
     draw() {
         if (this.state !== DYING) {
             let qr = xy2qr(this.pos);
-            let shakemap = game.screen.tileshakemap[qr.r + 1]?.[qr.q];
+            let shakemap = game.levelScreen.tileshakemap[qr.r + 1]?.[qr.q];
             let y = shakemap && shakemap.y ? shakemap.y : 0;
 
             if (this.pos.y - this.highestY > SUPER_SLAM_FALL_DISTANCE) {
@@ -179,7 +190,7 @@ export class Player {
             this.dead = true;
             this.vel.x = 0;
             this.stateFrames = 0;
-            game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: levelBottomY - 2 }));
+            game.levelScreen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: levelBottomY - 2 }));
             Audio.play(Audio.playerDeath);
         }
     }
@@ -190,7 +201,7 @@ export class Player {
             this.dead = true;
             this.vel.x = 0;
             this.stateFrames = 0;
-            game.screen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: this.pos.y }));
+            game.levelScreen.addEntity(new ExplosionBParticle({ x: this.pos.x, y: this.pos.y }));
             Audio.play(Audio.playerDeath);
         }
     }

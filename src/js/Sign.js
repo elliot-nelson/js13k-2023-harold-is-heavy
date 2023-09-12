@@ -58,7 +58,7 @@ export class Sign {
             this.shakeY = 8;
         }
 
-        this.displayOverlay = (manhattanXY(this.pos, game.screen.player.pos) < 12);
+        this.displayOverlay = (manhattanXY(this.pos, game.levelScreen.player.pos) < 12);
     }
 
     draw() {

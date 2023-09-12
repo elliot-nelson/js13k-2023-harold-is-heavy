@@ -23,9 +23,12 @@ import { FallingDirtParticle } from './FallingDirtParticle';
 import { CloudParticle } from './CloudParticle';
 import { StarParticle } from './StarParticle';
 import { Audio } from './Audio';
+import { Replay } from './Replay';
 
 export class LevelScreen {
-    constructor(levelNumber) {
+    constructor(levelNumber, replay) {
+        game.levelScreen = this;
+
         this.levelName = 'something';
         this.levelData = LevelData[levelNumber];
         this.tiles = this.levelData.floors[0].tiles.map(row => [...row]);
@@ -39,6 +42,15 @@ export class LevelScreen {
         this.lightUpSlamTiles = 0;
 
         this.player = new Player(qr2xy({ q: this.levelData.spawn[0], r: this.levelData.spawn[1] }));
+
+        if (replay) {
+            replay.reset();
+            this.player.replay = replay;
+        } else {
+            this.replay = new Replay(levelNumber);
+            this.player.recording = this.replay;
+        }
+
         this.addEntity(this.player);
         this.addEntity(new StarParticle(this.player.pos));
         this.addEntity(new StarParticle(this.player.pos));
@@ -341,6 +353,9 @@ export class LevelScreen {
         this.littlePigsRescued++;
 
         if (this.littlePigsRescued === this.littlePigs) {
+            if (game.levelScreen.player.recording) {
+                game.lastReplay = game.levelScreen.player.recording;
+            }
             game.nextLevel++;
             game.screens.pop();
         }

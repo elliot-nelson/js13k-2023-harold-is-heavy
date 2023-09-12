@@ -48,7 +48,7 @@ export class LittlePig {
         }
 
         if (this.t % 3 === 0) {
-            game.screen.addEntity(new StarParticle(this.pos, 0));
+            game.levelScreen.addEntity(new StarParticle(this.pos, 0));
         }
 
         this.vel.y += GRAVITY * 0.9;
@@ -73,7 +73,7 @@ export class LittlePig {
 
         if (xy2uv(this.pos).u > Viewport.width) {
             this.cull = true;
-            game.screen.rescueLittlePig();
+            game.levelScreen.rescueLittlePig();
         }
     }
 

@@ -48,7 +48,7 @@ export class Knight {
 
         let action = this.stack[this.stack.length - 1];
 
-        if (!game.screen.entityIsOnSolidGround(this)) {
+        if (!game.levelScreen.entityIsOnSolidGround(this)) {
             this.frame = 0;
             this.vel.x *= 0.9;
         } else if (action.pause) {
@@ -61,9 +61,9 @@ export class Knight {
             this.vel.x = clamp(this.vel.x, -MOVE_SPEED, MOVE_SPEED);
 
             let nextTile = xy2qr({ x: this.pos.x + this.vel.x, y: this.pos.y });
-            if (game.screen.tileIsPassable(nextTile.q, nextTile.r + 1) ||
-                (this.vel.x < 0 && (this.pos.x - (nextTile.q - 1) * TILE_SIZE < 12) && !game.screen.tileIsPassable(nextTile.q - 1, nextTile.r)) ||
-                (this.vel.x > 0 && ((nextTile.q + 1) * TILE_SIZE - this.pos.x < 12) && !game.screen.tileIsPassable(nextTile.q + 1, nextTile.r))) {
+            if (game.levelScreen.tileIsPassable(nextTile.q, nextTile.r + 1) ||
+                (this.vel.x < 0 && (this.pos.x - (nextTile.q - 1) * TILE_SIZE < 12) && !game.levelScreen.tileIsPassable(nextTile.q - 1, nextTile.r)) ||
+                (this.vel.x > 0 && ((nextTile.q + 1) * TILE_SIZE - this.pos.x < 12) && !game.levelScreen.tileIsPassable(nextTile.q + 1, nextTile.r))) {
                 this.vel.x = 0;
                 this.stack.push({ turn: -1 });
                 this.stack.push({ pause: 20 });
@@ -77,7 +77,7 @@ export class Knight {
         } else if (action.crush) {
             action.crush--;
             if (action.crush === 2) {
-                game.screen.addEntity(new BloodPoolParticle(this.pos));
+                game.levelScreen.addEntity(new BloodPoolParticle(this.pos));
             }
             if (action.crush === 0) {
                 this.cull = true;

@@ -5,6 +5,7 @@ import { Viewport } from './Viewport';
 import { rgba, createCanvas, clamp, partialText, uv2xy, xy2qr, xy2uv, qr2xy, centerxy } from './Util';
 import { game } from './Game';
 import { Audio } from './Audio';
+import { LevelScreen } from './LevelScreen';
 
 export class VictoryScreen {
     constructor() {
@@ -16,21 +17,35 @@ export class VictoryScreen {
             'TO TELEPORT BACK TO YOUR FAVORITE LEVEL.'
         ];
         this.frames = 0;
+
+        if (game.lastReplay) {
+            this.replay = game.lastReplay;
+            this.level = new LevelScreen(this.replay.levelNumber, this.replay);
+        }
     }
 
     update() {
         this.frames++;
 
-        if (this.frames === 5) {
+        /*if (this.frames === 5) {
             Audio.play(Audio.levelStart);
-        }
+        }*/
 
-        return true;
+        //return true;
+
+        if (this.level) this.level.update();
     }
 
     draw() {
+        if (this.level) {
+            this.level.draw();
+            Viewport.ctx.globalAlpha = 0.5;
+        }
+
         Viewport.ctx.fillStyle = '#457cd6';
         Viewport.ctx.fillRect(0, 0, Viewport.width, Viewport.height);
+
+        Viewport.ctx.globalAlpha = 1;
 
         for (let i = 0; i < this.text.length; i++) {
             let width = Text.measure(this.text[i], 1).w;
