@@ -77,7 +77,7 @@
 </data>
   </layer>
   <objectgroup id="2" name="OBJECTS">
-   <object id="1" name="SPAWN" x="20.0699" y="116.42">
+   <object id="1" name="SPAWN" x="19.5343" y="163.284">
     <point/>
    </object>
    <object id="10" name="SIGN01" x="20.0846" y="203.25">

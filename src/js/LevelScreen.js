@@ -22,6 +22,7 @@ import { BigArrowParticle } from './BigArrowParticle';
 import { FallingDirtParticle } from './FallingDirtParticle';
 import { CloudParticle } from './CloudParticle';
 import { StarParticle } from './StarParticle';
+import { Audio } from './Audio';
 
 export class LevelScreen {
     constructor(levelNumber) {
@@ -73,6 +74,10 @@ export class LevelScreen {
 
     update() {
         this.t++;
+
+        if (this.t === 4) {
+            Audio.play(Audio.levelStart);
+        }
 
         let levelBottomY = qr2xy({ q: 0, r: this.tiles.length - 1 }).y;
         let cameraMaxY = levelBottomY - (TARGET_GAME_HEIGHT / 2);

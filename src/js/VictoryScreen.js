@@ -4,6 +4,7 @@ import { Text } from './Text';
 import { Viewport } from './Viewport';
 import { rgba, createCanvas, clamp, partialText, uv2xy, xy2qr, xy2uv, qr2xy, centerxy } from './Util';
 import { game } from './Game';
+import { Audio } from './Audio';
 
 export class VictoryScreen {
     constructor() {
@@ -19,6 +20,10 @@ export class VictoryScreen {
 
     update() {
         this.frames++;
+
+        if (this.frames === 5) {
+            Audio.play(Audio.levelStart);
+        }
 
         return true;
     }

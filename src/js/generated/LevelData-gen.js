@@ -1719,7 +1719,7 @@ export const LevelData =
                     {
                         "name": "SPAWN",
                         "x": 2,
-                        "y": 0
+                        "y": 6
                     },
                     {
                         "name": "SIGN01",
@@ -1768,7 +1768,7 @@ export const LevelData =
         ],
         "spawn": [
             2,
-            0,
+            6,
             0
         ]
     },
@@ -7342,8 +7342,8 @@ export const LevelData =
                 "objects": [
                     {
                         "name": "SPAWN",
-                        "x": 1,
-                        "y": 17
+                        "x": 0,
+                        "y": 15
                     },
                     {
                         "name": "KNIGHT",
@@ -7411,8 +7411,8 @@ export const LevelData =
             ]
         ],
         "spawn": [
-            1,
-            17,
+            0,
+            15,
             0
         ]
     }
