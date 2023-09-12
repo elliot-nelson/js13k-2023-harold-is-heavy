@@ -45,17 +45,6 @@ This is usually where I stop during development. Near the end of the game jam, I
 
 ## CHANGELOG
 
-#### [v1.0.2](https://github.com/elliot-nelson/js13k-2022-moth/releases/tag/v1.0.2) (2022-09-21)
-
- - Cleaned up loads of old comments and unused files.
- - Generated files now live in `src/js/generated` and `src/assets/generated`.
- - Added a build section describing the build process.
-
-#### [v1.0.1](https://github.com/elliot-nelson/js13k-2022-moth/releases/tag/v1.0.1) (2022-09-14)
-
- - Bugfix: sound and music do not play in Safari.
- - Resubmitted to game jam.
-
-#### [v1.0.0](https://github.com/elliot-nelson/js13k-2022-moth/releases/tag/v1.0.0) (2022-09-13)
+#### [v1.0.0](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.0.0) (2023-09-12)
 
  - Submitted to game jam.
