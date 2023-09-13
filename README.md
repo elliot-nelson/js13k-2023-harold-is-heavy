@@ -9,7 +9,7 @@
  - Play the version submitted to game jam at: https://js13kgames.com/entries/harold-is-heavy
  - The most recent version is available at: https://harold-is-heavy.7tonshark.com
 
-(See changelog before for more information on changes, bug fixes, etc.)
+(See changelog below for more information on changes, bug fixes, etc.)
 
 ## INSTRUCTIONS
 
