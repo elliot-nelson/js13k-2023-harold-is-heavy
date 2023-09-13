@@ -29,8 +29,8 @@ export class LevelScreen {
     constructor(levelNumber, replay) {
         game.levelScreen = this;
 
-        this.levelName = 'something';
-        this.levelData = LevelData[levelNumber];
+        this.levelNumber = levelNumber;
+        this.levelData = LevelData[this.levelNumber];
         this.tiles = this.levelData.floors[0].tiles.map(row => [...row]);
         this.tileshakemap = this.levelData.floors[0].tiles.map(row => row.map(x => ({ x: 0, y: 0 })));
         this.entities = [];
@@ -61,8 +61,7 @@ export class LevelScreen {
         this.littlePigs = 0;
         this.littlePigsRescued = 0;
 
-        this.enemies = 0;
-        this.enemiesDefeated = 0;
+        this.enemiesAlive = 0;
 
         for (const obj of this.levelData.floors[0].objects) {
             if (obj.name === 'BOX') {
@@ -70,10 +69,10 @@ export class LevelScreen {
                 this.littlePigs++;
             } else if (obj.name === 'KNIGHT') {
                 this.addEntity(new Knight(qr2xy({ q: obj.x, r: obj.y })));
-                this.enemies++;
+                this.enemiesAlive++;
             } else if (obj.name === 'HEDGEHOG') {
                 this.addEntity(new Hedgehog(qr2xy({ q: obj.x, r: obj.y })));
-                this.enemies++;
+                this.enemiesAlive++;
             } else if (obj.name.startsWith('SIGN')) {
                 this.addEntity(new Sign({ q: obj.x, r: obj.y }, Number(obj.name.slice(4))));
             } else if (obj.name === 'SLAM') {
@@ -358,6 +357,8 @@ export class LevelScreen {
             }
             game.nextLevel++;
             game.screens.pop();
+            game.scores[this.levelNumber].time = this.t;
+            game.scores[this.levelNumber].time = this.enemiesAlive;
         }
     }
 

@@ -106,6 +106,7 @@ export class Knight {
         if (!this.dead) {
             this.dead = true;
             this.stack = [{ crush: 8 }];
+            game.levelScreen.enemiesAlive--;
             Audio.play(Audio.enemyDeath);
         }
     }

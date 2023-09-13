@@ -44,6 +44,13 @@ export class Game {
         this.lastFrame = 0;
         this.nextLevel = 0;
 
+        this.scores = [
+            { time: 300, enemiesAlive: 10 },
+            { time: 300, enemiesAlive: 10 },
+            { time: 300, enemiesAlive: 10 },
+            { time: 300, enemiesAlive: 10 }
+        ];
+
         this.screens.push(new IntroScreen());
     }
 
@@ -125,6 +132,22 @@ export class Game {
 
     restartLevel() {
         this.screens.pop();
+    }
+
+    speedrunScore() {
+        let score = 10000;
+
+        for (let i = 0; i < this.scores.length; i++) {
+            score -= this.scores[i].time * 3;
+            score -= this.scores[i].enemiesAlive * 20;
+        }
+
+        let scoreText = String(score);
+        if (scoreText.length > 3) {
+            scoreText = scoreText.slice(0, 1) + ',' + scoreText.slice(1);
+        }
+
+        return scoreText;
     }
 }
 
