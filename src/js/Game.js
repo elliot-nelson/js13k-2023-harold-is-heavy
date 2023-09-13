@@ -45,10 +45,10 @@ export class Game {
         this.nextLevel = 0;
 
         this.scores = [
-            { time: 300, enemiesAlive: 10 },
-            { time: 300, enemiesAlive: 10 },
-            { time: 300, enemiesAlive: 10 },
-            { time: 300, enemiesAlive: 10 }
+            { time: 300 * 60, enemiesAlive: 10 },
+            { time: 300 * 60, enemiesAlive: 10 },
+            { time: 300 * 60, enemiesAlive: 10 },
+            { time: 300 * 60, enemiesAlive: 10 }
         ];
 
         this.screens.push(new IntroScreen());
@@ -135,16 +135,17 @@ export class Game {
     }
 
     speedrunScore() {
-        let score = 10000;
+        let score = 100000;
 
         for (let i = 0; i < this.scores.length; i++) {
-            score -= this.scores[i].time * 3;
-            score -= this.scores[i].enemiesAlive * 20;
+            score -= this.scores[i].time;
+            score -= this.scores[i].enemiesAlive * 5 * 60;
         }
 
         let scoreText = String(score);
         if (scoreText.length > 3) {
-            scoreText = scoreText.slice(0, 1) + ',' + scoreText.slice(1);
+
+            scoreText = scoreText.slice(0, scoreText.length - 3) + ',' + scoreText.slice(scoreText.length - 3);
         }
 
         return scoreText;
