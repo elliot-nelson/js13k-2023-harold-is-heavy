@@ -6,8 +6,8 @@
 
 ## PLAY THE GAME!
 
- - Play the final version submitted to game jam at: https://js13kgames.com/entries/moth
- - The most recent version is available at: https://moth.7tonshark.com
+ - Play the version submitted to game jam at: https://js13kgames.com/entries/harold-is-heavy
+ - The most recent version is available at: https://harold-is-heavy.7tonshark.com
 
 (See changelog before for more information on changes, bug fixes, etc.)
 
@@ -23,25 +23,16 @@ To build the game for yourself:
 
  1. Clone the repository
  2. `npm install`
- 3. `gulp build`
+ 3. `gulp build` (or just `gulp` to enter watch mode)
 
-### How does it work?
+A normal build doesn't run the full terser / roadroller / zipping steps; for that, run `gulp build --dist`.
 
-The gulpfile can get a little long, but in essence what it does is pretty simple:
+## TOOLS
 
-1. It takes all of the artwork (`.aseprite` files) and uses the Aseprite CLI to collapse all of the frames into one big Spritesheet PNG. This also generates a Spritesheet JSON file listing the pixel coordinates of each frame in the sheet. At the same time, we take just the tiles, and output another PNG that is used as the tileset in Tiled.
-
-2. It runs some custom tools in the `tools/` folder. These tools update generated source files -- first, the "sprite sheet data", which contains those pixel coordinates from the JSON file above, and the entire spritesheet PNG base64-encoded as a string. Second, a source file that represents the "world data" (from Tiled).
-
-3. It takes all of our JavaScript source files and runs Rollup/Terser to generate a single minified JavaScript file.
-
-4. Any CSS and our single JavaScript file are inserted into the `index.html` template -- our output is a single file, `dist/build/index.html`, which is the full playable game.
-
-This is usually where I stop during development. Near the end of the game jam, I'll run `gulp build --dist`, which includes some extra steps:
-
-5. Run Roadroller CLI on the javascript before inserting into the HTML.
-
-6. Zip up the game and run advzip on it.
+ - Levels are built using [Tiled](https://www.mapeditor.org/). The level structure is flattened/minimized and inserted into the LevelData during the gulp build.
+ - Art created using [Aseprite](https://www.aseprite.org/). All aseprite files in the assets folder is automatically smashed into a spritesheet during the build.
+ - Sound effects created using [ZZFX](https://killedbyapixel.github.io/ZzFX/).
+ - Music composed in [Sound Box](https://sb.bitsnbites.eu/).
 
 ## CHANGELOG
 
