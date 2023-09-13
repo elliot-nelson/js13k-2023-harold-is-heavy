@@ -358,7 +358,7 @@ export class LevelScreen {
             game.nextLevel++;
             game.screens.pop();
             game.scores[this.levelNumber].time = this.t;
-            game.scores[this.levelNumber].time = this.enemiesAlive;
+            game.scores[this.levelNumber].enemiesAlive = this.enemiesAlive;
         }
     }
 
