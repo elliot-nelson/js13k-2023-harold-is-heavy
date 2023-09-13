@@ -42,7 +42,7 @@ A normal build doesn't run the full terser / roadroller / zipping steps; for tha
   - As the end-game victory screen suggests, you can jump to any level with number keys 1-4.
   - You can also jump to the victory screen by pressing 5.
   - The victory screen will replay your last COMPLETED level, so you can trick it into playing a replay of another level by playing a level and then pressing 5 after completing it.
-  - Your speedrun score keeps track of last run on each level, so you can jump around between levels to eke out better performance on just one level.
+  - Your speedrun score is based on the total seconds spent in each level. Your time is tracked separately for each level and is updated when you complete a level.
   - Note that enemies left alive have a ~7 second penalty, so for maximum points, crush every enemy and rescue your friends as quickly as possible.
 </details>
 
