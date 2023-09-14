@@ -1,11 +1,8 @@
-// Gore
+// LandingParticle
 
-import { game } from './Game';
-import { R45, R90, R360, GRAVITY, TERMINAL_VELOCITY } from './Constants';
-import { vector2angle, vector2point, angle2vector, vectorAdd } from './Util';
+import { GRAVITY, TERMINAL_VELOCITY } from './Constants';
 import { Sprite } from './Sprite';
-import { Viewport } from './Viewport';
-import { clamp } from './Util';
+import { angle2vector, clamp, vector2point } from './Util';
 
 export class LandingParticle {
     constructor(pos) {

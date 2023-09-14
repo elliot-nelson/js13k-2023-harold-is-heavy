@@ -1,18 +1,14 @@
 // Player
 
-import { JUMP_VELOCITY, JUMP_CHEAT_LANDING_FRAMES, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TARGET_GAME_HEIGHT, SUPER_SLAM_FALL_DISTANCE, SLAM_ENEMY_DISTANCE } from './Constants';
+import { Audio } from './Audio';
+import { GRAVITY, JUMP_CHEAT_LANDING_FRAMES, JUMP_VELOCITY, PLAYER_FOOT_SPEED, SLAM_ENEMY_DISTANCE, SUPER_SLAM_FALL_DISTANCE, TERMINAL_VELOCITY } from './Constants';
+import { ExplosionBParticle } from './ExplosionBParticle';
+import { game } from './Game';
+import { ScreenShake } from './ScreenShake';
 import { Sprite } from './Sprite';
-import { Camera } from './Camera';
+import { clamp, xy2qr } from './Util';
 import { Viewport } from './Viewport';
 import { Input } from './input/Input';
-import { game } from './Game';
-import { LandingParticle } from './Particle';
-import { clamp, uv2xy, xy2qr } from './Util';
-import { ScreenShake } from './ScreenShake';
-import { ExplosionBParticle } from './ExplosionBParticle';
-import { StarParticle } from './StarParticle';
-import { Audio } from './Audio';
-import { Replay } from './Replay';
 
 const PLAYING = 1;
 const DYING = 2;

@@ -1,15 +1,11 @@
 // Player
 
-import { JUMP_VELOCITY, GRAVITY, TERMINAL_VELOCITY, PLAYER_FOOT_SPEED, TILE_SIZE } from './Constants';
-import { Sprite } from './Sprite';
-import { Camera } from './Camera';
-import { Viewport } from './Viewport';
-import { Input } from './input/Input';
-import { game } from './Game';
-import { LandingParticle } from './Particle';
-import { clamp, xy2qr } from './Util';
-import { BloodPoolParticle } from './BloodPoolParticle';
 import { Audio } from './Audio';
+import { BloodPoolParticle } from './BloodPoolParticle';
+import { GRAVITY, TILE_SIZE } from './Constants';
+import { game } from './Game';
+import { Sprite } from './Sprite';
+import { clamp, xy2qr } from './Util';
 
 const PATROL = 0;
 const FLIPPING = 1;

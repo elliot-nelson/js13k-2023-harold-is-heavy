@@ -1,11 +1,7 @@
-// Gore
+// BigArrowParticle
 
-import { game } from './Game';
-import { R45, R90, R360 } from './Constants';
-import { vector2angle, vector2point, angle2vector, vectorAdd } from './Util';
 import { Sprite } from './Sprite';
 import { Viewport } from './Viewport';
-import { clamp } from './Util';
 
 export class BigArrowParticle {
     constructor(pos) {
