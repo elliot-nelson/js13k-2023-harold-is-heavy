@@ -1,11 +1,10 @@
-// Gore
+// FallingDirtParticle
+//
+// A falling dirt particle is spawned only beneath tiles that are super-slammable
+// (can be pushed down by the player), whenever the player lands.
 
-import { game } from './Game';
-import { R45, R90, R360 } from './Constants';
-import { vector2angle, vector2point, angle2vector, vectorAdd } from './Util';
 import { Sprite } from './Sprite';
 import { Viewport } from './Viewport';
-import { clamp } from './Util';
 
 export class FallingDirtParticle {
     constructor(pos) {

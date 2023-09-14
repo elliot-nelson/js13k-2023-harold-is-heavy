@@ -1,11 +1,9 @@
-// Gore
+// ExplosionBParticle
+//
+// "Explosion B" is a short pink/white explosion used when the player
+// dies (i.e. falls off the screen or touches an enemy).
 
-import { game } from './Game';
-import { R45, R90, R360 } from './Constants';
-import { vector2angle, vector2point, angle2vector, vectorAdd } from './Util';
 import { Sprite } from './Sprite';
-import { Viewport } from './Viewport';
-import { clamp } from './Util';
 
 export class ExplosionBParticle {
     constructor(pos) {

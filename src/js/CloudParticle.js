@@ -1,11 +1,10 @@
-// Gore
+// CloudParticle
+//
+// Cloud particles slowly move across the top of the screen. They are drawn
+// a bit different because their coordinate system is the screen, not the map.
 
-import { game } from './Game';
-import { R45, R90, R360 } from './Constants';
-import { vector2angle, vector2point, angle2vector, vectorAdd } from './Util';
 import { Sprite } from './Sprite';
 import { Viewport } from './Viewport';
-import { clamp } from './Util';
 
 export class CloudParticle {
     constructor(middle) {
