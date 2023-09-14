@@ -47,12 +47,14 @@ export class Player {
     update() {
         let input = Input;
 
+        // The player character has two modes -- if we're RECORDING (default), then we take
+        // the current Input set and record this frame. If we're REPLAYING (victory screen),
+        // we grab the next input frame from the recording and use that as our input.
         if (this.recording) {
             this.recording.record();
         } else if (this.replay) {
             this.replay.replay();
             input = this.replay;
-            console.log(input.direction, input.pressed, 'replay');
         }
 
         this.last[1] = { ...this.last[0] };

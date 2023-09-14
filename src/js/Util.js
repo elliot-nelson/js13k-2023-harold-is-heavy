@@ -427,81 +427,6 @@ export function intersectCircleCircle(p1, r1, v1, p2, r2, v2) {
     }
 }
 
-export function floodTarget(maze, from, to) {
-    let result = array2d(maze[0].length, maze.length, () => Infinity);
-    let stack = [{ ...to, cost: 0 }];
-
-    /*
-    if (!tileIsPassable(to.q, to.r)) {
-        throw new Error(['fuck first', to.q, to.r, World.tiles[to.r][to.q]].join(' '));
-    }
-    if (!tileIsPassable(from.q, from.r)) {
-        throw new Error('fuck bhencho', from, World.tiles[from.r][from.q]);
-    }
-    */
-
-    while (stack.length > 0) {
-        let { q, r, cost } = stack.shift();
-        if (q === from.q && r === from.r) {
-            result[r][q] = cost++;
-            return result;
-        }
-        if (result[r][q] <= cost) continue;
-        result[r][q] = cost++;
-        //if (result[r][q] >= maxDistance) continue;
-        if (tileIsPassable(q + 1, r) && result[r][q + 1] > cost)
-            stack.push({ q: q + 1, r, cost });
-        if (tileIsPassable(q - 1, r) && result[r][q - 1] > cost)
-            stack.push({ q: q - 1, r, cost });
-        if (tileIsPassable(q, r + 1) && result[r + 1][q] > cost)
-            stack.push({ q, r: r + 1, cost });
-        if (tileIsPassable(q, r - 1) && result[r - 1][q] > cost)
-            stack.push({ q, r: r - 1, cost });
-    }
-    throw new Error('fuck');
-}
-
-export function flood(maze, to, maxDistance = Infinity) {
-    let result = array2d(maze[0].length, maze.length, () => Infinity);
-    let stack = [{ ...to, cost: 0 }];
-    while (stack.length > 0) {
-        let { q, r, cost } = stack.shift();
-        if (result[r][q] <= cost) continue;
-        result[r][q] = cost++;
-        if (result[r][q] >= maxDistance) continue;
-        if (tileIsPassable(q + 1, r) && result[r][q + 1] > cost)
-            stack.push({ q: q + 1, r, cost });
-        if (tileIsPassable(q - 1, r) && result[r][q - 1] > cost)
-            stack.push({ q: q - 1, r, cost });
-        if (tileIsPassable(q, r + 1) && result[r + 1][q] > cost)
-            stack.push({ q, r: r + 1, cost });
-        if (tileIsPassable(q, r - 1) && result[r - 1][q] > cost)
-            stack.push({ q, r: r - 1, cost });
-    }
-    return result;
-}
-
-export function floodlight(maze, froms, maxDistance = Infinity) {
-    let result = array2d(maze[0].length, maze.length, () => 0);
-    let stack = [...froms];
-
-    while (stack.length > 0) {
-        let { q, r, light } = stack.shift();
-        if (result[r][q] >= light) continue;
-        result[r][q] = light--;
-        if (result[r][q] >= maxDistance) continue;
-        if (tileOnMap(q + 1, r) && result[r][q + 1] < light)
-            stack.push({ q: q + 1, r, light });
-        if (tileOnMap(q - 1, r) && result[r][q - 1] < light)
-            stack.push({ q: q - 1, r, light });
-        if (tileOnMap(q, r + 1) && result[r + 1][q] < light)
-            stack.push({ q, r: r + 1, light });
-        if (tileOnMap(q, r - 1) && result[r - 1][q] < light)
-            stack.push({ q, r: r - 1, light });
-    }
-    return result;
-}
-
 export function array2d(width, height, fn) {
     return Array.from({ length: height }, () =>
         Array.from({ length: width }, fn)
@@ -526,21 +451,6 @@ export function tileIsPassable(q, r) {
     }
 
     return false;
-
-    // 1
-
-    if (game.brawl) {
-        let room = game.brawl.room;
-        if (
-            q < room.q ||
-            r < room.r ||
-            q >= room.q + room.w ||
-            r >= room.r + room.h
-        )
-            return false;
-    }
-    if (q < 0 || r < 0 || q >= game.maze.w || r >= game.maze.h) return false;
-    return !!game.maze.maze[r][q];
 }
 
 export function rgba(r, g, b, a) {

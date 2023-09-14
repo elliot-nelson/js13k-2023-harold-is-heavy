@@ -45,10 +45,12 @@ export const KeyboardAdapter = {
 
         window.addEventListener('keydown', event => {
             let k = KeyboardAdapter.map[event.code];
-            // Debugging - key presses
-            console.log(event.key, event.keyCode, event.code, k);
+            // Uncomment to debug key presses
+            // console.log(event.key, event.keyCode, event.code, k);
+
             // Hack to ensure we initialize audio after user interacts with game
             Audio.initContext();
+
             if (k) {
                 KeyboardAdapter.held[k] = true;
             }
