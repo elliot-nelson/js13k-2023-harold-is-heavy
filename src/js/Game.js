@@ -1,21 +1,16 @@
 // Game
 
-import { FPS } from './Constants';
-import { Sprite } from './Sprite';
-import { Input } from './input/Input';
-import { Text } from './Text';
-import { Viewport } from './Viewport';
-import { rgba, createCanvas, clamp, partialText, uv2xy, xy2qr, xy2uv, qr2xy, centerxy } from './Util';
 import { Audio } from './Audio';
-import { Movement } from './systems/Movement';
-
 import { Camera } from './Camera';
-import { VictoryScreen } from './VictoryScreen';
-import { DefeatScreen } from './DefeatScreen';
-
-import { LevelData } from './generated/LevelData-gen';
-import { LevelScreen } from './LevelScreen';
+import { FPS } from './Constants';
 import { IntroScreen } from './IntroScreen';
+import { LevelScreen } from './LevelScreen';
+import { Sprite } from './Sprite';
+import { Text } from './Text';
+import { VictoryScreen } from './VictoryScreen';
+import { Viewport } from './Viewport';
+import { LevelData } from './generated/LevelData-gen';
+import { Input } from './input/Input';
 
 /**
  * Game state.
