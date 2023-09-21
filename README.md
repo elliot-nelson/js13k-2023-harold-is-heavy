@@ -49,6 +49,11 @@ A normal build doesn't run the full terser / roadroller / zipping steps; for tha
 
 ## CHANGELOG
 
+#### [v1.0.1](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.0.1) (2023-09-21)
+
+ - Bugfix: speedrun score calculation was incorrect.
+ - Miscellaneous code cleanup and refactoring.
+
 #### [v1.0.0](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.0.0) (2023-09-12)
 
  - Submitted to game jam.
