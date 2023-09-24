@@ -49,6 +49,10 @@ A normal build doesn't run the full terser / roadroller / zipping steps; for tha
 
 ## CHANGELOG
 
+#### [v1.1.0](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.1.0) (2023-09-24)
+
+ - Replace tiny 3x5 font with a more relaxed 4x5/5x5 font.
+
 #### [v1.0.1](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.0.1) (2023-09-21)
 
  - Bugfix: speedrun score calculation was incorrect.
