@@ -26,6 +26,8 @@ const C_SHIFT = {
     84: 6, // T
     86: 6, // V
     87: 6, // W
+    88: 6, // X
+    89: 6, // Y
     109: 6, // m (up)
     111: 6, // o (down)
 };
@@ -35,20 +37,10 @@ const C_ICONS = {};
 export const Text = {
     init() {
         Text.white = Sprite.font.img;
-
         Text.black = recolor(Text.white, rgba(0, 0, 0, 1));
-        Text.black_shadow = recolor(Text.white, rgba(90, 20, 90, 0.15));
-        Text.blue = recolor(Text.white, rgba(200, 40, 220, 1));
-        Text.blue_shadow = recolor(Text.white, rgba(240, 50, 200, 0.2));
-        //Text.shadow = recolor(Text.white, rgba(240, 240, 255, 0.25));
-        Text.red = recolor(Text.white, rgba(240, 50, 50, 1));
-
         Text.shadow = recolor(Text.white, rgba(44, 27, 46, 1));
         Text.tan = recolor(Text.white, rgba(209, 180, 140, 1));
-
         Text.pig = recolor(Text.white, rgba(227, 66, 98, 1));
-
-        //Text.duotone = recolorDuotone(Text.white, '#ffaa5e', '#ffd4a3');
         Text.duotone = recolorDuotone(Text.white, '#f2b63d', '#fff4e0');
         Text.duotone_red = recolorDuotone(Text.white, '#ffaa5e', '#ffd4a3', rgba(255, 0, 0, 0.7));
     },
@@ -89,38 +81,6 @@ export const Text = {
                 );
             }
         }
-    },
-
-    /*
-    drawRightText(ctx, text, u, v, scale = 1, font = Text.white, shadow) {
-        u -= Text.measureWidth(text, scale);
-        Text.drawText(ctx, text, u, v, scale, font, shadow);
-    },
-    */
-
-    drawParagraph(ctx, text, u, v, w, h, scale = 1, font = Text.duotone, shadow) {
-        let cu = u,
-            cv = v,
-            phrases = text.split(' ');
-
-        for (let phrase of phrases) {
-            while (phrase[0] === '\n') {
-                phrase = phrase.slice(1);
-                cu = u;
-                cv += (C_HEIGHT + 1) * scale;
-            }
-            let phraseWidth = Text.measureWidth(phrase, scale);
-            if (cu + phraseWidth - u > w) {
-                cu = u;
-                cv += (C_HEIGHT + 1) * scale;
-            }
-            Text.drawText(ctx, phrase, cu, cv, scale, font, shadow);
-            cu += phraseWidth + (C_SHIFT[32] || DEFAULT_C_SHIFT);
-        }
-    },
-
-    measureWidth(text, scale) {
-        return text.split('').reduce((sum, c) => sum + (C_SHIFT[c.charCodeAt(0)] || DEFAULT_C_SHIFT), 0) * scale;
     },
 
     measure(text, scale = 1) {
