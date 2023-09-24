@@ -3,13 +3,16 @@
 import { Sprite } from './Sprite';
 import { rgba, createCanvas } from './Util';
 
-const C_WIDTH = 3;
+const C_WIDTH = 5;
 const C_HEIGHT = 5;
+const FONT_SHEET_C_WIDTH = 6;
+const FONT_SHEET_WIDTH = 270;
+const DEFAULT_C_SHIFT = 5;
 
 // Very simple variable-width font implementation. The characters in the font strip
-// are left-aligned in their 3x5 pixel boxes, so in order to have variable width,
+// are left-aligned in their 5x5 pixel boxes, so in order to have variable width,
 // we just need to note the characters that AREN'T full width. Anything not in
-// this list has full shift (3+1 = 4 pixels).
+// this list has full shift (5+1 = 6 pixels).
 const C_SHIFT = {
     10: 0, // LF (\n)
     32: 3, // Space ( )
@@ -17,7 +20,14 @@ const C_SHIFT = {
     39: 2, // Apostrophe (')
     44: 3, // Comma (,)
     46: 3, // Period (.)
-    73: 2 // I
+    47: 6, // Slash (/)
+    73: 2, // I
+    77: 6, // M
+    84: 6, // T
+    86: 6, // V
+    87: 6, // W
+    109: 6, // m (up)
+    111: 6, // o (down)
 };
 
 const C_ICONS = {};
@@ -52,12 +62,12 @@ export const Text = {
                     v + c.v - (C_ICONS[c.c].img.height + 4) / 2
                 );
             } else {
-                let k = (c.c - 32) * (C_WIDTH + 1);
+                let k = (c.c - 32) * FONT_SHEET_C_WIDTH;
                 if (shadow) {
                     ctx.drawImage(
                         shadow,
-                        k % 180,
-                        (k / 180 | 0) * 6,
+                        k % FONT_SHEET_WIDTH,
+                        (k / FONT_SHEET_WIDTH | 0) * FONT_SHEET_C_WIDTH,
                         C_WIDTH,
                         C_HEIGHT,
                         u + c.u,
@@ -68,8 +78,8 @@ export const Text = {
                 }
                 ctx.drawImage(
                     font,
-                    k % 180,
-                    (k / 180 | 0) * 6,
+                    k % FONT_SHEET_WIDTH,
+                    (k / FONT_SHEET_WIDTH | 0) * FONT_SHEET_C_WIDTH,
                     C_WIDTH,
                     C_HEIGHT,
                     u + c.u,
@@ -105,19 +115,19 @@ export const Text = {
                 cv += (C_HEIGHT + 1) * scale;
             }
             Text.drawText(ctx, phrase, cu, cv, scale, font, shadow);
-            cu += phraseWidth + (C_SHIFT[32] || 4);
+            cu += phraseWidth + (C_SHIFT[32] || DEFAULT_C_SHIFT);
         }
     },
 
     measureWidth(text, scale) {
-        return text.split('').reduce((sum, c) => sum + (C_SHIFT[c.charCodeAt(0)] || 4), 0) * scale;
+        return text.split('').reduce((sum, c) => sum + (C_SHIFT[c.charCodeAt(0)] || DEFAULT_C_SHIFT), 0) * scale;
     },
 
     measure(text, scale = 1) {
         let w = 0, h = 0;
 
         for (let c of this.charactersToDraw(text, scale)) {
-            w = Math.max(w, c.u + (C_SHIFT[c.c] || C_WIDTH + 1) * scale);
+            w = Math.max(w, c.u + (C_SHIFT[c.c] || DEFAULT_C_SHIFT) * scale);
             h = c.v + (C_HEIGHT + 2) * scale;
         }
 
@@ -138,7 +148,7 @@ export const Text = {
 
             yield { c, u, v };
 
-            u += (C_SHIFT[c] || C_WIDTH + 1) * scale;
+            u += (C_SHIFT[c] || DEFAULT_C_SHIFT) * scale;
         }
     }
 };

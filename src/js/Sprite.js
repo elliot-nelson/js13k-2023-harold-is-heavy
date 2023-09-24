@@ -54,7 +54,7 @@ export const Sprite = {
         Sprite.sign = SpriteSheet.sign.map(initBasicSprite);
 
         // Base pixel font and icons (see `Text.init` for additional variations)
-        Sprite.font = initBasicSprite(SpriteSheet.font[0]);
+        Sprite.font = initBasicSprite(SpriteSheet.font4[0]);
         //Sprite.icon_mouse_lmb = initBasicSprite(SpriteSheet.icon_mouse[0]);
         //Sprite.icon_mouse_rmb = initBasicSprite(SpriteSheet.icon_mouse[1]);
 

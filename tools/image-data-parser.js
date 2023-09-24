@@ -59,7 +59,7 @@ const ImageDataParser = {
       base64: `data:image/png;base64,${base64}`
     };
 
-    let generated = util.inspect(data, { compact: true, maxArrayLength: Infinity, depth: Infinity });
+    let generated = util.inspect(data, { compact: true, maxArrayLength: Infinity, depth: Infinity, maxStringLength: Infinity });
     generated = lines.slice(0, prefix + 1).join('\n') + '\n' + generated + '\n' + lines.slice(suffix).join('\n');
 
     fs.writeFileSync(outputFile, generated, 'utf8');
