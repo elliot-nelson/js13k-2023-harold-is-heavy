@@ -1,6 +1,6 @@
 {
   "name": "js13k-2023-harold-is-heavy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "My 2023 entry for the js13kgames compo, 'Harold is Heavy'.",
   "main": "index.js",
   "scripts": {
