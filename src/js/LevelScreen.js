@@ -89,11 +89,15 @@ export class LevelScreen {
 
         let levelBottomY = qr2xy({ q: 0, r: this.tiles.length - 1 }).y;
         let cameraMaxY = levelBottomY - (TARGET_GAME_HEIGHT / 2);
-        Camera.forceTarget = {
+
+        /*Camera.forceTarget = {
             x: this.player.pos.x,
             y: Math.min(this.player.pos.y, cameraMaxY)
-        };
-        Camera.update();
+        };*/
+        //Camera.update();
+
+        Camera.pos.x = (Camera.pos.x * 0.92 + this.player.pos.x * 0.08);
+        Camera.pos.y = Math.min((Camera.pos.y * 0.92 + this.player.pos.y * 0.08), cameraMaxY);
 
         if (this.player.pos.y > levelBottomY) {
             this.player.dieFalling(levelBottomY);
