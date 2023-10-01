@@ -39,7 +39,7 @@ A normal build doesn't run the full terser / roadroller / zipping steps; for tha
 
 <details>
   <summary>Click me (contains light spoilers)</summary>
-  
+
   - As the end-game victory screen suggests, you can jump to any level with number keys 1-4.
   - You can also jump to the victory screen by pressing 5.
   - The victory screen will replay your last COMPLETED level, so you can trick it into playing a replay of another level by playing a level and then pressing 5 after completing it.
@@ -48,6 +48,11 @@ A normal build doesn't run the full terser / roadroller / zipping steps; for tha
 </details>
 
 ## CHANGELOG
+
+#### [v1.2.0](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.2.0) (2023-10-01)
+
+ - Bugfix: victory screen text was not aligned properly.
+ - Interpolate camera movement so it is less shaky when following Harold.
 
 #### [v1.1.0](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.1.0) (2023-09-24)
 
