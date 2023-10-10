@@ -57,25 +57,22 @@ export class Game {
     }
 
     onFrame(currentms) {
-        let startTime= new Date().getTime();
+        let delta = (currentms - this.lastFrame) - (1000 / FPS);
 
-        /*this.framestamps.push(currentms);*/
-        if (this.framestamps.length >= 40) {
-            this.framestamps.shift();
-        }
-        this.fps = 1000 / ((this.framestamps[this.framestamps.length - 1] - this.framestamps[0]) / this.framestamps.length);
-
-        if (currentms - this.lastFrame >= 1000 / FPS) {
+        if (delta >= 0) {
             this.frame++;
-            this.lastFrame = currentms;
+            this.lastFrame = currentms - delta;
             Viewport.resize();
             this.update();
             this.draw(Viewport.ctx);
+
+            // this.framestamps.push(currentms);
+            // if (this.framestamps.length >= 120) {
+            //     this.framestamps.shift();
+            // }
+            // this.fps = 1000 / ((this.framestamps[this.framestamps.length - 1] - this.framestamps[0]) / this.framestamps.length);
         }
         window.requestAnimationFrame((xyz) => this.onFrame(xyz));
-
-        let endTime = new Date().getTime();
-        this.framestamps.push(this.framestamps[this.framestamps.length - 1] + endTime - startTime);
     }
 
     update() {
@@ -111,6 +108,11 @@ export class Game {
         Viewport.ctx.scale(Viewport.scale, Viewport.scale);
 
         this.screen.draw();
+
+        Text.drawText(Viewport.ctx, String(this.fps), 15, 15, 1, Text.white);
+
+        Viewport.ctx.fillStyle = 'black';
+        Viewport.ctx.fillRect(50, 50, 10, 10);
     }
 
     pause() {

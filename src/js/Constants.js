@@ -29,7 +29,7 @@ export const R360        = 360 * Math.PI / 180;
 // Frames per second (locked)
 //
 // Other constants below, like gravity, foot speed, etc., are represented as movement PER FRAME.
-export const FPS = 60;
+export const FPS = 42;
 
 // Player movement constants
 export const PLAYER_FOOT_SPEED = 1.3;
