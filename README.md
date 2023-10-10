@@ -49,6 +49,10 @@ A normal build doesn't run the full terser / roadroller / zipping steps; for tha
 
 ## CHANGELOG
 
+#### [v1.3.0](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.3.0) (2023-10-10)
+
+ - Fixed an issue where the frame rate was actually somewhat variable based on browser and operating system. Although the _intent_ was 60 FPS, in actuality it ranged between 40 and 50 FPS. The new, fixed frame rate is 42 FPS.
+
 #### [v1.2.0](https://github.com/elliot-nelson/js13k-2023-harold-is-heavy/releases/tag/v1.2.0) (2023-10-01)
 
  - Bugfix: victory screen text was not aligned properly.
